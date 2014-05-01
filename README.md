@@ -23,11 +23,17 @@ After restarting, go to **Window->Preferences** in Eclipse, and then go to **Mav
 
 ## Step 3: Get and Initialize the Repository
 
-Clone the repository with the following command:
+Clone the repository.
 
 ```
 git clone https://github.com/jwbartel/Grader.git
 ```
+
+From a command line (if using Windows, use command prompt not powershell), navigate to the folder you just cloned and
+run the following command.
+
+```
+mvn install:install-file -Dfile=oeall17.jar -DgroupId=edu.unc -DartifactId=oeall -Dversion=17 -Dpackaging=jar
 
 ## Step 4: Add the Project to Eclipse
 
