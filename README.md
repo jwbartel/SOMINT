@@ -34,6 +34,7 @@ run the following command.
 
 ```
 mvn install:install-file -Dfile=oeall17.jar -DgroupId=edu.unc -DartifactId=oeall -Dversion=17 -Dpackaging=jar
+```
 
 ## Step 4: Add the Project to Eclipse
 
