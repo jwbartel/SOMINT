@@ -1,5 +1,6 @@
 package groups.seedless.fellows;
 
+import groups.seedless.SeedlessGroupRecommender;
 import groups.seedless.kelli.IOFunctions;
 
 import java.io.File;
@@ -17,7 +18,7 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.BronKerboschCliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 
-public class Fellows<V extends Comparable<V>> {
+public class Fellows<V extends Comparable<V>> implements SeedlessGroupRecommender<V>{
 	
 	public static final String RESULTS_FOLDER = "data/Jacob/Fellows/";
 	
@@ -76,6 +77,128 @@ public class Fellows<V extends Comparable<V>> {
 		System.out.println("created the UIDGraph");
 		UIDGraph = ioHelp.createUIDGraph(inFileName);
 		ioHelp.fillNames(idNameMap);
+	}
+
+	@Override
+	public Collection<Set<V>> getRecommendations() {
+		return greedyFindGroups();
+	}
+	
+	private boolean cohesionCanIncrease(Set<V> group) {
+		// Returns true if it is possible for cohesion to increase
+		
+		double currCohesion = getCohesion(group);
+		
+		Set<V> otherNodes = new TreeSet<V>(UIDGraph.vertexSet());
+		otherNodes.removeAll(group);
+		for (V otherNode : otherNodes) {
+			Set<V> tempSet = new TreeSet<>(group);
+			tempSet.add(otherNode);
+			
+			double nextCohesion = getCohesion(tempSet);
+			if (nextCohesion > currCohesion) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private V breakTies(Set<V> group, Collection<V>optimalNodes) {
+		
+		if (optimalNodes.size() == 1) {
+			return optimalNodes.iterator().next();
+		}
+		
+		V optimalNode = null;
+		int optimalInternalTriangles = -1;
+		int optimalOutgoingTriangles = -1;
+		
+		for (V candidate : optimalNodes) {
+			Set<V> tempGroup = new TreeSet<>(group);
+			tempGroup.add(candidate);
+			int[] triangleCounts = sortTriangles(tempGroup, triangles);
+			
+			boolean shouldSet = false;
+			if (optimalInternalTriangles < triangleCounts[0]) {
+				shouldSet = true;
+			} else if (optimalInternalTriangles < triangleCounts[0]
+					&& optimalOutgoingTriangles < triangleCounts[1]){
+				shouldSet = true;
+			}
+			
+			if (shouldSet) {
+				optimalNode = candidate;
+				optimalInternalTriangles = triangleCounts[0];
+				optimalOutgoingTriangles = triangleCounts[1];
+			}
+		}
+		return optimalNode;
+	}
+	
+	private void greedilyGrowGroup(Set<V> group) {
+		
+		while (true) {
+			
+			// All nodes not in the group
+			Set<V> otherNodes = new TreeSet<V>(UIDGraph.vertexSet());
+			otherNodes.removeAll(group);
+			
+			double currCohesion = getCohesion(group);
+			Collection<V> optimalNodes = new ArrayList<V>(); 
+			double optimalNextCohesion = 0;
+			
+			// Find the node that increases the cohesion
+			for (V otherNode : otherNodes) {
+				Set<V> tempGroup = new TreeSet<>(group);
+				tempGroup.add(otherNode);
+				
+				double nextCohesion = getCohesion(tempGroup);
+				if (nextCohesion < currCohesion || nextCohesion < nextCohesion) {
+					continue;
+				} else {
+					if (nextCohesion > optimalNextCohesion) {
+						optimalNodes = new ArrayList<V>();
+					}
+					optimalNodes.add(otherNode);
+				}
+			}
+			
+			if(optimalNodes.size() == 0) {
+				break;
+			}
+			
+			group.add(breakTies(group, optimalNodes));
+		}
+	}
+	
+	private Collection<Set<V>> greedyFindGroups() {
+		
+		triangles = getTriangles(UIDGraph);
+		
+		System.out.println("~~~~~~~~~~~~~~Greedy Finding Groups~~~~~~~~~~~~~~");
+		
+		long start, elapsedTime;
+		float elapsedTimeMin;
+		start = System.currentTimeMillis();
+		
+		Collection<Set<V>> groups = new HashSet<Set<V>>();
+		Set<V> ungroupedNodes = new TreeSet<V>(UIDGraph.vertexSet());
+		while (ungroupedNodes.size() > 0) {
+			
+			Set<V> group = new TreeSet<V>();
+			group.add(ungroupedNodes.iterator().next());
+			greedilyGrowGroup(group);
+			
+			groups.add(group);
+			ungroupedNodes.removeAll(group);
+		}
+		
+		elapsedTime = System.currentTimeMillis() - start;
+		elapsedTimeMin = elapsedTime / 1000 / 60;
+		
+		System.out.println ("Completed in "+elapsedTimeMin + " minutes");
+		
+		return groups;
 	}
 	
 	public void findGroups(Collection<Set<V>> cliques){
