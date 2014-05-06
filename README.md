@@ -26,7 +26,7 @@ After restarting, go to **Window->Preferences** in Eclipse, and then go to **Mav
 Clone the repository.
 
 ```
-git clone https://github.com/jwbartel/Grader.git
+git clone https://github.com/jwbartel/SharingPredictor.git
 ```
 
 From a command line (if using Windows, use command prompt not powershell), navigate to the folder you just cloned and
