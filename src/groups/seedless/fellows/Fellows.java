@@ -84,25 +84,6 @@ public class Fellows<V extends Comparable<V>> implements SeedlessGroupRecommende
 		return greedyFindGroups();
 	}
 	
-	private boolean cohesionCanIncrease(Set<V> group) {
-		// Returns true if it is possible for cohesion to increase
-		
-		double currCohesion = getCohesion(group);
-		
-		Set<V> otherNodes = new TreeSet<V>(UIDGraph.vertexSet());
-		otherNodes.removeAll(group);
-		for (V otherNode : otherNodes) {
-			Set<V> tempSet = new TreeSet<>(group);
-			tempSet.add(otherNode);
-			
-			double nextCohesion = getCohesion(tempSet);
-			if (nextCohesion > currCohesion) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	private V breakTies(Set<V> group, Collection<V>optimalNodes) {
 		
 		if (optimalNodes.size() == 1) {
