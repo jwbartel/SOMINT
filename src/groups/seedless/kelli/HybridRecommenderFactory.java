@@ -9,7 +9,7 @@ import java.util.Set;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-public class HybridRecommmenderFactory<V> implements SeedlessGroupRecommenderFactory<V>{
+public class HybridRecommenderFactory<V> implements SeedlessGroupRecommenderFactory<V>{
 
 	@Override
 	public SeedlessGroupRecommender<V> create(UndirectedGraph<V, DefaultEdge> graph) {
