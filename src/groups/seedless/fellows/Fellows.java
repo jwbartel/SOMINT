@@ -40,6 +40,10 @@ public class Fellows<V extends Comparable<V>> implements SeedlessGroupRecommende
 	Map<Set<V>, Double> cohesionValues = new HashMap<Set<V>, Double>();
 	Set<Triangle<V>> triangles;
 	
+	public Fellows(UndirectedGraph<V, DefaultEdge> ugraph){
+		UIDGraph = ugraph;
+	}
+	
 	public Fellows(UndirectedGraph<V, DefaultEdge> ugraph, String id, boolean greedy, Class<V> genericClass){
 		init(ugraph, id, greedy, -1, genericClass);
 	}

@@ -23,12 +23,19 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 
 	double S = 0.0, D = 1.0;
 	protected UndirectedGraph<V, DefaultEdge> graph = null;
+	protected final Collection<Set<V>> precomputedMaximalCliques;
 	protected IOFunctions<V> ioHelp;
 	int participantID;
 	Class<V> genericClass;
 
 	public HybridCliqueMerger(UndirectedGraph<V, DefaultEdge> graph) {
 		this.graph = graph;
+		precomputedMaximalCliques = null;
+	}
+	
+	public HybridCliqueMerger(UndirectedGraph<V, DefaultEdge> graph, Collection<Set<V>> maximalCliques) {
+		this.graph = graph;
+		this.precomputedMaximalCliques = maximalCliques;
 	}
 
 	public HybridCliqueMerger(UndirectedGraph<V, DefaultEdge> graph, int participantID,
@@ -37,6 +44,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		this.participantID = participantID;
 		this.ioHelp = new IOFunctions<V>(genericClass);
 		this.genericClass = genericClass;
+		precomputedMaximalCliques = null;
 	}
 
 	public void setIOHelp(IOFunctions<V> ioHelp) {
@@ -54,7 +62,11 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 
 	@Override
 	public Collection<Set<V>> getRecommendations() {
-		return findNetworksAndSubgroups();
+		if (precomputedMaximalCliques == null) {
+			return findNetworksAndSubgroups();
+		} else {
+			return findNetworksAndSubgroups(precomputedMaximalCliques);
+		}
 	}
 
 	public Collection<Set<V>> findNetworksAndSubgroups() {
