@@ -46,6 +46,11 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		this.genericClass = genericClass;
 		precomputedMaximalCliques = null;
 	}
+	
+	@Override
+	public String getTypeOfRecommender() {
+		return "hybrid";
+	}
 
 	public void setIOHelp(IOFunctions<V> ioHelp) {
 		this.ioHelp = ioHelp;

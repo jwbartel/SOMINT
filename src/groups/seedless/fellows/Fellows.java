@@ -71,6 +71,11 @@ public class Fellows<V extends Comparable<V>> implements
 		this.threshold = threshold;
 		this.genericClass = genericClass;
 	}
+	
+	@Override
+	public String getTypeOfRecommender() {
+		return "fellows";
+	}
 
 	public void setIOHelp(IOFunctions<V> ioHelp) {
 		this.ioHelp = ioHelp;

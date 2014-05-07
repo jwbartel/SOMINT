@@ -7,4 +7,5 @@ import java.util.Set;
 
 public interface SeedlessGroupRecommender<V> extends GroupRecommender<V> {
 	
+	public String getTypeOfRecommender();
 }
