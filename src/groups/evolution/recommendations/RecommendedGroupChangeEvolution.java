@@ -1,15 +1,15 @@
-package groups.evolution;
+package groups.evolution.recommendations;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class RecommendedEvolution<V> implements Comparable<RecommendedEvolution<V>>{
+public class RecommendedGroupChangeEvolution<V> implements Comparable<RecommendedGroupChangeEvolution<V>>, RecommendedEvolution<V>{
 	Set<V> oldGroup;
 	Set<V> recommenderEngineResult;
 	Set<V> merging;
 	
-	public RecommendedEvolution(Set<V> oldGroup, Set<V> recommenderEngineResult, Collection<V> newMembers){
+	public RecommendedGroupChangeEvolution(Set<V> oldGroup, Set<V> recommenderEngineResult, Collection<V> newMembers){
 		this.oldGroup = oldGroup;
 		this.recommenderEngineResult = recommenderEngineResult;
 		addMerging(oldGroup, recommenderEngineResult, newMembers);
@@ -25,6 +25,10 @@ public class RecommendedEvolution<V> implements Comparable<RecommendedEvolution<
 		return oldGroup;
 	}
 	
+	/* (non-Javadoc)
+	 * @see groups.evolution.RecommendedEvolution#getRecommenderEngineResult()
+	 */
+	@Override
 	public Set<V> getRecommenderEngineResult(){
 		return recommenderEngineResult;
 	}
@@ -34,7 +38,7 @@ public class RecommendedEvolution<V> implements Comparable<RecommendedEvolution<
 	}
 
 	@Override
-	public int compareTo(RecommendedEvolution<V> arg0) {
+	public int compareTo(RecommendedGroupChangeEvolution<V> arg0) {
 		
 		int oldStrCompare = oldGroup.toString().compareTo(arg0.oldGroup.toString());
 		if(oldStrCompare != 0) return oldStrCompare;

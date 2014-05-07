@@ -1,10 +1,10 @@
 package groups.evolution.predictions.choosers;
 
 import groups.evolution.GroupPredictionList;
-import groups.evolution.RecommendedEvolution;
 import groups.evolution.old.GroupMaintainer;
 import groups.evolution.old.GroupMorphingTuple;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,13 +19,13 @@ public class SingleRecommenderEngineResultRecommendationChooser<V> implements
 	ArrayList<GroupMorphingTuple<V>> tuples = new ArrayList<GroupMorphingTuple<V>>();
 	
 	@Override
-	public Collection<RecommendedEvolution<V>> modelPredictionChoosingCase1(
+	public Collection<RecommendedGroupChangeEvolution<V>> modelPredictionChoosingCase1(
 			ArrayList<GroupPredictionList<V>> smallestPredictionLists, Collection<V> newMembers,
 			Collection<GroupPredictionList<V>> predictionLists,
 			Collection<OldGroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Collection<Set<V>> usedPredictedGroups) {
 	
-		Collection<RecommendedEvolution<V>> recommendations = new TreeSet<RecommendedEvolution<V>>();
+		Collection<RecommendedGroupChangeEvolution<V>> recommendations = new TreeSet<RecommendedGroupChangeEvolution<V>>();
 		
 		for(int i=0; i<smallestPredictionLists.size(); i++){
 			
@@ -37,7 +37,7 @@ public class SingleRecommenderEngineResultRecommendationChooser<V> implements
 			}
 			
 			Set<V> recommenderEngineResult = predictionList.getPredictions().iterator().next();
-			RecommendedEvolution<V> recommendedEvolution = new RecommendedEvolution<V>(oldGroup, recommenderEngineResult, newMembers);
+			RecommendedGroupChangeEvolution<V> recommendedEvolution = new RecommendedGroupChangeEvolution<V>(oldGroup, recommenderEngineResult, newMembers);
 			recommendations.add(recommendedEvolution);
 			
 			removeSelection(oldGroup, recommenderEngineResult, predictionLists, usedPairings, usedOldGroups, usedPredictedGroups);
@@ -48,7 +48,7 @@ public class SingleRecommenderEngineResultRecommendationChooser<V> implements
 	}
 
 	@Override
-	public Collection<RecommendedEvolution<V>> modelPredictionChoosingCase2(ArrayList<GroupPredictionList<V>> smallestPredictionLists, Collection<GroupPredictionList<V>> intersectingLists,
+	public Collection<RecommendedGroupChangeEvolution<V>> modelPredictionChoosingCase2(ArrayList<GroupPredictionList<V>> smallestPredictionLists, Collection<GroupPredictionList<V>> intersectingLists,
 			Collection<V> newMembers,Collection<GroupPredictionList<V>> predictionLists,
 			Collection<OldGroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Collection<Set<V>> usedPredictedGroups) {
@@ -83,7 +83,7 @@ public class SingleRecommenderEngineResultRecommendationChooser<V> implements
 	}
 
 	@Override
-	public Collection<RecommendedEvolution<V>> modelPredictionChoosingCase3(GroupPredictionList<V> predictionList, Collection<V> newMembers,
+	public Collection<RecommendedGroupChangeEvolution<V>> modelPredictionChoosingCase3(GroupPredictionList<V> predictionList, Collection<V> newMembers,
 			Collection<GroupPredictionList<V>> predictionLists, Map<Set<V>, ArrayList<Set<V>>> oldToIdealGroupsMap,
 			Collection<OldGroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Collection<Set<V>> usedPredictedGroups, Collection<Set<V>> usedIdeals) {
@@ -129,7 +129,7 @@ public class SingleRecommenderEngineResultRecommendationChooser<V> implements
 	}
 
 	@Override
-	public Collection<RecommendedEvolution<V>> modelPredictionChoosingCase4(ArrayList<GroupPredictionList<V>> smallestPredictionLists, Collection<V> newMembers,
+	public Collection<RecommendedGroupChangeEvolution<V>> modelPredictionChoosingCase4(ArrayList<GroupPredictionList<V>> smallestPredictionLists, Collection<V> newMembers,
 			Collection<GroupPredictionList<V>> predictionLists, Map<Set<V>, ArrayList<Set<V>>> oldToIdealGroupsMap,
 			Collection<OldGroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Collection<Set<V>> usedPredictedGroups, Collection<Set<V>> usedIdeals) {

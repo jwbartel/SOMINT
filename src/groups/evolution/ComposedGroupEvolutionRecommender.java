@@ -2,6 +2,9 @@ package groups.evolution;
 
 import groups.evolution.predictions.lists.PredictionListSelector;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.recommendations.RecommendedEvolution;
+import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
+import groups.evolution.recommendations.RecommendedGroupCreationEvolution;
 import groups.seedless.SeedlessGroupRecommender;
 import groups.seedless.SeedlessGroupRecommenderFactory;
 
@@ -148,12 +151,20 @@ public class ComposedGroupEvolutionRecommender<V> implements GroupEvolutionRecom
 			
 			//Select from matchings to present recommendations to the user for this threshold
 			EvolutionRecommendationSelector<V> recommender = new EvolutionRecommendationSelector<V>();
-			Collection<RecommendedEvolution<V>> recommendations = recommender.selectRecommendationsForSingleThreshold(matchings, usedPairings, usedOldGroups, newMembers, usedRecommenderEngineResults);
+			Collection<RecommendedGroupChangeEvolution<V>> recommendations = recommender.selectRecommendationsForSingleThreshold(matchings, usedPairings, usedOldGroups, newMembers, usedRecommenderEngineResults);
 			allRecommendations.addAll(recommendations);
 			
 
 			round++;
 			threshold += thresholdIncrement;
+		}
+		
+		if (usedRecommenderEngineResults.size() != recommenderEngineResults.size()) {
+			Collection<Set<V>> unusedRecommenderEngineResults = new HashSet<>(recommenderEngineResults);
+			unusedRecommenderEngineResults.removeAll(usedRecommenderEngineResults);
+			for (Set<V> unusedRecommenderEngineResult : unusedRecommenderEngineResults) {
+				allRecommendations.add(new RecommendedGroupCreationEvolution<>(unusedRecommenderEngineResult));
+			}
 		}
 		
 		return allRecommendations;

@@ -2,13 +2,15 @@ package groups.evolution;
 
 import groups.evolution.predictions.lists.PredictionListSelector;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.recommendations.RecommendedEvolution;
+import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 import groups.seedless.SeedlessGroupRecommender;
 import groups.seedless.kelli.HybridCliqueMerger;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
@@ -132,7 +134,7 @@ public class GroupEvolutionRecommenderImpl<V> implements GroupEvolutionRecommend
 			
 			//Select from matchings to present recommendations to the user for this threshold
 			EvolutionRecommendationSelector<V> recommender = new EvolutionRecommendationSelector<V>();
-			Collection<RecommendedEvolution<V>> recommendations = recommender.selectRecommendationsForSingleThreshold(matchings, usedPairings, usedOldGroups, newMembers, usedRecommenderEngineResults);
+			Collection<RecommendedGroupChangeEvolution<V>> recommendations = recommender.selectRecommendationsForSingleThreshold(matchings, usedPairings, usedOldGroups, newMembers, usedRecommenderEngineResults);
 			allRecommendations.addAll(recommendations);
 			
 

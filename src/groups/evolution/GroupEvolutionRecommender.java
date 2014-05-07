@@ -1,5 +1,7 @@
 package groups.evolution;
 
+import groups.evolution.recommendations.RecommendedEvolution;
+
 import java.util.Collection;
 import java.util.Map.Entry;
 import java.util.Set;

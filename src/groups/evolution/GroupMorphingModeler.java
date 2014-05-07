@@ -16,6 +16,7 @@ import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.predictions.oldchoosers.PredictionChooserSelector;
 import groups.evolution.predictions.oldchoosers.SinglePredictionMultiIdealPredictionChooserFactory;
 import groups.evolution.predictions.oldchoosers.SinglePredictionSingleIdealPredictionChooserFactory;
+import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 import groups.seedless.kelli.IOFunctions;
 
 import java.io.BufferedWriter;
@@ -302,7 +303,7 @@ public class GroupMorphingModeler {
 	}
 	
 	public EvolutionStats computeStats(int participant, Set<Integer> newIndividuals, double percentNew, 
-			Collection<Set<Integer>> ideals, Collection<RecommendedEvolution<Integer>> recommendations){
+			Collection<Set<Integer>> ideals, Collection<RecommendedGroupChangeEvolution<Integer>> recommendations){
 		
 			EvolutionStatsBuilder<Integer> builder = new EvolutionStatsBuilder<Integer>();
 			EvolutionStats stats = new EvolutionStats(participant, percentNew, newIndividuals.size());
@@ -332,7 +333,7 @@ public class GroupMorphingModeler {
 		
 		System.out.print("\t"+totalOldGroups+" old,"+predictedGroups.size()+" predicted,"+ideals.size()+" ideal");
 		
-		Collection<RecommendedEvolution<Integer>> recommendations = EvolutionRecommendationSelector.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, predictedGroups);
+		Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = EvolutionRecommendationSelector.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, predictedGroups);
 		
 		
 		System.out.println("Computing stats...");

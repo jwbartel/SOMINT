@@ -3,12 +3,12 @@ package groups.evolution.analysis;
 import groups.evolution.GroupPredictionList;
 import groups.evolution.MembershipChangeFinder;
 import groups.evolution.EvolutionRecommendationSelector;
-import groups.evolution.RecommendedEvolution;
 import groups.evolution.old.GroupMaintainer;
 import groups.evolution.old.GroupMorphingTuple;
 import groups.evolution.predictions.lists.PredictionListSelector;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 import groups.evolution.synthetic.SyntheticEvolutionDataGenerator;
 import groups.seedless.kelli.IOFunctions;
 
@@ -189,7 +189,7 @@ public class RelativeScaledGroupEvolutionModeler {
 		System.out.print("\tRunning models for creating and selecting prediction lists...");
 		ArrayList<GroupMorphingTuple<Integer>> tuples = new ArrayList<GroupMorphingTuple<Integer>>();
 		
-		Collection<RecommendedEvolution<Integer>> recommendations = EvolutionRecommendationSelector.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, recommenderEngineResults, ideals, oldToIdealGroupsMap);
+		Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = EvolutionRecommendationSelector.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, recommenderEngineResults, ideals, oldToIdealGroupsMap);
 		
 		/*while(true){
 			int remainingIdeals = originalIdeals.size() - usedIdealGroups.size();

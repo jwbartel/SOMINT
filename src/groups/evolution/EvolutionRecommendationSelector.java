@@ -4,6 +4,7 @@ import groups.evolution.predictions.choosers.RecommendationChooser;
 import groups.evolution.predictions.choosers.RecommendationChooserSelector;
 import groups.evolution.predictions.lists.PredictionListSelector;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -116,13 +117,13 @@ public class EvolutionRecommendationSelector<V> {
 		
 	}
 	
-	public static Collection<RecommendedEvolution<Integer>> selectRecommendationsAcrossAllThresholds(double percentNew, Set<Integer> newMembers,
+	public static Collection<RecommendedGroupChangeEvolution<Integer>> selectRecommendationsAcrossAllThresholds(double percentNew, Set<Integer> newMembers,
 			Collection<Set<Integer>> oldGroups, Collection<Set<Integer>> recommenderEngineResults){
 		
 		return selectRecommendationsAcrossAllThresholds(percentNew, newMembers, oldGroups, recommenderEngineResults, null, null);
 	}
 	
-	public static Collection<RecommendedEvolution<Integer>> selectRecommendationsAcrossAllThresholds(double percentNew, Set<Integer> newMembers,
+	public static Collection<RecommendedGroupChangeEvolution<Integer>> selectRecommendationsAcrossAllThresholds(double percentNew, Set<Integer> newMembers,
 			Collection<Set<Integer>> oldGroups, Collection<Set<Integer>> recommenderEngineResults, 
 			Collection<Set<Integer>> ideals, Map<Set<Integer>, ArrayList<Set<Integer>>> oldToIdealGroupsMap){
 		
@@ -131,7 +132,7 @@ public class EvolutionRecommendationSelector<V> {
 		Collection<Set<Integer>> usedOldGroups = new HashSet<Set<Integer>>();			//Tracks which of the modeled old groups have already been morphed
 		Collection<Set<Integer>> usedRecommenderEngineResults = new HashSet<Set<Integer>>();		//Tracks which of the predicted groups have been used to morph old groups
 		
-		Collection<RecommendedEvolution<Integer>> allRecommendations = new ArrayList<RecommendedEvolution<Integer>>(); //Keeps track of recommendations found across all thresholds
+		Collection<RecommendedGroupChangeEvolution<Integer>> allRecommendations = new ArrayList<RecommendedGroupChangeEvolution<Integer>>(); //Keeps track of recommendations found across all thresholds
 		
 		double maxThreshold = findMaxPredictionThreshold(oldGroups, recommenderEngineResults, ideals, newMembers);
 		
@@ -159,7 +160,7 @@ public class EvolutionRecommendationSelector<V> {
 			//Select from matchings to present recommendations to the user for this threshold
 			if (matchings.size() > 0) {
 				EvolutionRecommendationSelector<Integer> recommender = new EvolutionRecommendationSelector<Integer>();
-				Collection<RecommendedEvolution<Integer>> recommendations = recommender.selectRecommendationsForSingleThreshold(matchings, oldToIdealGroupsMap, usedPairings, usedOldGroups, newMembers, usedRecommenderEngineResults);
+				Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = recommender.selectRecommendationsForSingleThreshold(matchings, oldToIdealGroupsMap, usedPairings, usedOldGroups, newMembers, usedRecommenderEngineResults);
 				allRecommendations.addAll(recommendations);
 			}
 
@@ -170,7 +171,7 @@ public class EvolutionRecommendationSelector<V> {
 		return allRecommendations;
 	}
 	
-	public Collection<RecommendedEvolution<V>> selectRecommendationsForSingleThreshold(Set<GroupPredictionList<V>> matchings, Collection<OldGroupAndPredictionPair<V>> usedPairings, Collection<Set<V>> usedOldGroups, Set<V> newMembers, Collection<Set<V>> usedRecommenderEngineResults){
+	public Collection<RecommendedGroupChangeEvolution<V>> selectRecommendationsForSingleThreshold(Set<GroupPredictionList<V>> matchings, Collection<OldGroupAndPredictionPair<V>> usedPairings, Collection<Set<V>> usedOldGroups, Set<V> newMembers, Collection<Set<V>> usedRecommenderEngineResults){
 
 		//Maybe need to allow predictions to be used multiple times
 		//Maybe need to allow ideals to be reached more than once
@@ -197,7 +198,7 @@ public class EvolutionRecommendationSelector<V> {
 
 		@SuppressWarnings("unchecked")
 		RecommendationChooser<V> chooser = RecommendationChooserSelector.getChooser();
-		Collection<RecommendedEvolution<V>> recommendations = new TreeSet<RecommendedEvolution<V>>();
+		Collection<RecommendedGroupChangeEvolution<V>> recommendations = new TreeSet<RecommendedGroupChangeEvolution<V>>();
 
 		//boolean stopMorphing = false;
 		while(smallestPredictionLists.size() > 0){
@@ -217,13 +218,13 @@ public class EvolutionRecommendationSelector<V> {
 				if(intersectingLists.size() == 0){
 					//Case 1
 					System.out.print("Case1");
-					Collection<RecommendedEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase1(smallestPredictionLists, newMembers, matchings, usedPairings, usedOldGroups, usedRecommenderEngineResults);
+					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase1(smallestPredictionLists, newMembers, matchings, usedPairings, usedOldGroups, usedRecommenderEngineResults);
 					recommendations.addAll(currentIterationRecommendations);
 
 				}else{
 					//Case 2
 					System.out.print("Case2");
-					Collection<RecommendedEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase2(smallestPredictionLists, intersectingLists, newMembers, smallestPredictionLists, usedPairings, usedOldGroups, usedRecommenderEngineResults);
+					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase2(smallestPredictionLists, intersectingLists, newMembers, smallestPredictionLists, usedPairings, usedOldGroups, usedRecommenderEngineResults);
 					recommendations.addAll(currentIterationRecommendations);
 
 				}
@@ -272,7 +273,7 @@ public class EvolutionRecommendationSelector<V> {
 		return recommendations;
 	}
 	
-	public Collection<RecommendedEvolution<V>> selectRecommendationsForSingleThreshold(Set<GroupPredictionList<V>> matchings, Map<Set<V>, ArrayList<Set<V>>> oldToIdealGroupsMap, Collection<OldGroupAndPredictionPair<V>> usedPairings, Collection<Set<V>> usedOldGroups, Set<V> newMembers, Collection<Set<V>> usedRecommenderEngineResults){
+	public Collection<RecommendedGroupChangeEvolution<V>> selectRecommendationsForSingleThreshold(Set<GroupPredictionList<V>> matchings, Map<Set<V>, ArrayList<Set<V>>> oldToIdealGroupsMap, Collection<OldGroupAndPredictionPair<V>> usedPairings, Collection<Set<V>> usedOldGroups, Set<V> newMembers, Collection<Set<V>> usedRecommenderEngineResults){
 
 		//Maybe need to allow predictions to be used multiple times
 		//Maybe need to allow ideals to be reached more than once
@@ -299,7 +300,7 @@ public class EvolutionRecommendationSelector<V> {
 
 		@SuppressWarnings("unchecked")
 		RecommendationChooser<V> chooser = RecommendationChooserSelector.getChooser();
-		Collection<RecommendedEvolution<V>> recommendations = new TreeSet<RecommendedEvolution<V>>();
+		Collection<RecommendedGroupChangeEvolution<V>> recommendations = new TreeSet<RecommendedGroupChangeEvolution<V>>();
 
 		//boolean stopMorphing = false;
 		while(smallestPredictionLists.size() > 0){
@@ -319,13 +320,13 @@ public class EvolutionRecommendationSelector<V> {
 				if(intersectingLists.size() == 0){
 					//Case 1
 					System.out.print("Case1");
-					Collection<RecommendedEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase1(smallestPredictionLists, newMembers, matchings, usedPairings, usedOldGroups, usedRecommenderEngineResults);
+					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase1(smallestPredictionLists, newMembers, matchings, usedPairings, usedOldGroups, usedRecommenderEngineResults);
 					recommendations.addAll(currentIterationRecommendations);
 
 				}else{
 					//Case 2
 					System.out.print("Case2");
-					Collection<RecommendedEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase2(smallestPredictionLists, intersectingLists, newMembers, smallestPredictionLists, usedPairings, usedOldGroups, usedRecommenderEngineResults);
+					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase2(smallestPredictionLists, intersectingLists, newMembers, smallestPredictionLists, usedPairings, usedOldGroups, usedRecommenderEngineResults);
 					if (currentIterationRecommendations != null) {
 						recommendations.addAll(currentIterationRecommendations);
 					} else {

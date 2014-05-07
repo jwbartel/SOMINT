@@ -1,7 +1,7 @@
 package groups.evolution.analysis;
 
 import groups.evolution.MembershipChangeFinder;
-import groups.evolution.RecommendedEvolution;
+import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,7 +56,7 @@ public class EvolutionStatsBuilder<V> {
 		return oldToIdealGroupsMap;
 	}
 	
-	public void computeEvolutionStats(Set<V> newIndividuals, Collection<Set<V>> ideals, Collection<RecommendedEvolution<V>> recommendations,
+	public void computeEvolutionStats(Set<V> newIndividuals, Collection<Set<V>> ideals, Collection<RecommendedGroupChangeEvolution<V>> recommendations,
 			Map<Set<V>, ArrayList<Set<V>>> oldToIdealGroupsMap, EvolutionStats stats){
 		
 		
@@ -68,7 +68,7 @@ public class EvolutionStatsBuilder<V> {
 		
 		Collection<Set<V>> usedIdeals = new HashSet<Set<V>>();
 		
-		for(RecommendedEvolution<V> recommendation: recommendations){
+		for(RecommendedGroupChangeEvolution<V> recommendation: recommendations){
 			Set<V> membersToAdd = new TreeSet<V>(recommendation.getMerging());
 			membersToAdd.removeAll(recommendation.getOldGroup());
 			
