@@ -23,7 +23,7 @@ public class IOFunctions<V> {
 
 	Class<V> genericClass;
 
-	private boolean storeSubSteps = true;
+	private boolean storeSubSteps = false;
 	private boolean storeIdsAsSubsteps = true;
 	private String subStepsFolder = null;
 	
