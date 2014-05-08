@@ -10,7 +10,7 @@ import java.util.TreeSet;
 
 
 public class PredictionListSelector {
-	static PredictionListMakerFactory factory;
+	static PredictionListMakerFactory factory = new ExpectedScalingPredictionListMakerFactory<Integer>();
 	
 	public static <V> void setFactory(PredictionListMakerFactory<V> f){
 		factory = f;

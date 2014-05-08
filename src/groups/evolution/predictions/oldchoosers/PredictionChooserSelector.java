@@ -3,7 +3,7 @@ package groups.evolution.predictions.oldchoosers;
 public class PredictionChooserSelector {
 
 	@SuppressWarnings("rawtypes")
-	static PredictionChooserFactory factory;
+	static PredictionChooserFactory factory = new SinglePredictionMultiIdealPredictionChooserFactory<Integer>();
 	
 	@SuppressWarnings("rawtypes")
 	public static void setFactory(PredictionChooserFactory f){

@@ -225,7 +225,11 @@ public class EvolutionRecommendationSelector<V> {
 					//Case 2
 					System.out.print("Case2");
 					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase2(smallestPredictionLists, intersectingLists, newMembers, smallestPredictionLists, usedPairings, usedOldGroups, usedRecommenderEngineResults);
-					recommendations.addAll(currentIterationRecommendations);
+					if (currentIterationRecommendations != null) {
+						recommendations.addAll(currentIterationRecommendations);
+					} else {
+						break;
+					}
 
 				}
 				
