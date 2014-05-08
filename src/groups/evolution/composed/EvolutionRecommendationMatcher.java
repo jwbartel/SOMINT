@@ -1,8 +1,8 @@
 package groups.evolution.composed;
 
 import groups.evolution.GroupPredictionList;
-import groups.evolution.composed.cleanuppers.RecommendationCleanupper;
-import groups.evolution.composed.cleanuppers.RecommendationCleanupperSelector;
+import groups.evolution.composed.cleanuppers.RecommendationCleanupperFactory;
+import groups.evolution.composed.cleanuppers.SingleRecommenderEngineResultRecommendationCleanupperFactory;
 import groups.evolution.predictions.lists.PredictionListSelector;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
@@ -19,6 +19,15 @@ import bus.tools.TestingConstants;
 //Selects recommendations based on a one-to-one mapping
 //It would be good to include one-to-many, many-to-one, and many-to-many mappings here too
 public class EvolutionRecommendationMatcher<V> {
+	private final RecommendationCleanupperFactory<V> cleanupperFactory;
+	
+	public EvolutionRecommendationMatcher () {
+		cleanupperFactory = new SingleRecommenderEngineResultRecommendationCleanupperFactory<>();
+	}
+	
+	public EvolutionRecommendationMatcher (RecommendationCleanupperFactory<V> cleanupperFactory) {
+		this.cleanupperFactory = cleanupperFactory;
+	}
 
 	private ArrayList<GroupPredictionList<V>> getSmallestPredictionLists(
 			Set<GroupPredictionList<V>> predictionLists,
@@ -235,9 +244,6 @@ public class EvolutionRecommendationMatcher<V> {
 		ArrayList<GroupPredictionList<V>> smallestPredictionLists = getSmallestPredictionLists(
 				matchings, usedOldGroups);
 
-		@SuppressWarnings("unchecked")
-		RecommendationCleanupper<V> matcher = RecommendationCleanupperSelector
-				.getChooser();
 		Collection<RecommendedGroupChangeEvolution<V>> recommendations = new TreeSet<RecommendedGroupChangeEvolution<V>>();
 
 		// boolean stopMorphing = false;
@@ -324,9 +330,6 @@ public class EvolutionRecommendationMatcher<V> {
 		ArrayList<GroupPredictionList<V>> smallestPredictionLists = getSmallestPredictionLists(
 				matchings, usedOldGroups);
 
-		@SuppressWarnings("unchecked")
-		RecommendationCleanupper<V> matcher = RecommendationCleanupperSelector
-				.getChooser();
 		Collection<RecommendedGroupChangeEvolution<V>> recommendations = new TreeSet<RecommendedGroupChangeEvolution<V>>();
 
 		// boolean stopMorphing = false;
@@ -401,8 +404,9 @@ public class EvolutionRecommendationMatcher<V> {
 					oldGroup, recommenderEngineResult, newMembers);
 			recommendations.add(recommendedEvolution);
 
-			RecommendationCleanupperSelector.getChooser().removeSelection(oldGroup, recommenderEngineResult, predictionLists,
-					usedPairings, usedOldGroups, usedPredictedGroups);
+			cleanupperFactory.createRecommendationCleanupper().removeSelection(oldGroup,
+					recommenderEngineResult, predictionLists, usedPairings, usedOldGroups,
+					usedPredictedGroups);
 
 		}
 

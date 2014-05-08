@@ -4,7 +4,7 @@ public class MultiRecommenderEngineResultRecommendationCleanupperFactory<V> impl
 		RecommendationCleanupperFactory<V> {
 
 	@Override
-	public RecommendationCleanupper<V> createPredictionChooser() {
+	public RecommendationCleanupper<V> createRecommendationCleanupper() {
 		return new MultiRecommenderEngineResultRecommendationCleanupper<V>();
 	}
 

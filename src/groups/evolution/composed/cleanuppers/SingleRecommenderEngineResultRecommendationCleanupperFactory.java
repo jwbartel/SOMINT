@@ -4,7 +4,7 @@ public class SingleRecommenderEngineResultRecommendationCleanupperFactory<V> imp
 		RecommendationCleanupperFactory<V> {
 
 	@Override
-	public RecommendationCleanupper<V> createPredictionChooser() {
+	public RecommendationCleanupper<V> createRecommendationCleanupper() {
 		return new SingleRecommenderEngineResultRecommendationCleanupper<V>();
 	}
 

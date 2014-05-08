@@ -11,7 +11,7 @@ public class RecommendationCleanupperSelector {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public static RecommendationCleanupper getChooser(){
-		return factory.createPredictionChooser();
+	public static RecommendationCleanupper getCleanupper(){
+		return factory.createRecommendationCleanupper();
 	}
 }

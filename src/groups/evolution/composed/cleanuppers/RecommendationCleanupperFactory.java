@@ -2,5 +2,5 @@ package groups.evolution.composed.cleanuppers;
 
 public interface RecommendationCleanupperFactory<V> {
 
-	public RecommendationCleanupper<V> createPredictionChooser();
+	public RecommendationCleanupper<V> createRecommendationCleanupper();
 }
