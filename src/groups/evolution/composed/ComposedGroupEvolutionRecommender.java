@@ -1,5 +1,7 @@
-package groups.evolution;
+package groups.evolution.composed;
 
+import groups.evolution.GroupEvolutionRecommender;
+import groups.evolution.GroupPredictionList;
 import groups.evolution.predictions.lists.PredictionListSelector;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedEvolution;

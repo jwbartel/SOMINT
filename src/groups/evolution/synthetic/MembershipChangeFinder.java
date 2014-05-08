@@ -1,4 +1,4 @@
-package groups.evolution;
+package groups.evolution.synthetic;
 
 import groups.comparison.SeedFinder;
 

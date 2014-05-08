@@ -12,11 +12,11 @@ import java.util.Set;
 
 import bus.tools.FileFinder;
 import bus.tools.TestingConstants;
-import groups.evolution.GroupMorphingModeler;
-import groups.evolution.MembershipChangeFinder;
-import groups.evolution.analysis.EvolutionStats;
+import groups.evolution.evaluation.GroupMorphingModeler;
+import groups.evolution.evaluation.analysis.EvolutionStats;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
 import groups.evolution.predictions.loading.SnapHybridPredictionLoaderFactory;
+import groups.evolution.synthetic.MembershipChangeFinder;
 import groups.seedless.kelli.IOFunctions;
 
 public class SnapGroupMorphingModeler extends GroupMorphingModeler {

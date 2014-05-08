@@ -1,6 +1,6 @@
 package groups.evolution.snap;
 
-import groups.evolution.MembershipChangeFinder;
+import groups.evolution.synthetic.MembershipChangeFinder;
 import groups.evolution.synthetic.SyntheticEvolutionDataGenerator;
 import groups.seedless.kelli.IOFunctions;
 

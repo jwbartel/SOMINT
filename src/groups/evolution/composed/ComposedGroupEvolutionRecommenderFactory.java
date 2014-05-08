@@ -1,5 +1,7 @@
-package groups.evolution;
+package groups.evolution.composed;
 
+import groups.evolution.GroupEvolutionRecommender;
+import groups.evolution.GroupEvolutionRecommenderFactory;
 import groups.seedless.SeedlessGroupRecommenderFactory;
 
 import java.util.Collection;

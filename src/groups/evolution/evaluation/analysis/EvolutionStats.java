@@ -1,4 +1,4 @@
-package groups.evolution.analysis;
+package groups.evolution.evaluation.analysis;
 
 import groups.seedless.analysis.GroupPredictionStats;
 

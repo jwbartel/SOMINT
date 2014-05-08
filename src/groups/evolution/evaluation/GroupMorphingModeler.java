@@ -1,7 +1,8 @@
-package groups.evolution;
+package groups.evolution.evaluation;
 
-import groups.evolution.analysis.EvolutionStats;
-import groups.evolution.analysis.EvolutionStatsBuilder;
+import groups.evolution.composed.EvolutionRecommendationSelector;
+import groups.evolution.evaluation.analysis.EvolutionStats;
+import groups.evolution.evaluation.analysis.EvolutionStatsBuilder;
 import groups.evolution.predictions.choosers.MultiRecommenderEngineResultRecommendationChooserFactory;
 import groups.evolution.predictions.choosers.RecommendationChooserSelector;
 import groups.evolution.predictions.choosers.SingleRecommenderEngineResultRecommendationChooserFactory;
@@ -17,6 +18,7 @@ import groups.evolution.predictions.oldchoosers.PredictionChooserSelector;
 import groups.evolution.predictions.oldchoosers.SinglePredictionMultiIdealPredictionChooserFactory;
 import groups.evolution.predictions.oldchoosers.SinglePredictionSingleIdealPredictionChooserFactory;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
+import groups.evolution.synthetic.MembershipChangeFinder;
 import groups.seedless.kelli.IOFunctions;
 
 import java.io.BufferedWriter;

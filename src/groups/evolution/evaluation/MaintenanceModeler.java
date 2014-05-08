@@ -1,4 +1,4 @@
-package groups.evolution;
+package groups.evolution.evaluation;
 
 import groups.evolution.old.GroupMaintainer;
 import groups.evolution.predictions.lists.ExpectedScalingPredictionListMakerFactory;
@@ -6,6 +6,7 @@ import groups.evolution.predictions.lists.JaccardCoefficientPredictionListMakerF
 import groups.evolution.predictions.lists.PredictionListSelector;
 import groups.evolution.predictions.loading.HybridPredictionLoaderFactory;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
+import groups.evolution.synthetic.MembershipChangeFinder;
 import groups.seedless.kelli.IOFunctions;
 
 import java.io.BufferedWriter;

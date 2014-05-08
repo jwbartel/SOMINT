@@ -1,6 +1,5 @@
 package groups.evolution.synthetic;
 
-import groups.evolution.MembershipChangeFinder;
 import groups.seedless.kelli.IOFunctions;
 
 import java.io.BufferedReader;

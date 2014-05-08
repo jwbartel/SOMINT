@@ -1,5 +1,6 @@
-package groups.evolution;
+package groups.evolution.composed;
 
+import groups.evolution.GroupPredictionList;
 import groups.evolution.predictions.choosers.RecommendationChooser;
 import groups.evolution.predictions.choosers.RecommendationChooserSelector;
 import groups.evolution.predictions.lists.PredictionListSelector;

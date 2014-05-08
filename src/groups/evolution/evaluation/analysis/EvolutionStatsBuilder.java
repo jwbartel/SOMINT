@@ -1,7 +1,7 @@
-package groups.evolution.analysis;
+package groups.evolution.evaluation.analysis;
 
-import groups.evolution.MembershipChangeFinder;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
+import groups.evolution.synthetic.MembershipChangeFinder;
 
 import java.util.ArrayList;
 import java.util.Collection;

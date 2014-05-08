@@ -1,6 +1,6 @@
-package groups.evolution.analysis;
+package groups.evolution.evaluation.analysis;
 
-import groups.evolution.GroupMorphingModeler;
+import groups.evolution.evaluation.GroupMorphingModeler;
 import groups.seedless.kelli.IOFunctions;
 
 import java.io.BufferedReader;
