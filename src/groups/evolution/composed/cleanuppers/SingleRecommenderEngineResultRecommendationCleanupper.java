@@ -1,20 +1,23 @@
-package groups.evolution.predictions.matchers;
+package groups.evolution.composed.cleanuppers;
 
 import groups.evolution.GroupPredictionList;
+import groups.evolution.old.GroupMaintainer;
+import groups.evolution.old.GroupMorphingTuple;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 
-
-public class MultiRecommenderEngineResultRecommendationMatcher<V> 
-		extends SingleRecommenderEngineResultRecommendationMatcher<V>
-		implements RecommendationMatcher<V> {
+public class SingleRecommenderEngineResultRecommendationCleanupper<V> implements
+		RecommendationCleanupper<V> {
 	
 	@Override
-	public void removeSelection(Set<V> usedOldGroup, Set<V> usedRecommendedEvolution, 
+	public void removeSelection(Set<V> usedOldGroup, Set<V> usedRecommendedEvolution,
 			Collection<GroupPredictionList<V>> predictionLists, 
 			Collection<OldGroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Collection<Set<V>> usedRecommendedEvolutions){
@@ -22,11 +25,7 @@ public class MultiRecommenderEngineResultRecommendationMatcher<V>
 		usedOldGroups.add(usedOldGroup);
 		usedRecommendedEvolutions.add(usedRecommendedEvolution);
 		
-		//Only use each (old group, prediction) pair at most once
-		OldGroupAndPredictionPair<V> currPair = new OldGroupAndPredictionPair<V>(usedOldGroup, usedRecommendedEvolution);
-		usedPairings.add(currPair);
-		
-		
+		//Only use each prediction once at most
 		Set<GroupPredictionList<V>> toRemove = new TreeSet<GroupPredictionList<V>>();
 		for(GroupPredictionList<V> predictionList: predictionLists){
 			
@@ -34,6 +33,11 @@ public class MultiRecommenderEngineResultRecommendationMatcher<V>
 				//This already made all predicted expansions for this group
 				toRemove.add(predictionList);
 				continue;
+			}
+			
+			predictionList.removePrediction(usedRecommendedEvolution);
+			if(predictionList.size() == 0){
+				toRemove.add(predictionList);
 			}
 			
 		}

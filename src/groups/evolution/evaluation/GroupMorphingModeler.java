@@ -1,6 +1,9 @@
 package groups.evolution.evaluation;
 
 import groups.evolution.composed.EvolutionRecommendationMatcher;
+import groups.evolution.composed.cleanuppers.MultiRecommenderEngineResultRecommendationCleanupperFactory;
+import groups.evolution.composed.cleanuppers.RecommendationCleanupperSelector;
+import groups.evolution.composed.cleanuppers.SingleRecommenderEngineResultRecommendationCleanupperFactory;
 import groups.evolution.evaluation.analysis.EvolutionStats;
 import groups.evolution.evaluation.analysis.EvolutionStatsBuilder;
 import groups.evolution.predictions.lists.ExpectedScalingPredictionListMakerFactory;
@@ -8,9 +11,6 @@ import groups.evolution.predictions.lists.JaccardCoefficientPredictionListMakerF
 import groups.evolution.predictions.lists.PredictionListSelector;
 import groups.evolution.predictions.loading.HybridPredictionLoaderFactory;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
-import groups.evolution.predictions.matchers.MultiRecommenderEngineResultRecommendationMatcherFactory;
-import groups.evolution.predictions.matchers.RecommendationMatcherSelector;
-import groups.evolution.predictions.matchers.SingleRecommenderEngineResultRecommendationMatcherFactory;
 import groups.evolution.predictions.oldchoosers.MultiPredictionMultiIdealPredictionChooserFactory;
 import groups.evolution.predictions.oldchoosers.MultiPredictionSingleIdealPredictionChooserFactory;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
@@ -112,25 +112,25 @@ public class GroupMorphingModeler {
 	
 	public static void selectSinglePredictionSingleIdealChoosing(){
 		PredictionChooserSelector.setFactory(new SinglePredictionSingleIdealPredictionChooserFactory<Integer>());
-		RecommendationMatcherSelector.setFactory(new SingleRecommenderEngineResultRecommendationMatcherFactory<Integer>());
+		RecommendationCleanupperSelector.setFactory(new SingleRecommenderEngineResultRecommendationCleanupperFactory<Integer>());
 		FileFinder.selectSinglePredictionSingleIdealChoosing();
 	}
 	
 	public static void selectSinglePredictionMultiIdealChoosing(){
 		PredictionChooserSelector.setFactory(new SinglePredictionMultiIdealPredictionChooserFactory<Integer>());
-		RecommendationMatcherSelector.setFactory(new SingleRecommenderEngineResultRecommendationMatcherFactory<Integer>());
+		RecommendationCleanupperSelector.setFactory(new SingleRecommenderEngineResultRecommendationCleanupperFactory<Integer>());
 		FileFinder.selectSinglePredictionMultiIdealChoosing();
 	}
 	
 	public static void selectMultiPredictionSingleIdealChoosing(){
 		PredictionChooserSelector.setFactory(new MultiPredictionSingleIdealPredictionChooserFactory<Integer>());
-		RecommendationMatcherSelector.setFactory(new MultiRecommenderEngineResultRecommendationMatcherFactory<Integer>());
+		RecommendationCleanupperSelector.setFactory(new MultiRecommenderEngineResultRecommendationCleanupperFactory<Integer>());
 		FileFinder.selectMultiPredictionSingleIdealChoosing();
 	}
 	
 	public static void selectMultiPredictionMultiIdealChoosing(){
 		PredictionChooserSelector.setFactory(new MultiPredictionMultiIdealPredictionChooserFactory<Integer>());
-		RecommendationMatcherSelector.setFactory(new MultiRecommenderEngineResultRecommendationMatcherFactory<Integer>());
+		RecommendationCleanupperSelector.setFactory(new MultiRecommenderEngineResultRecommendationCleanupperFactory<Integer>());
 		FileFinder.selectMultiPredictionMultiIdealChoosing();
 	}
 	

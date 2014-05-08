@@ -1,9 +1,9 @@
 package groups.evolution.composed;
 
 import groups.evolution.GroupPredictionList;
+import groups.evolution.composed.cleanuppers.RecommendationCleanupper;
+import groups.evolution.composed.cleanuppers.RecommendationCleanupperSelector;
 import groups.evolution.predictions.lists.PredictionListSelector;
-import groups.evolution.predictions.matchers.RecommendationMatcher;
-import groups.evolution.predictions.matchers.RecommendationMatcherSelector;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 
@@ -236,7 +236,7 @@ public class EvolutionRecommendationMatcher<V> {
 				matchings, usedOldGroups);
 
 		@SuppressWarnings("unchecked")
-		RecommendationMatcher<V> matcher = RecommendationMatcherSelector
+		RecommendationCleanupper<V> matcher = RecommendationCleanupperSelector
 				.getChooser();
 		Collection<RecommendedGroupChangeEvolution<V>> recommendations = new TreeSet<RecommendedGroupChangeEvolution<V>>();
 
@@ -325,7 +325,7 @@ public class EvolutionRecommendationMatcher<V> {
 				matchings, usedOldGroups);
 
 		@SuppressWarnings("unchecked")
-		RecommendationMatcher<V> matcher = RecommendationMatcherSelector
+		RecommendationCleanupper<V> matcher = RecommendationCleanupperSelector
 				.getChooser();
 		Collection<RecommendedGroupChangeEvolution<V>> recommendations = new TreeSet<RecommendedGroupChangeEvolution<V>>();
 
@@ -401,7 +401,7 @@ public class EvolutionRecommendationMatcher<V> {
 					oldGroup, recommenderEngineResult, newMembers);
 			recommendations.add(recommendedEvolution);
 
-			RecommendationMatcherSelector.getChooser().removeSelection(oldGroup, recommenderEngineResult, predictionLists,
+			RecommendationCleanupperSelector.getChooser().removeSelection(oldGroup, recommenderEngineResult, predictionLists,
 					usedPairings, usedOldGroups, usedPredictedGroups);
 
 		}
