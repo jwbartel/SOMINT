@@ -53,17 +53,8 @@ public class SingleRecommenderEngineResultRecommendationChooser<V> implements
 			Collection<OldGroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Collection<Set<V>> usedPredictedGroups) {
 		
-		int expandedGroups = 0;
-		int addCount = 0;
-		int removeCount = 0;
-		int selectCount = 0;
-		int automatedAdds = 0;
-		
-		boolean stopMorphing = false;
-		
 		ArrayList<GroupPredictionList<V>> disjointLists = new ArrayList<GroupPredictionList<V>>(smallestPredictionLists);
 		disjointLists.removeAll(intersectingLists);
-		int[] stats;
 		if(disjointLists.size() != 0){
 			return modelPredictionChoosingCase1(disjointLists, newMembers, predictionLists, usedPairings, usedOldGroups, usedPredictedGroups);
 		}else{
@@ -71,15 +62,6 @@ public class SingleRecommenderEngineResultRecommendationChooser<V> implements
 		}
 		
 		//TODO:handle non-disjoint lists
-		
-		/*stats = new int[6];
-		stats[0] = expandedGroups;
-		stats[1] = addCount;
-		stats[2] = removeCount;
-		stats[3] = selectCount;
-		stats[4] = automatedAdds;
-		stats[5] = (stopMorphing)? 1:0;
-		return stats;*/
 	}
 
 	@Override
@@ -89,13 +71,7 @@ public class SingleRecommenderEngineResultRecommendationChooser<V> implements
 			Collection<Set<V>> usedOldGroups, Collection<Set<V>> usedPredictedGroups, Collection<Set<V>> usedIdeals) {
 		
 		
-		/*int expandedGroups = 0;
-		int addCount = 0;
-		int removeCount = 0;
-		int selectCount = 0;
-		int automatedAdds = 0;
-		
-		Set<V> oldGroup = predictionList.getF();
+		/*Set<V> oldGroup = predictionList.getF();
 		if(!usedOldGroups.contains(oldGroup) && predictionList.size() != 0){
 			
 			for(Set<V> prediction: predictionList.getPredictions()){
@@ -106,25 +82,11 @@ public class SingleRecommenderEngineResultRecommendationChooser<V> implements
 				ArrayList<Set<V>> possibleIdealExpansions = oldToIdealGroupsMap.get(oldGroup);
 				Set<V> bestIdealExpansion = getBestIdealExpansion(oldGroup, membersToAdd, possibleIdealExpansions, usedIdeals);
 				
-				int[] addsAndRemoves = GroupMaintainer.getAddsAndRemoves(oldGroup, membersToAdd, bestIdealExpansion);
-				int adds = addsAndRemoves[0];
-				int removes = addsAndRemoves[1];
 				
-				expandedGroups++;
-				addCount += adds;
-				removeCount += removes;
-				automatedAdds += membersToAdd.size();
-				removeSelection(oldGroup, prediction, bestIdealExpansion, oldToIdealGroupsMap, predictionLists, usedOldGroups, usedPredictedGroups, usedIdeals);
 			}
 			
 		}
-		int[] stats = new int[5];
-		stats[0] = expandedGroups;
-		stats[1] = addCount;
-		stats[2] = removeCount;
-		stats[3] = selectCount;
-		stats[4] = automatedAdds;
-		return stats;*/
+		*/
 		return null;
 	}
 
