@@ -1,4 +1,4 @@
-package groups.evolution.snap;
+package groups.evolution.evaluation.snap;
 
 public class SnapTestingConstants {
 	

@@ -3,10 +3,10 @@ package groups.evolution.evaluation;
 import groups.evolution.composed.listmaker.ExpectedScalingPredictionListMakerFactory;
 import groups.evolution.composed.listmaker.JaccardCoefficientPredictionListMakerFactory;
 import groups.evolution.composed.listmaker.PredictionListSelector;
+import groups.evolution.evaluation.synthetic.MembershipChangeFinder;
 import groups.evolution.old.GroupMaintainer;
 import groups.evolution.predictions.loading.HybridPredictionLoaderFactory;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
-import groups.evolution.synthetic.MembershipChangeFinder;
 import groups.seedless.kelli.IOFunctions;
 
 import java.io.BufferedWriter;

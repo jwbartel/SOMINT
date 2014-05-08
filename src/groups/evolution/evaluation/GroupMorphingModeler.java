@@ -9,6 +9,7 @@ import groups.evolution.composed.listmaker.JaccardCoefficientPredictionListMaker
 import groups.evolution.composed.listmaker.PredictionListSelector;
 import groups.evolution.evaluation.analysis.EvolutionStats;
 import groups.evolution.evaluation.analysis.EvolutionStatsBuilder;
+import groups.evolution.evaluation.synthetic.MembershipChangeFinder;
 import groups.evolution.predictions.loading.HybridPredictionLoaderFactory;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
 import groups.evolution.predictions.oldchoosers.MultiPredictionMultiIdealPredictionChooserFactory;
@@ -18,7 +19,6 @@ import groups.evolution.predictions.oldchoosers.PredictionChooserSelector;
 import groups.evolution.predictions.oldchoosers.SinglePredictionMultiIdealPredictionChooserFactory;
 import groups.evolution.predictions.oldchoosers.SinglePredictionSingleIdealPredictionChooserFactory;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
-import groups.evolution.synthetic.MembershipChangeFinder;
 import groups.seedless.kelli.IOFunctions;
 
 import java.io.BufferedWriter;

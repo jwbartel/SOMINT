@@ -3,13 +3,13 @@ package groups.evolution.evaluation.analysis;
 import groups.evolution.GroupPredictionList;
 import groups.evolution.composed.EvolutionRecommendationMatcher;
 import groups.evolution.composed.listmaker.PredictionListSelector;
+import groups.evolution.evaluation.synthetic.MembershipChangeFinder;
+import groups.evolution.evaluation.synthetic.SyntheticEvolutionDataGenerator;
 import groups.evolution.old.GroupMaintainer;
 import groups.evolution.old.GroupMorphingTuple;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
-import groups.evolution.synthetic.MembershipChangeFinder;
-import groups.evolution.synthetic.SyntheticEvolutionDataGenerator;
 import groups.seedless.kelli.IOFunctions;
 
 import java.io.BufferedWriter;

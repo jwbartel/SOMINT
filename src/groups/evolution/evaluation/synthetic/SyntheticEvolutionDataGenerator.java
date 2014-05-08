@@ -1,4 +1,4 @@
-package groups.evolution.synthetic;
+package groups.evolution.evaluation.synthetic;
 
 import groups.seedless.kelli.IOFunctions;
 

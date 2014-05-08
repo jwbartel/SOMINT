@@ -1,4 +1,4 @@
-package groups.evolution.snap;
+package groups.evolution.evaluation.snap;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,11 +12,12 @@ import java.util.Set;
 
 import bus.tools.FileFinder;
 import bus.tools.TestingConstants;
+import bus.tools.io.SnapIOFunctions;
 import groups.evolution.evaluation.GroupMorphingModeler;
 import groups.evolution.evaluation.analysis.EvolutionStats;
+import groups.evolution.evaluation.synthetic.MembershipChangeFinder;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
 import groups.evolution.predictions.loading.SnapHybridPredictionLoaderFactory;
-import groups.evolution.synthetic.MembershipChangeFinder;
 import groups.seedless.kelli.IOFunctions;
 
 public class SnapGroupMorphingModeler extends GroupMorphingModeler {

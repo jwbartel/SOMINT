@@ -1,7 +1,7 @@
-package groups.evolution.snap;
+package groups.evolution.evaluation.snap;
 
-import groups.evolution.synthetic.MembershipChangeFinder;
-import groups.evolution.synthetic.SyntheticEvolutionDataGenerator;
+import groups.evolution.evaluation.synthetic.MembershipChangeFinder;
+import groups.evolution.evaluation.synthetic.SyntheticEvolutionDataGenerator;
 import groups.seedless.kelli.IOFunctions;
 
 import java.io.BufferedReader;
@@ -18,6 +18,7 @@ import java.util.TreeSet;
 
 import bus.tools.FileFinder;
 import bus.tools.TestingConstants;
+import bus.tools.io.SnapIOFunctions;
 
 public class SnapSyntheticEvolutionDataGenerator extends SyntheticEvolutionDataGenerator {
 	

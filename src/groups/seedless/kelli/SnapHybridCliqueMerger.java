@@ -1,7 +1,6 @@
 package groups.seedless.kelli;
 
-import groups.evolution.snap.SnapIOFunctions;
-import groups.evolution.snap.SnapTestingConstants;
+import groups.evolution.evaluation.snap.SnapTestingConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +16,7 @@ import org.jgrapht.graph.SimpleGraph;
 
 import bus.tools.FileFinder;
 import bus.tools.io.IntegerValueParser;
+import bus.tools.io.SnapIOFunctions;
 import bus.tools.io.ValueParser;
 
 public class SnapHybridCliqueMerger<V> extends HybridCliqueMerger<V>{
