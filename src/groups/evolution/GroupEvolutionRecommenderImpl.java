@@ -26,6 +26,11 @@ public class GroupEvolutionRecommenderImpl<V> implements GroupEvolutionRecommend
 	private SeedlessGroupRecommender<V> recommenderEngine;
 
 	@Override
+	public String getTypeOfRecommender() {
+		return "impl";
+	}
+	
+	@Override
 	public Collection<RecommendedEvolution<V>> generateRecommendations(
 			UndirectedGraph<V, DefaultEdge> oldSocialGraph,
 			UndirectedGraph<V, DefaultEdge> socialGraph, Collection<Set<V>> oldGroups) {

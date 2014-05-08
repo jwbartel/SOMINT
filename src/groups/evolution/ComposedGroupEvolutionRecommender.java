@@ -24,16 +24,31 @@ public class ComposedGroupEvolutionRecommender<V> implements GroupEvolutionRecom
 	private static final double DEFAULT_THRESHOLD_INCREMENT = 1.0;
 
 	private final SeedlessGroupRecommenderFactory<V> recommenderEngineFactory;
+	private final Collection<Set<V>> prefetchedSeedlessRecommendations;
 	private final double thresholdIncrement;
 	
 	public ComposedGroupEvolutionRecommender(SeedlessGroupRecommenderFactory<V> recommenderEngineFactory) {
 		this.recommenderEngineFactory = recommenderEngineFactory;
+		this.prefetchedSeedlessRecommendations = null;
+		this.thresholdIncrement = DEFAULT_THRESHOLD_INCREMENT;
+	}
+	
+	public ComposedGroupEvolutionRecommender(SeedlessGroupRecommenderFactory<V> recommenderEngineFactory,
+			Collection<Set<V>> prefetchedSeedlessRecommendations) {
+		this.recommenderEngineFactory = recommenderEngineFactory;
+		this.prefetchedSeedlessRecommendations = prefetchedSeedlessRecommendations;
 		this.thresholdIncrement = DEFAULT_THRESHOLD_INCREMENT;
 	}
 	
 	public ComposedGroupEvolutionRecommender(SeedlessGroupRecommenderFactory<V> recommenderEngineFactory, double thresholdIncrement) {
 		this.recommenderEngineFactory = recommenderEngineFactory;
+		this.prefetchedSeedlessRecommendations = null;
 		this.thresholdIncrement = thresholdIncrement;
+	}
+	
+	@Override
+	public String getTypeOfRecommender() {
+		return "composed";
 	}
 	
 	@Override
@@ -111,14 +126,18 @@ public class ComposedGroupEvolutionRecommender<V> implements GroupEvolutionRecom
 		//Keeps track of recommendations found across all thresholds
 		Collection<RecommendedEvolution<V>> allRecommendations = new ArrayList<RecommendedEvolution<V>>(); 
 		
-		
-		SeedlessGroupRecommender<V> recommenderEngine;
-		if (maximalCliques != null) {
-			recommenderEngine = recommenderEngineFactory.create(socialGraph, maximalCliques);
+		Collection<Set<V>> recommenderEngineResults;
+		if (prefetchedSeedlessRecommendations != null) {
+			recommenderEngineResults = new HashSet<>(prefetchedSeedlessRecommendations);
 		} else {
-			recommenderEngine = recommenderEngineFactory.create(socialGraph);
+			SeedlessGroupRecommender<V> recommenderEngine;
+			if (maximalCliques != null) {
+				recommenderEngine = recommenderEngineFactory.create(socialGraph, maximalCliques);
+			} else {
+				recommenderEngine = recommenderEngineFactory.create(socialGraph);
+			}
+			recommenderEngineResults = recommenderEngine.getRecommendations();
 		}
-		Collection<Set<V>> recommenderEngineResults = recommenderEngine.getRecommendations();
 		
 		int maxOldGroupSize = 0;
 		for (Set<V> oldGroup : oldGroups) {

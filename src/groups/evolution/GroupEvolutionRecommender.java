@@ -10,6 +10,8 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 public interface GroupEvolutionRecommender<V> {
+	
+	public String getTypeOfRecommender();
 
 	public Collection<RecommendedEvolution<V>> generateRecommendations(
 			UndirectedGraph<V, DefaultEdge> oldSocialGraph,

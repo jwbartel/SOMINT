@@ -6,6 +6,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -37,6 +41,27 @@ public class MembershipChangeFinder<V> extends SeedFinder<V>{
 		unmaintainedGroup.removeAll(newMembers);
 		return unmaintainedGroup;
 		
+	}
+	
+	public Map<Set<V>, Collection<Set<V>>> getUnmaintainedToMaintainedGroups(Collection<Set<V>> maintainedGroups, Set<V> newMembers) {
+		
+		Map<Set<V>, Collection<Set<V>>> retVal = new HashMap<Set<V>, Collection<Set<V>>>();
+		
+		
+		for(Set<V> maintainedGroup : maintainedGroups) {
+			Set<V> unmaintainedGroup = getUnmaintainedGroup(maintainedGroup, newMembers);
+			if(unmaintainedGroup.size() == 0) {
+				continue;
+			}
+			Collection<Set<V>> mappings = retVal.get(unmaintainedGroup);
+			if (mappings == null) {
+				mappings = new ArrayList<>();
+				retVal.put(unmaintainedGroup, mappings);
+			}
+			mappings.add(maintainedGroup);
+		}
+		
+		return retVal;
 	}
 	
 	public void saveUnmaintainedIndividuals(Set<V> oldAndNewIndividuals, double percentNew, File outFile){
