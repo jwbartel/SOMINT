@@ -301,7 +301,8 @@ public class EvolutionRecommendationMatcher<V> {
 				break;
 			}
 
-			if (currentIterationRecommendations != null) {
+			if (currentIterationRecommendations != null
+					&& currentIterationRecommendations.size() > 0) {
 				recommendations.addAll(currentIterationRecommendations);
 			} else {
 				break;
