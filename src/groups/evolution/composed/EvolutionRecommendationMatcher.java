@@ -3,8 +3,8 @@ package groups.evolution.composed;
 import groups.evolution.GroupPredictionList;
 import groups.evolution.composed.cleanuppers.RecommendationCleanupperFactory;
 import groups.evolution.composed.cleanuppers.SingleRecommenderEngineResultRecommendationCleanupperFactory;
-import groups.evolution.predictions.lists.ExpectedScalingPredictionListMakerFactory;
-import groups.evolution.predictions.lists.PredictionListMakerFactory;
+import groups.evolution.composed.listmaker.ExpectedScalingPredictionListMakerFactory;
+import groups.evolution.composed.listmaker.PredictionListMakerFactory;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 

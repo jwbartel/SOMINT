@@ -1,9 +1,9 @@
 package groups.evolution.evaluation;
 
+import groups.evolution.composed.listmaker.ExpectedScalingPredictionListMakerFactory;
+import groups.evolution.composed.listmaker.JaccardCoefficientPredictionListMakerFactory;
+import groups.evolution.composed.listmaker.PredictionListSelector;
 import groups.evolution.old.GroupMaintainer;
-import groups.evolution.predictions.lists.ExpectedScalingPredictionListMakerFactory;
-import groups.evolution.predictions.lists.JaccardCoefficientPredictionListMakerFactory;
-import groups.evolution.predictions.lists.PredictionListSelector;
 import groups.evolution.predictions.loading.HybridPredictionLoaderFactory;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
 import groups.evolution.synthetic.MembershipChangeFinder;

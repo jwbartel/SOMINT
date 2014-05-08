@@ -1,4 +1,4 @@
-package groups.evolution.predictions.lists;
+package groups.evolution.composed.listmaker;
 
 public class ExpectedScalingPredictionListMakerFactory<V> implements
 		PredictionListMakerFactory<V> {

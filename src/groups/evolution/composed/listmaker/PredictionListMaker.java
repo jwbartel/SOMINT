@@ -1,4 +1,4 @@
-package groups.evolution.predictions.lists;
+package groups.evolution.composed.listmaker;
 
 import groups.evolution.GroupPredictionList;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
