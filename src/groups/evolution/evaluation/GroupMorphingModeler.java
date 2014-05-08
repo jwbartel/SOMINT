@@ -7,17 +7,17 @@ import groups.evolution.composed.cleanuppers.SingleRecommenderEngineResultRecomm
 import groups.evolution.composed.listmaker.ExpectedScalingPredictionListMakerFactory;
 import groups.evolution.composed.listmaker.JaccardCoefficientPredictionListMakerFactory;
 import groups.evolution.composed.listmaker.PredictionListSelector;
+import groups.evolution.composed.loading.HybridPredictionLoaderFactory;
+import groups.evolution.composed.loading.PredictionLoaderSelector;
+import groups.evolution.composed.oldchoosers.MultiPredictionMultiIdealPredictionChooserFactory;
+import groups.evolution.composed.oldchoosers.MultiPredictionSingleIdealPredictionChooserFactory;
+import groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.composed.oldchoosers.PredictionChooserSelector;
+import groups.evolution.composed.oldchoosers.SinglePredictionMultiIdealPredictionChooserFactory;
+import groups.evolution.composed.oldchoosers.SinglePredictionSingleIdealPredictionChooserFactory;
 import groups.evolution.evaluation.analysis.EvolutionStats;
 import groups.evolution.evaluation.analysis.EvolutionStatsBuilder;
 import groups.evolution.evaluation.synthetic.MembershipChangeFinder;
-import groups.evolution.predictions.loading.HybridPredictionLoaderFactory;
-import groups.evolution.predictions.loading.PredictionLoaderSelector;
-import groups.evolution.predictions.oldchoosers.MultiPredictionMultiIdealPredictionChooserFactory;
-import groups.evolution.predictions.oldchoosers.MultiPredictionSingleIdealPredictionChooserFactory;
-import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
-import groups.evolution.predictions.oldchoosers.PredictionChooserSelector;
-import groups.evolution.predictions.oldchoosers.SinglePredictionMultiIdealPredictionChooserFactory;
-import groups.evolution.predictions.oldchoosers.SinglePredictionSingleIdealPredictionChooserFactory;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 import groups.seedless.hybrid.IOFunctions;
 

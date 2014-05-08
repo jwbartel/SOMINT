@@ -1,4 +1,4 @@
-package groups.evolution.predictions.loading;
+package groups.evolution.composed.loading;
 
 import java.util.Collection;
 import java.util.Map;

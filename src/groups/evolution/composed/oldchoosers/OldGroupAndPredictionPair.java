@@ -1,4 +1,4 @@
-package groups.evolution.predictions.oldchoosers;
+package groups.evolution.composed.oldchoosers;
 
 import java.util.Set;
 import java.util.TreeSet;

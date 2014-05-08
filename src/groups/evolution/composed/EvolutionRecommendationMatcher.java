@@ -5,7 +5,7 @@ import groups.evolution.composed.cleanuppers.RecommendationCleanupperFactory;
 import groups.evolution.composed.cleanuppers.SingleRecommenderEngineResultRecommendationCleanupperFactory;
 import groups.evolution.composed.listmaker.ExpectedScalingPredictionListMakerFactory;
 import groups.evolution.composed.listmaker.PredictionListMakerFactory;
-import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 
 import java.util.ArrayList;

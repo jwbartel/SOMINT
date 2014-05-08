@@ -1,4 +1,4 @@
-package groups.evolution.predictions.oldchoosers;
+package groups.evolution.composed.oldchoosers;
 
 public class SinglePredictionSingleIdealPredictionChooserFactory<V> implements
 		PredictionChooserFactory<V> {

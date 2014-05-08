@@ -4,7 +4,7 @@ import groups.evolution.GroupEvolutionRecommender;
 import groups.evolution.GroupPredictionList;
 import groups.evolution.composed.listmaker.ExpectedScalingPredictionListMakerFactory;
 import groups.evolution.composed.listmaker.PredictionListMakerFactory;
-import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedEvolution;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 import groups.evolution.recommendations.RecommendedGroupCreationEvolution;

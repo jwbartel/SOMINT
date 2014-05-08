@@ -1,7 +1,7 @@
 /*
  *  Loads predictions from Kelli's Hybrid algorithm
  */
-package groups.evolution.predictions.loading;
+package groups.evolution.composed.loading;
 
 import groups.seedless.hybrid.IOFunctions;
 

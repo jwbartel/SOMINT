@@ -1,4 +1,4 @@
-package groups.evolution.predictions.oldchoosers;
+package groups.evolution.composed.oldchoosers;
 
 public class MultiPredictionMultiIdealPredictionChooserFactory<V> implements
 		PredictionChooserFactory<V> {

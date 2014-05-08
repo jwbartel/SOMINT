@@ -1,7 +1,7 @@
 package groups.evolution.composed.listmaker;
 
 import groups.evolution.GroupPredictionList;
-import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
 
 import java.util.Collection;
 import java.util.Map;

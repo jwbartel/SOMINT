@@ -1,9 +1,9 @@
 package groups.evolution.composed.cleanuppers;
 
 import groups.evolution.GroupPredictionList;
+import groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.old.GroupMaintainer;
 import groups.evolution.old.GroupMorphingTuple;
-import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 
 import java.util.ArrayList;

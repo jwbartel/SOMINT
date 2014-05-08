@@ -1,9 +1,9 @@
 package groups.evolution.old;
 
 import groups.evolution.GroupPredictionList;
-import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
-import groups.evolution.predictions.oldchoosers.PredictionChooser;
-import groups.evolution.predictions.oldchoosers.PredictionChooserSelector;
+import groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
+import groups.evolution.composed.oldchoosers.PredictionChooser;
+import groups.evolution.composed.oldchoosers.PredictionChooserSelector;
 
 import java.util.ArrayList;
 import java.util.Collection;
