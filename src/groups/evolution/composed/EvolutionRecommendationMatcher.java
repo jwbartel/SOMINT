@@ -19,7 +19,7 @@ import bus.tools.TestingConstants;
 
 //Selects recommendations based on a one-to-one mapping
 //It would be good to include one-to-many, many-to-one, and many-to-many mappings here too
-public class EvolutionRecommendationSelector<V> {
+public class EvolutionRecommendationMatcher<V> {
 
 
 	
@@ -160,7 +160,7 @@ public class EvolutionRecommendationSelector<V> {
 			
 			//Select from matchings to present recommendations to the user for this threshold
 			if (matchings.size() > 0) {
-				EvolutionRecommendationSelector<Integer> recommender = new EvolutionRecommendationSelector<Integer>();
+				EvolutionRecommendationMatcher<Integer> recommender = new EvolutionRecommendationMatcher<Integer>();
 				Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = recommender.selectRecommendationsForSingleThreshold(matchings, oldToIdealGroupsMap, usedPairings, usedOldGroups, newMembers, usedRecommenderEngineResults);
 				allRecommendations.addAll(recommendations);
 			}

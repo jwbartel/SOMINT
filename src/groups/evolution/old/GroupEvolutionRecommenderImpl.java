@@ -2,7 +2,7 @@ package groups.evolution.old;
 
 import groups.evolution.GroupEvolutionRecommender;
 import groups.evolution.GroupPredictionList;
-import groups.evolution.composed.EvolutionRecommendationSelector;
+import groups.evolution.composed.EvolutionRecommendationMatcher;
 import groups.evolution.evaluation.GroupMorphingModeler;
 import groups.evolution.predictions.lists.PredictionListSelector;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
@@ -142,7 +142,7 @@ public class GroupEvolutionRecommenderImpl<V> implements GroupEvolutionRecommend
 			System.out.println("\tround "+round+"...\t"+unusedOldGroups.size()+" unused old groups,"+matchings.size()+" prediction lists");
 			
 			//Select from matchings to present recommendations to the user for this threshold
-			EvolutionRecommendationSelector<V> recommender = new EvolutionRecommendationSelector<V>();
+			EvolutionRecommendationMatcher<V> recommender = new EvolutionRecommendationMatcher<V>();
 			Collection<RecommendedGroupChangeEvolution<V>> recommendations = recommender.selectRecommendationsForSingleThreshold(matchings, usedPairings, usedOldGroups, newMembers, usedRecommenderEngineResults);
 			allRecommendations.addAll(recommendations);
 			

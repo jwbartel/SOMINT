@@ -1,6 +1,6 @@
 package groups.evolution.evaluation;
 
-import groups.evolution.composed.EvolutionRecommendationSelector;
+import groups.evolution.composed.EvolutionRecommendationMatcher;
 import groups.evolution.evaluation.analysis.EvolutionStats;
 import groups.evolution.evaluation.analysis.EvolutionStatsBuilder;
 import groups.evolution.predictions.lists.ExpectedScalingPredictionListMakerFactory;
@@ -335,7 +335,7 @@ public class GroupMorphingModeler {
 		
 		System.out.print("\t"+totalOldGroups+" old,"+predictedGroups.size()+" predicted,"+ideals.size()+" ideal");
 		
-		Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = EvolutionRecommendationSelector.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, predictedGroups);
+		Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = EvolutionRecommendationMatcher.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, predictedGroups);
 		
 		
 		System.out.println("Computing stats...");

@@ -1,7 +1,7 @@
 package groups.evolution.evaluation.analysis;
 
 import groups.evolution.GroupPredictionList;
-import groups.evolution.composed.EvolutionRecommendationSelector;
+import groups.evolution.composed.EvolutionRecommendationMatcher;
 import groups.evolution.old.GroupMaintainer;
 import groups.evolution.old.GroupMorphingTuple;
 import groups.evolution.predictions.lists.PredictionListSelector;
@@ -189,7 +189,7 @@ public class RelativeScaledGroupEvolutionModeler {
 		System.out.print("\tRunning models for creating and selecting prediction lists...");
 		ArrayList<GroupMorphingTuple<Integer>> tuples = new ArrayList<GroupMorphingTuple<Integer>>();
 		
-		Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = EvolutionRecommendationSelector.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, recommenderEngineResults, ideals, oldToIdealGroupsMap);
+		Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = EvolutionRecommendationMatcher.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, recommenderEngineResults, ideals, oldToIdealGroupsMap);
 		
 		/*while(true){
 			int remainingIdeals = originalIdeals.size() - usedIdealGroups.size();
