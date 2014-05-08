@@ -1,4 +1,4 @@
-package groups.seedless.kelli;
+package groups.seedless.hybrid;
 
 import groups.evolution.evaluation.snap.SnapTestingConstants;
 

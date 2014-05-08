@@ -18,7 +18,7 @@ import groups.evolution.evaluation.analysis.EvolutionStats;
 import groups.evolution.evaluation.synthetic.MembershipChangeFinder;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
 import groups.evolution.predictions.loading.SnapHybridPredictionLoaderFactory;
-import groups.seedless.kelli.IOFunctions;
+import groups.seedless.hybrid.IOFunctions;
 
 public class SnapGroupMorphingModeler extends GroupMorphingModeler {
 	

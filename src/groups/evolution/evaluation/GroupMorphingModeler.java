@@ -19,7 +19,7 @@ import groups.evolution.predictions.oldchoosers.PredictionChooserSelector;
 import groups.evolution.predictions.oldchoosers.SinglePredictionMultiIdealPredictionChooserFactory;
 import groups.evolution.predictions.oldchoosers.SinglePredictionSingleIdealPredictionChooserFactory;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
-import groups.seedless.kelli.IOFunctions;
+import groups.seedless.hybrid.IOFunctions;
 
 import java.io.BufferedWriter;
 import java.io.File;

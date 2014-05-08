@@ -2,7 +2,7 @@ package groups.comparison;
 
 import groups.seeded.SeededHybridGroupFinder;
 import groups.seeded.SeededLCMAGroupFinder;
-import groups.seedless.kelli.IOFunctions;
+import groups.seedless.hybrid.IOFunctions;
 
 import java.io.File;
 import java.util.Collection;

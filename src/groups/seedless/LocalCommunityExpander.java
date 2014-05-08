@@ -1,7 +1,7 @@
 package groups.seedless;
 
 import groups.seedless.fellows.TrianglesCommunityScorerFactory;
-import groups.seedless.kelli.IOFunctions;
+import groups.seedless.hybrid.IOFunctions;
 
 import java.util.Collection;
 import java.util.HashSet;

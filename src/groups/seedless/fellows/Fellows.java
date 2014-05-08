@@ -1,7 +1,7 @@
 package groups.seedless.fellows;
 
 import groups.seedless.SeedlessGroupRecommender;
-import groups.seedless.kelli.IOFunctions;
+import groups.seedless.hybrid.IOFunctions;
 
 import java.io.File;
 import java.util.ArrayList;

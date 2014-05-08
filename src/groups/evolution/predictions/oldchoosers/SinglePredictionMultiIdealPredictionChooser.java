@@ -3,7 +3,7 @@ package groups.evolution.predictions.oldchoosers;
 import groups.evolution.GroupPredictionList;
 import groups.evolution.old.GroupMaintainer;
 import groups.evolution.old.GroupMorphingTuple;
-import groups.seedless.kelli.IOFunctions;
+import groups.seedless.hybrid.IOFunctions;
 
 import java.util.ArrayList;
 import java.util.Collection;

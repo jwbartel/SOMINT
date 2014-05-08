@@ -7,7 +7,7 @@ import groups.evolution.evaluation.synthetic.MembershipChangeFinder;
 import groups.evolution.old.GroupMaintainer;
 import groups.evolution.predictions.loading.HybridPredictionLoaderFactory;
 import groups.evolution.predictions.loading.PredictionLoaderSelector;
-import groups.seedless.kelli.IOFunctions;
+import groups.seedless.hybrid.IOFunctions;
 
 import java.io.BufferedWriter;
 import java.io.File;

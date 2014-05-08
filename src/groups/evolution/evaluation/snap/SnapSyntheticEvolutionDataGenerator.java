@@ -2,7 +2,7 @@ package groups.evolution.evaluation.snap;
 
 import groups.evolution.evaluation.synthetic.MembershipChangeFinder;
 import groups.evolution.evaluation.synthetic.SyntheticEvolutionDataGenerator;
-import groups.seedless.kelli.IOFunctions;
+import groups.seedless.hybrid.IOFunctions;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -9,7 +9,7 @@ import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedEvolution;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 import groups.seedless.SeedlessGroupRecommender;
-import groups.seedless.kelli.HybridCliqueMerger;
+import groups.seedless.hybrid.HybridCliqueMerger;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;

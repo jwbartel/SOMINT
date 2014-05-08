@@ -3,7 +3,7 @@ package groups.seedless.fellows;
 import groups.seedless.CommunityScorer;
 import groups.seedless.CommunityScorerSelector;
 import groups.seedless.LocalCommunityExpander;
-import groups.seedless.kelli.IOFunctions;
+import groups.seedless.hybrid.IOFunctions;
 
 import java.awt.Point;
 import java.util.ArrayList;
