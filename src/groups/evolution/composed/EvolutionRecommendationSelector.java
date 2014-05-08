@@ -1,9 +1,9 @@
 package groups.evolution.composed;
 
 import groups.evolution.GroupPredictionList;
-import groups.evolution.predictions.choosers.RecommendationChooser;
-import groups.evolution.predictions.choosers.RecommendationChooserSelector;
 import groups.evolution.predictions.lists.PredictionListSelector;
+import groups.evolution.predictions.matchers.RecommendationMatcher;
+import groups.evolution.predictions.matchers.RecommendationMatcherSelector;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 
@@ -198,7 +198,7 @@ public class EvolutionRecommendationSelector<V> {
 		ArrayList<GroupPredictionList<V>> smallestPredictionLists = getSmallestPredictionLists(matchings, usedOldGroups);
 
 		@SuppressWarnings("unchecked")
-		RecommendationChooser<V> chooser = RecommendationChooserSelector.getChooser();
+		RecommendationMatcher<V> matcher = RecommendationMatcherSelector.getChooser();
 		Collection<RecommendedGroupChangeEvolution<V>> recommendations = new TreeSet<RecommendedGroupChangeEvolution<V>>();
 
 		//boolean stopMorphing = false;
@@ -219,13 +219,13 @@ public class EvolutionRecommendationSelector<V> {
 				if(intersectingLists.size() == 0){
 					//Case 1
 					System.out.print("Case1");
-					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase1(smallestPredictionLists, newMembers, matchings, usedPairings, usedOldGroups, usedRecommenderEngineResults);
+					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = matcher.modelPredictionChoosingCase1(smallestPredictionLists, newMembers, matchings, usedPairings, usedOldGroups, usedRecommenderEngineResults);
 					recommendations.addAll(currentIterationRecommendations);
 
 				}else{
 					//Case 2
 					System.out.print("Case2");
-					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase2(smallestPredictionLists, intersectingLists, newMembers, smallestPredictionLists, usedPairings, usedOldGroups, usedRecommenderEngineResults);
+					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = matcher.modelPredictionChoosingCase2(smallestPredictionLists, intersectingLists, newMembers, smallestPredictionLists, usedPairings, usedOldGroups, usedRecommenderEngineResults);
 					if (currentIterationRecommendations != null) {
 						recommendations.addAll(currentIterationRecommendations);
 					} else {
@@ -304,7 +304,7 @@ public class EvolutionRecommendationSelector<V> {
 		ArrayList<GroupPredictionList<V>> smallestPredictionLists = getSmallestPredictionLists(matchings, usedOldGroups);
 
 		@SuppressWarnings("unchecked")
-		RecommendationChooser<V> chooser = RecommendationChooserSelector.getChooser();
+		RecommendationMatcher<V> matcher = RecommendationMatcherSelector.getChooser();
 		Collection<RecommendedGroupChangeEvolution<V>> recommendations = new TreeSet<RecommendedGroupChangeEvolution<V>>();
 
 		//boolean stopMorphing = false;
@@ -325,13 +325,13 @@ public class EvolutionRecommendationSelector<V> {
 				if(intersectingLists.size() == 0){
 					//Case 1
 					System.out.print("Case1");
-					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase1(smallestPredictionLists, newMembers, matchings, usedPairings, usedOldGroups, usedRecommenderEngineResults);
+					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = matcher.modelPredictionChoosingCase1(smallestPredictionLists, newMembers, matchings, usedPairings, usedOldGroups, usedRecommenderEngineResults);
 					recommendations.addAll(currentIterationRecommendations);
 
 				}else{
 					//Case 2
 					System.out.print("Case2");
-					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = chooser.modelPredictionChoosingCase2(smallestPredictionLists, intersectingLists, newMembers, smallestPredictionLists, usedPairings, usedOldGroups, usedRecommenderEngineResults);
+					Collection<RecommendedGroupChangeEvolution<V>> currentIterationRecommendations = matcher.modelPredictionChoosingCase2(smallestPredictionLists, intersectingLists, newMembers, smallestPredictionLists, usedPairings, usedOldGroups, usedRecommenderEngineResults);
 					if (currentIterationRecommendations != null) {
 						recommendations.addAll(currentIterationRecommendations);
 					} else {

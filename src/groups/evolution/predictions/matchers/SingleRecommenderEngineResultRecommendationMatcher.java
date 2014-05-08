@@ -1,4 +1,4 @@
-package groups.evolution.predictions.choosers;
+package groups.evolution.predictions.matchers;
 
 import groups.evolution.GroupPredictionList;
 import groups.evolution.old.GroupMaintainer;
@@ -13,8 +13,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
-public class SingleRecommenderEngineResultRecommendationChooser<V> implements
-		RecommendationChooser<V> {
+public class SingleRecommenderEngineResultRecommendationMatcher<V> implements
+		RecommendationMatcher<V> {
 	
 	ArrayList<GroupMorphingTuple<V>> tuples = new ArrayList<GroupMorphingTuple<V>>();
 	

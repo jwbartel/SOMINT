@@ -1,4 +1,4 @@
-package groups.evolution.predictions.choosers;
+package groups.evolution.predictions.matchers;
 
 import java.util.Set;
 import java.util.TreeSet;

@@ -1,4 +1,4 @@
-package groups.evolution.predictions.choosers;
+package groups.evolution.predictions.matchers;
 
 import groups.evolution.GroupPredictionList;
 import groups.evolution.old.GroupMorphingTuple;
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public interface RecommendationChooser<V> {
+public interface RecommendationMatcher<V> {
 
 	public Collection<RecommendedGroupChangeEvolution<V>> modelPredictionChoosingCase1(ArrayList<GroupPredictionList<V>> smallestPredictionLists, Collection<V> newMembers,
 			Collection<GroupPredictionList<V>> predictionLists,

@@ -1,4 +1,4 @@
-package groups.evolution.predictions.choosers;
+package groups.evolution.predictions.matchers;
 
 import groups.evolution.GroupPredictionList;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
@@ -9,9 +9,9 @@ import java.util.TreeSet;
 
 
 
-public class MultiRecommenderEngineResultRecommendationChooser<V> 
-		extends SingleRecommenderEngineResultRecommendationChooser<V>
-		implements RecommendationChooser<V> {
+public class MultiRecommenderEngineResultRecommendationMatcher<V> 
+		extends SingleRecommenderEngineResultRecommendationMatcher<V>
+		implements RecommendationMatcher<V> {
 	
 	@Override
 	protected void removeSelection(Set<V> usedOldGroup, Set<V> usedRecommendedEvolution, 
