@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
-public class ExpectedScalingPredictionListMaker<V> implements
+public class ExpectedScalingPredictionListMaker<V> extends
 		PredictionListMaker<V> {
 
 	@Override

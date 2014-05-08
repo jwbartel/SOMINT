@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
-public class JaccardCoefficientPredictionListMaker<V> implements PredictionListMaker<V> {
+public class JaccardCoefficientPredictionListMaker<V> extends PredictionListMaker<V> {
 
 	@Override
 	public GroupPredictionList<V> getPredictionList(Set<V> oldGroup, Collection<Set<V>> unusedRecommenderEngineResults,

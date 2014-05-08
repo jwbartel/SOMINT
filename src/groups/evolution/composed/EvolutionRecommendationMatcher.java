@@ -3,7 +3,8 @@ package groups.evolution.composed;
 import groups.evolution.GroupPredictionList;
 import groups.evolution.composed.cleanuppers.RecommendationCleanupperFactory;
 import groups.evolution.composed.cleanuppers.SingleRecommenderEngineResultRecommendationCleanupperFactory;
-import groups.evolution.predictions.lists.PredictionListSelector;
+import groups.evolution.predictions.lists.ExpectedScalingPredictionListMakerFactory;
+import groups.evolution.predictions.lists.PredictionListMakerFactory;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 
@@ -19,14 +20,31 @@ import bus.tools.TestingConstants;
 //Selects recommendations based on a one-to-one mapping
 //It would be good to include one-to-many, many-to-one, and many-to-many mappings here too
 public class EvolutionRecommendationMatcher<V> {
-	private final RecommendationCleanupperFactory<V> cleanupperFactory;
+	private RecommendationCleanupperFactory<V> cleanupperFactory;
+	private PredictionListMakerFactory<V> listMakerFactory;
 	
 	public EvolutionRecommendationMatcher () {
-		cleanupperFactory = new SingleRecommenderEngineResultRecommendationCleanupperFactory<>();
+		init(null, null);
 	}
 	
-	public EvolutionRecommendationMatcher (RecommendationCleanupperFactory<V> cleanupperFactory) {
-		this.cleanupperFactory = cleanupperFactory;
+	public EvolutionRecommendationMatcher (RecommendationCleanupperFactory<V> cleanupperFactory,
+			PredictionListMakerFactory<V> listMakerFactory) {
+		init(cleanupperFactory, listMakerFactory);
+	}
+	
+	private void init(RecommendationCleanupperFactory<V> cleanupperFactory,
+			PredictionListMakerFactory<V> listMakerFactory) {
+		if (cleanupperFactory != null) {
+			this.cleanupperFactory = cleanupperFactory;
+		} else {
+			this.cleanupperFactory = new SingleRecommenderEngineResultRecommendationCleanupperFactory<>();
+		}
+		
+		if (listMakerFactory != null) {
+			this.listMakerFactory = listMakerFactory;
+		} else {
+			this.listMakerFactory = new ExpectedScalingPredictionListMakerFactory<>();
+		}
 	}
 
 	private ArrayList<GroupPredictionList<V>> getSmallestPredictionLists(
@@ -185,9 +203,8 @@ public class EvolutionRecommendationMatcher<V> {
 			unusedRecommenderEngineResults.remove(usedRecommenderEngineResults);
 
 			// Find all possible matchings for this threshold
-			Set<GroupPredictionList<V>> matchings = PredictionListSelector
-					.getAllMatchings(unusedOldGroups,
-							unusedRecommenderEngineResults, usedPairings,
+			Set<GroupPredictionList<V>> matchings = listMakerFactory.getPredictionListMaker()
+					.getAllMatchings(unusedOldGroups, unusedRecommenderEngineResults, usedPairings,
 							newMembers, percentNew, threshold);
 
 			System.out.println("\tround " + round + "...\t" + matchings.size()

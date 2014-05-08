@@ -2,7 +2,8 @@ package groups.evolution.composed;
 
 import groups.evolution.GroupEvolutionRecommender;
 import groups.evolution.GroupPredictionList;
-import groups.evolution.predictions.lists.PredictionListSelector;
+import groups.evolution.predictions.lists.ExpectedScalingPredictionListMakerFactory;
+import groups.evolution.predictions.lists.PredictionListMakerFactory;
 import groups.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;
 import groups.evolution.recommendations.RecommendedEvolution;
 import groups.evolution.recommendations.RecommendedGroupChangeEvolution;
@@ -28,11 +29,13 @@ public class ComposedGroupEvolutionRecommender<V> implements GroupEvolutionRecom
 	private final SeedlessGroupRecommenderFactory<V> recommenderEngineFactory;
 	private final Collection<Set<V>> prefetchedSeedlessRecommendations;
 	private final double thresholdIncrement;
+	private final PredictionListMakerFactory<V> listMakerFactory;
 	
 	public ComposedGroupEvolutionRecommender(SeedlessGroupRecommenderFactory<V> recommenderEngineFactory) {
 		this.recommenderEngineFactory = recommenderEngineFactory;
 		this.prefetchedSeedlessRecommendations = null;
 		this.thresholdIncrement = DEFAULT_THRESHOLD_INCREMENT;
+		this.listMakerFactory = new ExpectedScalingPredictionListMakerFactory<>();
 	}
 	
 	public ComposedGroupEvolutionRecommender(SeedlessGroupRecommenderFactory<V> recommenderEngineFactory,
@@ -40,12 +43,23 @@ public class ComposedGroupEvolutionRecommender<V> implements GroupEvolutionRecom
 		this.recommenderEngineFactory = recommenderEngineFactory;
 		this.prefetchedSeedlessRecommendations = prefetchedSeedlessRecommendations;
 		this.thresholdIncrement = DEFAULT_THRESHOLD_INCREMENT;
+		this.listMakerFactory = new ExpectedScalingPredictionListMakerFactory<>();
+	}
+	
+	public ComposedGroupEvolutionRecommender(SeedlessGroupRecommenderFactory<V> recommenderEngineFactory,
+			Collection<Set<V>> prefetchedSeedlessRecommendations,
+			PredictionListMakerFactory<V> listMakerFactory) {
+		this.recommenderEngineFactory = recommenderEngineFactory;
+		this.prefetchedSeedlessRecommendations = prefetchedSeedlessRecommendations;
+		this.thresholdIncrement = DEFAULT_THRESHOLD_INCREMENT;
+		this.listMakerFactory = listMakerFactory;
 	}
 	
 	public ComposedGroupEvolutionRecommender(SeedlessGroupRecommenderFactory<V> recommenderEngineFactory, double thresholdIncrement) {
 		this.recommenderEngineFactory = recommenderEngineFactory;
 		this.prefetchedSeedlessRecommendations = null;
 		this.thresholdIncrement = thresholdIncrement;
+		this.listMakerFactory = new ExpectedScalingPredictionListMakerFactory<>();
 	}
 	
 	@Override
@@ -166,7 +180,8 @@ public class ComposedGroupEvolutionRecommender<V> implements GroupEvolutionRecom
 			unusedRecommenderEngineResults.remove(usedRecommenderEngineResults);
 
 			//Find all possible matchings for this threshold
-			Set<GroupPredictionList<V>> matchings = PredictionListSelector.getAllMatchings(unusedOldGroups, unusedRecommenderEngineResults, usedPairings, newMembers, percentNew, threshold);
+			Set<GroupPredictionList<V>> matchings = listMakerFactory.getPredictionListMaker()
+					.getAllMatchings(unusedOldGroups, unusedRecommenderEngineResults, usedPairings, newMembers, percentNew, threshold);
 						
 			System.out.println("\tround "+round+"...\t"+unusedOldGroups.size()+" unused old groups,"+matchings.size()+" prediction lists");
 			
