@@ -189,8 +189,11 @@ public class RelativeScaledGroupEvolutionModeler {
 		System.out.print("\tRunning models for creating and selecting prediction lists...");
 		ArrayList<GroupMorphingTuple<Integer>> tuples = new ArrayList<GroupMorphingTuple<Integer>>();
 		
-		Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = EvolutionRecommendationMatcher.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, recommenderEngineResults, ideals, oldToIdealGroupsMap);
-		
+		Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = new EvolutionRecommendationMatcher<Integer>()
+				.selectRecommendationsAcrossAllThresholds(percentNew,
+						newIndividuals, oldGroups, recommenderEngineResults,
+						ideals);
+
 		/*while(true){
 			int remainingIdeals = originalIdeals.size() - usedIdealGroups.size();
 			

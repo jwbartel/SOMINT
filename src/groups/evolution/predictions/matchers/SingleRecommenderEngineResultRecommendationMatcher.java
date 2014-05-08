@@ -125,8 +125,8 @@ public class SingleRecommenderEngineResultRecommendationMatcher<V> implements
 		
 	}
 	
-	
-	protected void removeSelection(Set<V> usedOldGroup, Set<V> usedRecommendedEvolution,
+	@Override
+	public void removeSelection(Set<V> usedOldGroup, Set<V> usedRecommendedEvolution,
 			Collection<GroupPredictionList<V>> predictionLists, 
 			Collection<OldGroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Collection<Set<V>> usedRecommendedEvolutions){

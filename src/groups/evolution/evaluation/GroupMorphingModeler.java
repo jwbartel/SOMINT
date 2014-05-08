@@ -335,7 +335,8 @@ public class GroupMorphingModeler {
 		
 		System.out.print("\t"+totalOldGroups+" old,"+predictedGroups.size()+" predicted,"+ideals.size()+" ideal");
 		
-		Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = EvolutionRecommendationMatcher.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, predictedGroups);
+		Collection<RecommendedGroupChangeEvolution<Integer>> recommendations = new EvolutionRecommendationMatcher<Integer>()
+				.selectRecommendationsAcrossAllThresholds(percentNew, newIndividuals, oldGroups, predictedGroups);
 		
 		
 		System.out.println("Computing stats...");

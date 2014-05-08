@@ -172,7 +172,10 @@ public class ComposedGroupEvolutionRecommender<V> implements GroupEvolutionRecom
 			
 			//Select from matchings to present recommendations to the user for this threshold
 			EvolutionRecommendationMatcher<V> recommender = new EvolutionRecommendationMatcher<V>();
-			Collection<RecommendedGroupChangeEvolution<V>> recommendations = recommender.selectRecommendationsForSingleThreshold(matchings, usedPairings, usedOldGroups, newMembers, usedRecommenderEngineResults);
+			Collection<RecommendedGroupChangeEvolution<V>> recommendations = recommender
+					.selectRecommendationsForSingleThreshold(matchings,
+							usedPairings, usedOldGroups, newMembers,
+							usedRecommenderEngineResults);
 			allRecommendations.addAll(recommendations);
 			
 
