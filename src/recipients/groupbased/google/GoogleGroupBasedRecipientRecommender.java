@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -91,8 +92,17 @@ public class GoogleGroupBasedRecipientRecommender<V extends Comparable<V>> imple
 	@Override
 	public Collection<ScoredRecipientRecommendation<V>> recommendRecipients(CollaborativeAction<V> action,
 			int maxPredictions) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Collection<ScoredRecipientRecommendation<V>> allRecommendations = recommendRecipients(action);
+		Collection<ScoredRecipientRecommendation<V>> recommendations = new TreeSet<>();
+		
+		Iterator<ScoredRecipientRecommendation<V>> iterator = allRecommendations.iterator();
+		int count = 0;
+		while (iterator.hasNext() && count < maxPredictions) {
+			recommendations.add(iterator.next());
+			count++;
+		}
+		return recommendations;
 	}
 
 }
