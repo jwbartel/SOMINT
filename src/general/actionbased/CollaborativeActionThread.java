@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class CollaborativeActionThread<V,C extends CollaborativeAction<V>> implements CollaborativeAction<V>{
+public abstract class CollaborativeActionThread<V,ActionType extends CollaborativeAction<V>> implements CollaborativeAction<V>{
 
-	public abstract void addThreadedAction(CollaborativeAction<V> action);
-	public abstract Collection<C> getThreadedActions();
+	public abstract void addThreadedAction(ActionType action);
+	public abstract Collection<ActionType> getThreadedActions();
 	
 	@Override
 	public V getCreator() {
