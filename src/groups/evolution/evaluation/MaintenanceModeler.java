@@ -26,6 +26,7 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.BronKerboschCliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 
+import bus.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
 import bus.tools.TestingConstants;
 
 
@@ -716,7 +717,7 @@ public class MaintenanceModeler {
 		
 		Collection<Set<Integer>> maximalCliques;
 		if(maximalCliqueFile == null || !maximalCliqueFile.exists()){		
-			BronKerboschCliqueFinder<Integer, DefaultEdge> BKcliqueFind = new BronKerboschCliqueFinder<Integer, DefaultEdge>(graph);
+			BronKerboschCliqueFinder<Integer, DefaultEdge> BKcliqueFind = new FileAndMemoryBasedBronKerboschCliqueFinder<Integer, DefaultEdge>(graph);
 			maximalCliques = BKcliqueFind.getAllMaximalCliques();
 			if(maximalCliqueFile != null){
 				ioHelp.printCliqueIDsToFile(maximalCliqueFile.getPath(), maximalCliques);

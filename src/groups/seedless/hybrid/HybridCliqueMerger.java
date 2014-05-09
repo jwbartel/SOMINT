@@ -15,6 +15,7 @@ import org.jgrapht.alg.BronKerboschCliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
+import bus.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
 import bus.tools.FileFinder;
 
 public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
@@ -239,7 +240,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 
 		Collection<Set<V>> maximalCliques;
 		if (maximalCliqueFile == null || !maximalCliqueFile.exists()) {
-			BronKerboschCliqueFinder<V, DefaultEdge> BKcliqueFind = new BronKerboschCliqueFinder<V, DefaultEdge>(
+			BronKerboschCliqueFinder<V, DefaultEdge> BKcliqueFind = new FileAndMemoryBasedBronKerboschCliqueFinder<V, DefaultEdge>(
 					graph);
 			maximalCliques = BKcliqueFind.getAllMaximalCliques();
 			if (maximalCliqueFile != null) {

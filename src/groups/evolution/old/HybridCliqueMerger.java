@@ -15,6 +15,8 @@ import org.jgrapht.alg.BronKerboschCliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
+import bus.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
+
 
 
 public class HybridCliqueMerger<V> {
@@ -160,7 +162,7 @@ public class HybridCliqueMerger<V> {
 		
 		Collection<Set<V>> maximalCliques = null;
 		if(maximalCliqueFile == null || !maximalCliqueFile.exists()){		
-			BronKerboschCliqueFinder<V, DefaultEdge> BKcliqueFind = new BronKerboschCliqueFinder<V, DefaultEdge>(graph);
+			BronKerboschCliqueFinder<V, DefaultEdge> BKcliqueFind = new FileAndMemoryBasedBronKerboschCliqueFinder<V, DefaultEdge>(graph);
 			maximalCliques = BKcliqueFind.getAllMaximalCliques();
 			if(maximalCliqueFile != null){
 				//ioHelp.printCliqueIDsToFile(maximalCliqueFile.getPath(), maximalCliques);

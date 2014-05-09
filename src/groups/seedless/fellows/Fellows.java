@@ -18,6 +18,8 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.BronKerboschCliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 
+import bus.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
+
 public class Fellows<V extends Comparable<V>> implements
 		SeedlessGroupRecommender<V> {
 
@@ -432,7 +434,7 @@ public class Fellows<V extends Comparable<V>> implements
 				+ participantID + "_MaximalCliques.txt");
 		Collection<Set<V>> maximalCliques;
 		if (!useFile || !maximalCliqueFile.exists()) {
-			BronKerboschCliqueFinder<V, DefaultEdge> BKcliqueFind = new BronKerboschCliqueFinder<V, DefaultEdge>(
+			BronKerboschCliqueFinder<V, DefaultEdge> BKcliqueFind = new FileAndMemoryBasedBronKerboschCliqueFinder<V, DefaultEdge>(
 					graph);
 			maximalCliques = BKcliqueFind.getAllMaximalCliques();
 			if (useFile) {

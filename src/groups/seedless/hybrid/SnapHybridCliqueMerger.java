@@ -3,17 +3,14 @@ package groups.seedless.hybrid;
 import groups.evolution.evaluation.snap.SnapTestingConstants;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.BronKerboschCliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
 
+import bus.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
 import bus.tools.FileFinder;
 import bus.tools.io.IntegerValueParser;
 import bus.tools.io.SnapIOFunctions;
@@ -64,7 +61,7 @@ public class SnapHybridCliqueMerger<V> extends HybridCliqueMerger<V>{
 
 		Collection<Set<V>> maximalCliques;
 		if (maximalCliqueFile == null || !maximalCliqueFile.exists()) {
-			BronKerboschCliqueFinder<V, DefaultEdge> BKcliqueFind = new BronKerboschCliqueFinder<V, DefaultEdge>(graph, parser);
+			BronKerboschCliqueFinder<V, DefaultEdge> BKcliqueFind = new FileAndMemoryBasedBronKerboschCliqueFinder<V, DefaultEdge>(graph, parser);
 			maximalCliques = BKcliqueFind.getAllMaximalCliques();
 			if (maximalCliqueFile != null) {
 				ioHelp.printCliqueIDsToFile(maximalCliqueFile.getPath(), maximalCliques);

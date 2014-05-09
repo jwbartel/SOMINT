@@ -15,6 +15,8 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.BronKerboschCliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 
+import bus.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
+
 
 
 public class ModifiedCompareAlgos {
@@ -180,7 +182,7 @@ public static void main(String[] args){
    public static void findCliques() {
 		  System.out.println("~~~~~~~~~~Find All Maximal Cliques~~~~~~~~~~");
 		  long start, elapsedTime, getAllTime;
-		  BronKerboschCliqueFinder<Integer, DefaultEdge> BKcliqueFind = new BronKerboschCliqueFinder<Integer, DefaultEdge>(UIDGraph);
+		  BronKerboschCliqueFinder<Integer, DefaultEdge> BKcliqueFind = new FileAndMemoryBasedBronKerboschCliqueFinder<Integer, DefaultEdge>(UIDGraph);
 		  //status message
 		  System.out.println("running getAllMaximalCliques");
 		  start = System.currentTimeMillis();

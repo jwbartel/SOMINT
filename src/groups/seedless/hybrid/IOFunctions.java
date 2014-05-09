@@ -484,6 +484,9 @@ public class IOFunctions<V> {
 					if (uid == null) {
 						int x = 0;
 					}
+					if (uid == null) {
+						System.out.println("Null user id for name: "+name);
+					}
 					group.add(uid);
 					line = in.readLine();
 					linesReadCount++;

@@ -1,44 +1,7 @@
-/* ==========================================
- * JGraphT : a free Java graph-theory library
- * ==========================================
- *
- * Project Info:  http://jgrapht.sourceforge.net/
- * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
- *
- * (C) Copyright 2003-2007, by Barak Naveh and Contributors.
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation; either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
- * License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+/*
+ * An extension of the jgrapht library class to allow creation of maximal cliques in memory and on disk
  */
-/* -------------------
- * BronKerboschCliqueFinder.java
- * -------------------
- * (C) Copyright 2005-2007, by Ewgenij Proschak and Contributors.
- *
- * Original Author:  Ewgenij Proschak
- * Contributor(s):   John V. Sichi
- *
- * $Id: BronKerboschCliqueFinder.java 568 2007-09-30 00:12:18Z perfecthash $
- *
- * Changes
- * -------
- * 21-Jul-2005 : Initial revision (EP);
- * 26-Jul-2005 : Cleaned up and checked in (JVS);
- *
- */
-package org.jgrapht.alg;
+package bus.tools;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -51,20 +14,13 @@ import java.util.Scanner;
 import java.util.Set;
 
 import org.jgrapht.Graph;
+import org.jgrapht.alg.BronKerboschCliqueFinder;
 
 import bus.tools.io.CollectionValueParser;
 import bus.tools.io.ValueParser;
 
 
-/**
- * This class implements Bron-Kerbosch clique detection algorithm as it is
- * described in [Samudrala R.,Moult J.:A Graph-theoretic Algorithm for
- * comparative Modeling of Protein Structure; J.Mol. Biol. (1998); vol 279; pp.
- * 287-302]
- *
- * @author Ewgenij Proschak
- */
-public class BronKerboschCliqueFinder<V, E>
+public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerboschCliqueFinder<V, E>
 {
     //~ Instance fields --------------------------------------------------------
 
@@ -84,8 +40,9 @@ public class BronKerboschCliqueFinder<V, E>
      * @param graph the graph in which cliques are to be found; graph must be
      * simple
      */
-    public BronKerboschCliqueFinder(Graph<V, E> graph)
+    public FileAndMemoryBasedBronKerboschCliqueFinder(Graph<V, E> graph)
     {
+    	super(graph);
         this.graph = graph;
         this.parser = null;
     }
@@ -96,8 +53,9 @@ public class BronKerboschCliqueFinder<V, E>
      * @param graph the graph in which cliques are to be found; graph must be
      * simple
      */
-    public BronKerboschCliqueFinder(Graph<V, E> graph, ValueParser<V> parser)
+    public FileAndMemoryBasedBronKerboschCliqueFinder(Graph<V, E> graph, ValueParser<V> parser)
     {
+    	super(graph);
         this.graph = graph;
         this.parser = parser;
     }
@@ -110,13 +68,14 @@ public class BronKerboschCliqueFinder<V, E>
      * that a maximal clique is not necessarily the biggest clique in the graph.
      *
      * @return Collection of cliques (each of which is represented as a Set of
-     * vertices)
-     * @throws IOException 
+     * vertices) 
      */
-    public Collection<Set<V>> getAllMaximalCliques()
-    {
-        // TODO jvs 26-July-2005:  assert that graph is simple
+    public Collection<Set<V>> getAllMaximalCliques() {
 
+    	if (parser == null) {
+    		return super.getAllMaximalCliques();
+    	}
+    	
     	try {
 			findTempCliqueFile();
 		} catch (IOException e) {
@@ -126,7 +85,7 @@ public class BronKerboschCliqueFinder<V, E>
         List<V> candidates = new ArrayList<V>();
         List<V> already_found = new ArrayList<V>();
         candidates.addAll(graph.vertexSet());
-        findCliques(potential_clique, candidates, already_found);
+        findCliquesOnFile(potential_clique, candidates, already_found);
         if (tempCliqueFile != null) {
         	cliques = readCliques();
             tempCliqueFile.delete();
@@ -175,34 +134,7 @@ public class BronKerboschCliqueFinder<V, E>
     	}
     }
 
-    /**
-     * Finds the biggest maximal cliques of the graph.
-     *
-     * @return Collection of cliques (each of which is represented as a Set of
-     * vertices)
-     * @throws IOException 
-     */
-    public Collection<Set<V>> getBiggestMaximalCliques() throws IOException
-    {
-        // first, find all cliques
-        getAllMaximalCliques();
-
-        int maximum = 0;
-        Collection<Set<V>> biggest_cliques = new ArrayList<Set<V>>();
-        for (Set<V> clique : cliques) {
-            if (maximum < clique.size()) {
-                maximum = clique.size();
-            }
-        }
-        for (Set<V> clique : cliques) {
-            if (maximum == clique.size()) {
-                biggest_cliques.add(clique);
-            }
-        }
-        return biggest_cliques;
-    }
-
-    private void findCliques(List<V> potential_clique, List<V> candidates, List<V> already_found)
+    private void findCliquesOnFile(List<V> potential_clique, List<V> candidates, List<V> already_found)
     {
         List<V> candidates_array = new ArrayList<V>(candidates);
         if (!end(candidates, already_found)) {
@@ -247,7 +179,7 @@ public class BronKerboschCliqueFinder<V, E>
                 } // of if
                 else {
                     // recursive call
-                    findCliques(potential_clique, new_candidates, new_already_found);
+                    findCliquesOnFile(potential_clique, new_candidates, new_already_found);
                 } // of else
 
                 // move candidate_node from potential_clique to already_found;
@@ -276,5 +208,3 @@ public class BronKerboschCliqueFinder<V, E>
         return end;
     }
 }
-
-// End BronKerboschCliqueFinder.java
