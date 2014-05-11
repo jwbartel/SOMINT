@@ -13,20 +13,20 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	
 	private final Date date;
 	
-	private final V creator;
+	private final Collection<V> creators;
 	private final ArrayList<V> to;
 	private final ArrayList<V> cc;
 	private final ArrayList<V> bcc;
 	private final String subject;
 	private final String body;
 
-	public EmailMessage(String messageId, String threadId, Date date, V from,
+	public EmailMessage(String messageId, String threadId, Date date, ArrayList<V> from,
 			ArrayList<V> to, ArrayList<V> cc, ArrayList<V> bcc, String subject,
 			String body) {
 		this.messageId = messageId;
 		this.threadId = threadId;
 		this.date = date;
-		this.creator = from;
+		this.creators = from;
 		this.to = to;
 		this.cc = cc;
 		this.bcc = bcc;
@@ -42,8 +42,8 @@ public class EmailMessage<V> implements SingleMessage<V> {
 		return threadId;
 	}
 
-	public V getFrom() {
-		return getCreator();
+	public Collection<V> getFrom() {
+		return getCreators();
 	}
 
 	public ArrayList<V> getTo() {
@@ -67,8 +67,8 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	}
 
 	@Override
-	public V getCreator() {
-		return creator;
+	public Collection<V> getCreators() {
+		return creators;
 	}
 
 	@Override
@@ -84,7 +84,11 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	@Override
 	public Collection<V> getCollaborators() {
 		Collection<V> collaborators = new ArrayList<>();
-		collaborators.add(creator);
+		for (V collaborator : creators) {
+			if (!collaborators.contains(collaborator)) {
+				collaborators.add(collaborator);
+			}
+		}
 		for (V collaborator : to) {
 			if (!collaborators.contains(collaborator)) {
 				collaborators.add(collaborator);

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public interface CollaborativeAction<V> {
 
-	public V getCreator();
+	public Collection<V> getCreators();
 	public Date getStartDate();
 	public Date getLastActiveDate();
 	public Collection<V> getCollaborators();

@@ -1,12 +1,20 @@
 package recipients;
 
 public class ScoredRecipientRecommendation<V extends Comparable<V>> implements Comparable<ScoredRecipientRecommendation<V>>, RecipientRecommendation<V> {
-	public final V recipient;
-	public double similarity;
+	private final V recipient;
+	private double similarity;
 	
 	public ScoredRecipientRecommendation(V recipient, double similarity){
 		this.recipient = recipient;
 		this.similarity = similarity;
+	}
+	
+	public V getRecipient() {
+		return recipient;
+	}
+	
+	public double getSimilarity() {
+		return similarity;
 	}
 	
 	public String toString(){

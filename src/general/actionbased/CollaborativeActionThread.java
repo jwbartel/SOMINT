@@ -11,7 +11,7 @@ public abstract class CollaborativeActionThread<V,ActionType extends Collaborati
 	public abstract Collection<ActionType> getThreadedActions();
 	
 	@Override
-	public V getCreator() {
+	public Collection<V> getCreators() {
 		Date earliestStart = null;
 		CollaborativeAction<V> earliestAction = null;
 		for (CollaborativeAction<V> action : getThreadedActions()) {
@@ -22,7 +22,7 @@ public abstract class CollaborativeActionThread<V,ActionType extends Collaborati
 		}
 		
 		if (earliestAction != null) {
-			return earliestAction.getCreator();
+			return earliestAction.getCreators();
 		}
 		return null;
 	}

@@ -22,8 +22,10 @@ public abstract class GroupScorer<V> {
 	private double getInteractionRankScoreOfPastAction(CollaborativeAction<V> currentAction,
 			CollaborativeAction<V> pastAction) {
 
-		if (currentAction.getCreator() == null
-				|| pastAction.getCreator() == null
+		if (currentAction.getCreators() == null
+				|| pastAction.getCreators() == null
+				|| currentAction.getCreators().size() != 1
+				|| pastAction.getCreators().size() != 1
 				|| currentAction.getLastActiveDate() == null
 				|| pastAction.getLastActiveDate() == null) {
 			return 0.0;
@@ -32,7 +34,9 @@ public abstract class GroupScorer<V> {
 		long timeDifference = currentAction.getLastActiveDate().getTime()
 				- pastAction.getLastActiveDate().getTime();
 		double score = Math.pow(0.5, (double) timeDifference / halfLife);
-		if (currentAction.getCreator().equals(pastAction.getCreator())) {
+		V currentActionCreator = currentAction.getCreators().iterator().next();
+		V pastActionCreator = pastAction.getCreators().iterator().next();
+		if (currentActionCreator.equals(pastActionCreator)) {
 			score *= wOut;
 		}
 		return score;
