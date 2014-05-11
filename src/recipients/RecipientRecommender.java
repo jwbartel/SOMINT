@@ -7,6 +7,8 @@ import java.util.Collection;
 
 public interface RecipientRecommender<V extends Comparable<V>> extends
 		ActionBasedRecommender<V> {
+	
+	public String getTypeOfRecommender();
 
 	public Collection<ScoredRecipientRecommendation<V>> recommendRecipients(
 			CollaborativeAction<V> action);

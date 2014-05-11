@@ -32,6 +32,11 @@ public class GoogleGroupBasedRecipientRecommender<V extends Comparable<V>> imple
 	public GoogleGroupBasedRecipientRecommender(double wOut, double halfLife) {
 		this.groupScorer = new SubsetWeightedScore<>(wOut, halfLife);
 	}
+	
+	@Override
+	public String getTypeOfRecommender() {
+		return "google group-based recipient recommender";
+	}
 
 	@Override
 	public void addPastAction(CollaborativeAction<V> action) {
