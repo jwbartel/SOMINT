@@ -71,6 +71,7 @@ public class GoogleGroupBasedRecipientRecommender<V extends Comparable<V>> imple
 	@Override
 	public Collection<ScoredRecipientRecommendation<V>> recommendRecipients(CollaborativeAction<V> action) {
 		Map<V, Double> recipientToScore = new TreeMap<>();
+		Collection<V> collaborators = new HashSet<>(action.getCollaborators());
 		for (Entry<Set<V>, Collection<CollaborativeAction<V>>> entry : groupsToActions
 				.entrySet()) {
 
@@ -79,10 +80,13 @@ public class GoogleGroupBasedRecipientRecommender<V extends Comparable<V>> imple
 			double score = groupScorer.score(pastGroup, action, pastGroupActions);
 			
 			if (score != 0) {
-				for (V recipient : new HashSet<>(action.getCollaborators())) {
-					Double recipientScore = recipientToScore.get(recipient);
-					recipientScore = (recipientScore == null)? score : recipientScore + score;
-					recipientToScore.put(recipient, recipientScore);
+				for (V recipient : new HashSet<>(pastGroup)) {
+					if (!collaborators.contains(recipient)) {
+						Double recipientScore = recipientToScore.get(recipient);
+						recipientScore = (recipientScore == null) ? score
+								: recipientScore + score;
+						recipientToScore.put(recipient, recipientScore);
+					}
 				}
 			}
 		}

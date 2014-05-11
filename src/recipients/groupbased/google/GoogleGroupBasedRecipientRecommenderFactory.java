@@ -10,7 +10,7 @@ public class GoogleGroupBasedRecipientRecommenderFactory<V extends Comparable<V>
 	public static final double DEFAULT_W_OUT = 0.25;
 
 	// One Week
-	public static final long DEFAULT_HALF_LIFE = 1000 * 3600 * 24 * 7;
+	public static final long DEFAULT_HALF_LIFE = 1000L * 3600L * 24L * 7L;
 
 	@Override
 	public GroupBasedRecipientRecommender<V> createRecommender() {
