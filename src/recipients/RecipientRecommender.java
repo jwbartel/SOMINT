@@ -10,9 +10,9 @@ public interface RecipientRecommender<V extends Comparable<V>> extends
 	
 	public String getTypeOfRecommender();
 
-	public Collection<ScoredRecipientRecommendation<V>> recommendRecipients(
+	public Collection<RecipientRecommendation<V>> recommendRecipients(
 			CollaborativeAction<V> action);
 
-	public Collection<ScoredRecipientRecommendation<V>> recommendRecipients(
+	public Collection<RecipientRecommendation<V>> recommendRecipients(
 			CollaborativeAction<V> action, int maxPredictions);
 }

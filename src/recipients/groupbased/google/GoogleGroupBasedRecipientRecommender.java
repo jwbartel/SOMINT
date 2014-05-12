@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import recipients.RecipientRecommendation;
 import recipients.ScoredRecipientRecommendation;
 import recipients.groupbased.GroupBasedRecipientRecommender;
 import recipients.groupbased.google.scoring.GroupScorer;
 import recipients.groupbased.google.scoring.SubsetWeightedScore;
 
-public class GoogleGroupBasedRecipientRecommender<V extends Comparable<V>> implements
+public class GoogleGroupBasedRecipientRecommender<V extends Comparable<V>> extends
 		GroupBasedRecipientRecommender<V> {
 
 	private final GroupScorer<V> groupScorer;
@@ -33,9 +33,26 @@ public class GoogleGroupBasedRecipientRecommender<V extends Comparable<V>> imple
 		this.groupScorer = new SubsetWeightedScore<>(wOut, halfLife);
 	}
 	
+	protected GroupScorer<V> getGroupScorer() {
+		return groupScorer;
+	}
+	
 	@Override
 	public String getTypeOfRecommender() {
 		return "google group-based recipient recommender";
+	}
+	
+	@Override
+	public Collection<Set<V>> getGroups() {
+		return groupsToActions.keySet();
+	}
+	
+	@Override
+	public double getGroupScore(CollaborativeAction<V> action, Set<V> group) {
+		Collection<CollaborativeAction<V>> pastGroupActions = groupsToActions
+				.get(group);
+		double score = groupScorer.score(group, action, pastGroupActions);
+		return score;
 	}
 
 	@Override
@@ -69,49 +86,39 @@ public class GoogleGroupBasedRecipientRecommender<V extends Comparable<V>> imple
 	}
 
 	@Override
-	public Collection<ScoredRecipientRecommendation<V>> recommendRecipients(CollaborativeAction<V> action) {
-		Map<V, Double> recipientToScore = new TreeMap<>();
-		Collection<V> collaborators = new HashSet<>(action.getCollaborators());
-		for (Entry<Set<V>, Collection<CollaborativeAction<V>>> entry : groupsToActions
-				.entrySet()) {
+	public Collection<RecipientRecommendation<V>> recommendRecipients(
+			CollaborativeAction<V> action, int maxPredictions) {
 
-			Set<V> pastGroup = entry.getKey();
-			Collection<CollaborativeAction<V>> pastGroupActions = entry.getValue();
-			double score = groupScorer.score(pastGroup, action, pastGroupActions);
-			
-			if (score != 0) {
-				for (V recipient : new HashSet<>(pastGroup)) {
-					if (!collaborators.contains(recipient)) {
-						Double recipientScore = recipientToScore.get(recipient);
-						recipientScore = (recipientScore == null) ? score
-								: recipientScore + score;
-						recipientToScore.put(recipient, recipientScore);
-					}
-				}
+		Map<V, Double> recipientToScore = new TreeMap<>();
+		Map<Set<V>, Double> groupToScore = new HashMap<>();
+		updateGroupAndRecipientScores(action, recipientToScore, groupToScore);
+
+		Collection<ScoredRecipientRecommendation<V>> allSingleRecipientRecommendations =
+				getAllSingleRecipientRecommendations(
+				action, recipientToScore);
+		Collection<ScoredRecipientRecommendation<V>> limitedSingleRecipientRecommendations =
+				new TreeSet<>();
+		for (ScoredRecipientRecommendation<V> recommendation : allSingleRecipientRecommendations) {
+			if (limitedSingleRecipientRecommendations.size() >= maxPredictions) {
+				break;
 			}
+			limitedSingleRecipientRecommendations.add(recommendation);
 		}
-		
-		Collection<ScoredRecipientRecommendation<V>> recommendations = new TreeSet<>();
-		for (Entry<V,Double> entry : recipientToScore.entrySet()) {
-			recommendations.add(new ScoredRecipientRecommendation<V>(entry.getKey(), entry.getValue()));
-		}
-		return recommendations;
+		return new ArrayList<RecipientRecommendation<V>>(
+				limitedSingleRecipientRecommendations);
 	}
 
 	@Override
-	public Collection<ScoredRecipientRecommendation<V>> recommendRecipients(CollaborativeAction<V> action,
-			int maxPredictions) {
-		
-		Collection<ScoredRecipientRecommendation<V>> allRecommendations = recommendRecipients(action);
-		Collection<ScoredRecipientRecommendation<V>> recommendations = new TreeSet<>();
-		
-		Iterator<ScoredRecipientRecommendation<V>> iterator = allRecommendations.iterator();
-		int count = 0;
-		while (iterator.hasNext() && count < maxPredictions) {
-			recommendations.add(iterator.next());
-			count++;
-		}
-		return recommendations;
+	public Collection<RecipientRecommendation<V>> recommendRecipients(
+			CollaborativeAction<V> action) {
+		Map<V, Double> recipientToScore = new TreeMap<>();
+		Map<Set<V>, Double> groupToScore = new HashMap<>();
+		updateGroupAndRecipientScores(action, recipientToScore, groupToScore);
+
+		Collection<ScoredRecipientRecommendation<V>> singleRecipientRecommendations =
+				getAllSingleRecipientRecommendations(
+				action, recipientToScore);
+		return new ArrayList<RecipientRecommendation<V>>(singleRecipientRecommendations);
 	}
 
 }

@@ -1,6 +1,8 @@
 package recipients;
 
-public class ScoredRecipientRecommendation<V extends Comparable<V>> implements Comparable<ScoredRecipientRecommendation<V>>, RecipientRecommendation<V> {
+public class ScoredRecipientRecommendation<V extends Comparable<V>> implements
+		Comparable<ScoredRecipientRecommendation<V>>, RecipientRecommendation<V>,
+		SingleRecipientRecommendation<V>{
 	private final V recipient;
 	private double similarity;
 	
