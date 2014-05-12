@@ -9,5 +9,5 @@ public interface CollaborativeAction<V> {
 	public Date getStartDate();
 	public Date getLastActiveDate();
 	public Collection<V> getCollaborators();
-	
+	public boolean wasSent();
 }

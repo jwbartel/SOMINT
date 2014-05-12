@@ -6,6 +6,11 @@ import java.util.Collection;
 
 public class SubsetWeightedScore<V> extends GroupScorer<V> {
 
+	@Override
+	public String getName() {
+		return "SubsetWeightedScore";
+	}
+
 	public SubsetWeightedScore(double wOut, double halfLife) {
 		this.wOut = wOut;
 		this.halfLife = halfLife;
@@ -23,6 +28,17 @@ public class SubsetWeightedScore<V> extends GroupScorer<V> {
 		} else {
 			return 0.0;
 		}
+	}
+
+	public static <V> GroupScorerFactory<V> factory(Class<V> memberTypeClass) {
+		
+		return new GroupScorerFactory<V>() {
+
+			@Override
+			public GroupScorer<V> create(double wOut, double halfLife) {
+				return new SubsetWeightedScore<>(wOut, halfLife);
+			}
+		};
 	}
 
 }

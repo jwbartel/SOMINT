@@ -12,6 +12,7 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	private final String threadId;
 	
 	private final Date date;
+	private final boolean wasSent;
 	
 	private final Collection<V> creators;
 	private final ArrayList<V> to;
@@ -20,12 +21,13 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	private final String subject;
 	private final String body;
 
-	public EmailMessage(String messageId, String threadId, Date date, ArrayList<V> from,
+	public EmailMessage(String messageId, String threadId, Date date, boolean wasSent, ArrayList<V> from,
 			ArrayList<V> to, ArrayList<V> cc, ArrayList<V> bcc, String subject,
 			String body) {
 		this.messageId = messageId;
 		this.threadId = threadId;
 		this.date = date;
+		this.wasSent = wasSent;
 		this.creators = from;
 		this.to = to;
 		this.cc = cc;
@@ -79,6 +81,11 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	@Override
 	public Date getLastActiveDate() {
 		return date;
+	}
+	
+	@Override
+	public boolean wasSent() {
+		return wasSent;
 	}
 
 	@Override

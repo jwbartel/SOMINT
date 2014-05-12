@@ -6,6 +6,11 @@ import java.util.Collection;
 
 public class IntersectionGroupScore<V> extends GroupScorer<V> {
 
+	@Override
+	public String getName() {
+		return "IntersectiongGroupScore";
+	}
+
 	public IntersectionGroupScore(double wOut, double halfLife) {
 		this.wOut = wOut;
 		this.halfLife = halfLife;
@@ -24,6 +29,15 @@ public class IntersectionGroupScore<V> extends GroupScorer<V> {
 		}
 	}
 
-	
+	public static <V> GroupScorerFactory<V> factory(Class<V> memberTypeClass) {
+		
+		return new GroupScorerFactory<V>() {
+
+			@Override
+			public GroupScorer<V> create(double wOut, double halfLife) {
+				return new IntersectionGroupScore<>(wOut, halfLife);
+			}
+		};
+	}
 
 }

@@ -10,6 +10,10 @@ public abstract class GroupScorer<V> {
 
 	protected double wOut;
 	protected double halfLife;
+	
+	public interface GroupScorerFactory<V> {
+		public GroupScorer<V> create(double wOut, double halfLife);
+	}
 
 	protected Collection<V> getGroupIntersection(Collection<V> group,
 			CollaborativeAction<V> currentAction) {
@@ -34,9 +38,7 @@ public abstract class GroupScorer<V> {
 		long timeDifference = currentAction.getLastActiveDate().getTime()
 				- pastAction.getLastActiveDate().getTime();
 		double score = Math.pow(0.5, (double) timeDifference / halfLife);
-		V currentActionCreator = currentAction.getCreators().iterator().next();
-		V pastActionCreator = pastAction.getCreators().iterator().next();
-		if (currentActionCreator.equals(pastActionCreator)) {
+		if (pastAction.wasSent()) {
 			score *= wOut;
 		}
 		return score;
@@ -51,6 +53,8 @@ public abstract class GroupScorer<V> {
 		}
 		return score;
 	}
+	
+	public abstract String getName();
 
 	public abstract double score(Collection<V> group, CollaborativeAction<V> currentAction,
 			Collection<CollaborativeAction<V>> pastGroupActions);
