@@ -44,5 +44,9 @@ public class HierarchicalIndividualRecommendation<V extends Comparable<V>>
 	public V getRecipient() {
 		return individual;
 	}
+	
+	public String toString() {
+		return individual.toString();
+	}
 
 }

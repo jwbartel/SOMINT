@@ -63,8 +63,8 @@ public class HierarchicalRecipientRecommender<V extends Comparable<V>> extends
 			for (Entry<Set<V>, Double> entry : groupToScore.entrySet()) {
 				Set<V> group = entry.getKey();
 				Double score = entry.getValue();
-				if (group.contains(recipient) && highestScore == null
-						|| highestScore < score) {
+				if (group.contains(recipient) && (highestScore == null
+						|| highestScore < score)) {
 					highestScore = score;
 					highestScoredGroup = group;
 				}
