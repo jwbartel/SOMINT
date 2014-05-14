@@ -8,11 +8,10 @@ import java.util.Set;
 
 import javax.mail.MessagingException;
 
-import recipients.predictionchecking.TopGroupPrediction;
-import recipients.predictionchecking.hierarchical.GroupPrediction;
-import recipients.predictionchecking.hierarchical.IndividualPrediction;
-import recipients.predictionchecking.hierarchical.MultispaceIndividualsWithTopGroup;
-
+import recommendation.recipients.predictionchecking.TopGroupPrediction;
+import recommendation.recipients.predictionchecking.hierarchical.GroupPrediction;
+import recommendation.recipients.predictionchecking.hierarchical.IndividualPrediction;
+import recommendation.recipients.predictionchecking.hierarchical.MultispaceIndividualsWithTopGroup;
 import bus.data.structures.ComparableSet;
 
 public class ThunderbirdMultispaceIndividualsWithTopGroup extends

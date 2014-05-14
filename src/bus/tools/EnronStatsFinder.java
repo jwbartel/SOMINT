@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
-import recipients.predictionchecking.PredictionAcceptanceModeler;
+import recommendation.recipients.predictionchecking.PredictionAcceptanceModeler;
 import bus.accounts.Account;
 
 public class EnronStatsFinder {

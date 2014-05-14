@@ -8,9 +8,8 @@ import java.util.TreeSet;
 
 import javax.mail.MessagingException;
 
-import recipients.predictionchecking.PredictionMaker;
-import recipients.predictionchecking.hierarchical.HierarchicalMultispacePredictionMaker;
-
+import recommendation.recipients.predictionchecking.PredictionMaker;
+import recommendation.recipients.predictionchecking.hierarchical.HierarchicalMultispacePredictionMaker;
 import bus.data.structures.ComparableSet;
 import bus.thunderbird.Trainer;
 
