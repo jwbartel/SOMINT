@@ -1,4 +1,4 @@
-package recommendation.groups.old.evolution.snap;
+package recommendation.groups.old.seedless.kelli;
 
 public class SnapTestingConstants {
 	
