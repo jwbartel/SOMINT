@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import recommendation.recipients.predictionchecking.hierarchical.HierarchicalSocialConnectionPredictionMaker;
+import recommendation.recipients.old.predictionchecking.hierarchical.HierarchicalSocialConnectionPredictionMaker;
 import bus.data.structures.ComparableSet;
 import bus.data.structures.DirectedEmailInteraction;
 import bus.thunderbird.Trainer;

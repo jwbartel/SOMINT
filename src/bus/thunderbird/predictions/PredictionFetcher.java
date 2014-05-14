@@ -8,9 +8,9 @@ import java.util.TreeSet;
 
 import javax.mail.MessagingException;
 
-import recommendation.recipients.predictionchecking.PredictionMaker;
-import recommendation.recipients.predictionchecking.hierarchical.GroupPrediction;
-import recommendation.recipients.predictionchecking.hierarchical.Prediction;
+import recommendation.recipients.old.predictionchecking.PredictionMaker;
+import recommendation.recipients.old.predictionchecking.hierarchical.GroupPrediction;
+import recommendation.recipients.old.predictionchecking.hierarchical.Prediction;
 import bus.thunderbird.Trainer;
 import bus.thunderbird.structures.ThunderbirdAddressParser;
 
