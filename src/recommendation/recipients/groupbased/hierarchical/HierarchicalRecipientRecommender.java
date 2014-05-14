@@ -1,7 +1,5 @@
 package recommendation.recipients.groupbased.hierarchical;
 
-import general.actionbased.CollaborativeAction;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,6 +9,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import recommendation.general.actionbased.CollaborativeAction;
 import recommendation.recipients.RecipientRecommendation;
 import recommendation.recipients.ScoredRecipientRecommendation;
 import recommendation.recipients.groupbased.GroupBasedRecipientRecommender;

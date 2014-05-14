@@ -1,6 +1,6 @@
-package general.actionbased.messages;
+package recommendation.general.actionbased.messages;
 
-import general.actionbased.CollaborativeActionThread;
+import recommendation.general.actionbased.CollaborativeActionThread;
 
 public abstract class MessageThread<V, MessageType extends SingleMessage<V>> extends
 		CollaborativeActionThread<V, MessageType> {

@@ -1,10 +1,10 @@
-package general.actionbased.messages.email;
-
-import general.actionbased.messages.SingleMessage;
+package recommendation.general.actionbased.messages.email;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
+import recommendation.general.actionbased.messages.SingleMessage;
 
 public class EmailMessage<V> implements SingleMessage<V> {
 

@@ -1,9 +1,8 @@
 package recommendation.recipients.groupbased.google.scoring;
 
-import general.actionbased.CollaborativeAction;
-
 import java.util.Collection;
 
+import recommendation.general.actionbased.CollaborativeAction;
 import recommendation.recipients.groupbased.GroupScorer;
 
 public class TopContactScore<V> extends GroupScorer<V> {

@@ -1,10 +1,10 @@
 package recommendation.recipients.groupbased;
 
-import general.actionbased.CollaborativeAction;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import recommendation.general.actionbased.CollaborativeAction;
 
 public abstract class GroupScorer<V> {
 

@@ -1,9 +1,9 @@
 package recommendation.recipients;
 
-import general.actionbased.ActionBasedRecommender;
-import general.actionbased.CollaborativeAction;
-
 import java.util.Collection;
+
+import recommendation.general.actionbased.ActionBasedRecommender;
+import recommendation.general.actionbased.CollaborativeAction;
 
 public interface RecipientRecommender<V extends Comparable<V>> extends
 		ActionBasedRecommender<V> {
