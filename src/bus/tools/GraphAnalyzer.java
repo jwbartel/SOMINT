@@ -1,8 +1,6 @@
 package bus.tools;
 
 
-import groups.seedless.hybrid.IOFunctions;
-
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
@@ -10,6 +8,8 @@ import java.util.TreeMap;
 
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+
+import recommendation.groups.seedless.hybrid.IOFunctions;
 
 /**
  * A tool for analyzing the statistics about a specific social graph

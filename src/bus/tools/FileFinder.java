@@ -1,8 +1,8 @@
 package bus.tools;
 
-import groups.seedless.hybrid.IOFunctions;
-
 import java.io.File;
+
+import recommendation.groups.seedless.hybrid.IOFunctions;
 
 public class FileFinder {
 	

@@ -1,7 +1,5 @@
 package bus.tools.io;
 
-import groups.seedless.hybrid.IOFunctions;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -15,6 +13,8 @@ import java.util.TreeSet;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
+
+import recommendation.groups.seedless.hybrid.IOFunctions;
 
 public class SnapIOFunctions<V> extends IOFunctions<V> {
 
