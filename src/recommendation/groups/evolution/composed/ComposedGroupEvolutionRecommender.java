@@ -14,8 +14,8 @@ import org.jgrapht.graph.DefaultEdge;
 import recommendation.groups.evolution.GroupEvolutionRecommender;
 import recommendation.groups.evolution.GroupPredictionList;
 import recommendation.groups.evolution.composed.listmaker.ExpectedScalingPredictionListMakerFactory;
+import recommendation.groups.evolution.composed.listmaker.GroupAndPredictionPair;
 import recommendation.groups.evolution.composed.listmaker.PredictionListMakerFactory;
-import recommendation.groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
 import recommendation.groups.evolution.recommendations.RecommendedEvolution;
 import recommendation.groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 import recommendation.groups.evolution.recommendations.RecommendedGroupCreationEvolution;
@@ -131,7 +131,7 @@ public class ComposedGroupEvolutionRecommender<V> implements GroupEvolutionRecom
 		addedEdges = (addedEdges == null)? new ArrayList<Entry<V,V>>() : addedEdges;
 		
 		//Tracks when an old group has been associated with a prediction
-		Collection<OldGroupAndPredictionPair<V>> usedPairings = new HashSet<OldGroupAndPredictionPair<V>>(); 	
+		Collection<GroupAndPredictionPair<V>> usedPairings = new HashSet<GroupAndPredictionPair<V>>(); 	
 
 		//Tracks which of the old groups have already been evolved
 		Collection<Set<V>> usedOldGroups = new HashSet<Set<V>>();

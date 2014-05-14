@@ -11,8 +11,8 @@ import recommendation.groups.evolution.GroupPredictionList;
 import recommendation.groups.evolution.composed.cleanuppers.RecommendationCleanupperFactory;
 import recommendation.groups.evolution.composed.cleanuppers.SingleRecommenderEngineResultRecommendationCleanupperFactory;
 import recommendation.groups.evolution.composed.listmaker.ExpectedScalingPredictionListMakerFactory;
+import recommendation.groups.evolution.composed.listmaker.GroupAndPredictionPair;
 import recommendation.groups.evolution.composed.listmaker.PredictionListMakerFactory;
-import recommendation.groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
 import recommendation.groups.evolution.recommendations.RecommendedGroupChangeEvolution;
 import bus.tools.TestingConstants;
 
@@ -165,7 +165,7 @@ public class EvolutionRecommendationMatcher<V> {
 			Collection<Set<V>> ideals) {
 
 		// Tracks when an old group has been associated with a prediction
-		Collection<OldGroupAndPredictionPair<V>> usedPairings = new TreeSet<OldGroupAndPredictionPair<V>>();
+		Collection<GroupAndPredictionPair<V>> usedPairings = new TreeSet<GroupAndPredictionPair<V>>();
 
 		// Tracks which of the modeled old groups have already been morphed into a prediction
 		Collection<Set<V>> usedOldGroups = new HashSet<Set<V>>();
@@ -228,7 +228,7 @@ public class EvolutionRecommendationMatcher<V> {
 
 	public Collection<RecommendedGroupChangeEvolution<V>> selectRecommendationsForSingleThreshold(
 			Set<GroupPredictionList<V>> matchings,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings,
+			Collection<GroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Set<V> newMembers,
 			Collection<Set<V>> usedRecommenderEngineResults) {
 
@@ -315,7 +315,7 @@ public class EvolutionRecommendationMatcher<V> {
 	public Collection<RecommendedGroupChangeEvolution<V>> selectRecommendationsForSingleThreshold(
 			Set<GroupPredictionList<V>> matchings,
 			Map<Set<V>, ArrayList<Set<V>>> oldToIdealGroupsMap,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings,
+			Collection<GroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Set<V> newMembers,
 			Collection<Set<V>> usedRecommenderEngineResults) {
 
@@ -399,7 +399,7 @@ public class EvolutionRecommendationMatcher<V> {
 			ArrayList<GroupPredictionList<V>> smallestPredictionLists,
 			Collection<V> newMembers,
 			Collection<GroupPredictionList<V>> predictionLists,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings,
+			Collection<GroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups,
 			Collection<Set<V>> usedPredictedGroups) {
 
@@ -435,7 +435,7 @@ public class EvolutionRecommendationMatcher<V> {
 			Collection<GroupPredictionList<V>> intersectingLists,
 			Collection<V> newMembers,
 			Collection<GroupPredictionList<V>> predictionLists,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings,
+			Collection<GroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups,
 			Collection<Set<V>> usedPredictedGroups) {
 
@@ -457,7 +457,7 @@ public class EvolutionRecommendationMatcher<V> {
 			GroupPredictionList<V> predictionList, Collection<V> newMembers,
 			Collection<GroupPredictionList<V>> predictionLists,
 			Map<Set<V>, ArrayList<Set<V>>> oldToIdealGroupsMap,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings,
+			Collection<GroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups,
 			Collection<Set<V>> usedPredictedGroups,
 			Collection<Set<V>> usedIdeals) {
@@ -489,7 +489,7 @@ public class EvolutionRecommendationMatcher<V> {
 			Collection<V> newMembers,
 			Collection<GroupPredictionList<V>> predictionLists,
 			Map<Set<V>, ArrayList<Set<V>>> oldToIdealGroupsMap,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings,
+			Collection<GroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups,
 			Collection<Set<V>> usedPredictedGroups,
 			Collection<Set<V>> usedIdeals) {

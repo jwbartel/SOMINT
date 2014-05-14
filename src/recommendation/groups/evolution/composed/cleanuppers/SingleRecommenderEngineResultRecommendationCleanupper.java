@@ -1,16 +1,11 @@
 package recommendation.groups.evolution.composed.cleanuppers;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import recommendation.groups.evolution.GroupPredictionList;
-import recommendation.groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
-import recommendation.groups.evolution.old.GroupMaintainer;
-import recommendation.groups.evolution.old.GroupMorphingTuple;
-import recommendation.groups.evolution.recommendations.RecommendedGroupChangeEvolution;
+import recommendation.groups.evolution.composed.listmaker.GroupAndPredictionPair;
 
 
 public class SingleRecommenderEngineResultRecommendationCleanupper<V> implements
@@ -19,7 +14,7 @@ public class SingleRecommenderEngineResultRecommendationCleanupper<V> implements
 	@Override
 	public void removeSelection(Set<V> usedOldGroup, Set<V> usedRecommendedEvolution,
 			Collection<GroupPredictionList<V>> predictionLists, 
-			Collection<OldGroupAndPredictionPair<V>> usedPairings,
+			Collection<GroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Collection<Set<V>> usedRecommendedEvolutions){
 		
 		usedOldGroups.add(usedOldGroup);

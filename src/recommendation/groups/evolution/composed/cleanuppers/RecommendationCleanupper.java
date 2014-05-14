@@ -4,14 +4,14 @@ import java.util.Collection;
 import java.util.Set;
 
 import recommendation.groups.evolution.GroupPredictionList;
-import recommendation.groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
+import recommendation.groups.evolution.composed.listmaker.GroupAndPredictionPair;
 
 
 public interface RecommendationCleanupper<V> {
 
 	void removeSelection(Set<V> usedOldGroup, Set<V> usedRecommendedEvolution,
 			Collection<GroupPredictionList<V>> predictionLists,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings,
+			Collection<GroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups,
 			Collection<Set<V>> usedRecommendedEvolutions);
 }

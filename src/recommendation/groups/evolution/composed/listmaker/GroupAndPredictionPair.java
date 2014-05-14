@@ -1,21 +1,21 @@
-package recommendation.groups.evolution.composed.oldchoosers;
+package recommendation.groups.evolution.composed.listmaker;
 
 import java.util.Set;
 import java.util.TreeSet;
 
-public class OldGroupAndPredictionPair<V> implements Comparable<OldGroupAndPredictionPair<V>>{
+public class GroupAndPredictionPair<V> implements Comparable<GroupAndPredictionPair<V>>{
 	Set<V> oldGroup;
 	Set<V> prediction;
 	
-	public OldGroupAndPredictionPair(Set<V> oldGroup, Set<V> prediction){
+	public GroupAndPredictionPair(Set<V> oldGroup, Set<V> prediction){
 		this.oldGroup = oldGroup;
 		this.prediction = prediction;
 	}
 	
 	@SuppressWarnings("rawtypes")
 	public boolean equals(Object o){
-		if(o instanceof OldGroupAndPredictionPair){
-			OldGroupAndPredictionPair other = (OldGroupAndPredictionPair) o;
+		if(o instanceof GroupAndPredictionPair){
+			GroupAndPredictionPair other = (GroupAndPredictionPair) o;
 			
 			return oldGroup.equals(other.oldGroup) && prediction.equals(other.prediction);
 		}
@@ -24,7 +24,7 @@ public class OldGroupAndPredictionPair<V> implements Comparable<OldGroupAndPredi
 	}
 
 	@Override
-	public int compareTo(OldGroupAndPredictionPair<V> arg0) {
+	public int compareTo(GroupAndPredictionPair<V> arg0) {
 		
 		int oldStrCompare = oldGroup.toString().compareTo(arg0.oldGroup.toString());
 		if(oldStrCompare != 0) return oldStrCompare;
@@ -57,7 +57,7 @@ public class OldGroupAndPredictionPair<V> implements Comparable<OldGroupAndPredi
 		oldGroup1.add(1);
 		oldGroup1.add(2);
 		prediction1.add(3);
-		OldGroupAndPredictionPair<Integer> pair1 = new OldGroupAndPredictionPair<Integer>(oldGroup1, prediction1);
+		GroupAndPredictionPair<Integer> pair1 = new GroupAndPredictionPair<Integer>(oldGroup1, prediction1);
 		
 		Set<Integer> oldGroup2 = new TreeSet<Integer>();
 		Set<Integer> prediction2 = new TreeSet<Integer>();
@@ -65,9 +65,9 @@ public class OldGroupAndPredictionPair<V> implements Comparable<OldGroupAndPredi
 		oldGroup2.add(2);
 		prediction2.add(3);
 		prediction2.add(4);
-		OldGroupAndPredictionPair<Integer> pair2 = new OldGroupAndPredictionPair<Integer>(oldGroup2, prediction2);
+		GroupAndPredictionPair<Integer> pair2 = new GroupAndPredictionPair<Integer>(oldGroup2, prediction2);
 		
-		Set<OldGroupAndPredictionPair<Integer>> pairSet = new TreeSet<OldGroupAndPredictionPair<Integer>>();
+		Set<GroupAndPredictionPair<Integer>> pairSet = new TreeSet<GroupAndPredictionPair<Integer>>();
 		pairSet.add(pair1);
 		pairSet.add(pair2);
 		

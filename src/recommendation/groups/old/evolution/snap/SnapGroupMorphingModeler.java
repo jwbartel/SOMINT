@@ -1,4 +1,4 @@
-package recommendation.groups.evolution.evaluation.snap;
+package recommendation.groups.old.evolution.snap;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,13 +12,11 @@ import java.util.Set;
 
 import recommendation.groups.evolution.composed.loading.PredictionLoaderSelector;
 import recommendation.groups.evolution.composed.loading.SnapHybridPredictionLoaderFactory;
-import recommendation.groups.evolution.evaluation.GroupMorphingModeler;
-import recommendation.groups.evolution.evaluation.analysis.EvolutionStats;
-import recommendation.groups.evolution.evaluation.synthetic.MembershipChangeFinder;
-import recommendation.groups.seedless.hybrid.IOFunctions;
+import recommendation.groups.old.evolution.GroupMorphingModeler;
+import recommendation.groups.old.evolution.MembershipChangeFinder;
+import recommendation.groups.old.evolution.analysis.EvolutionStats;
 import bus.tools.FileFinder;
 import bus.tools.TestingConstants;
-import bus.tools.io.SnapIOFunctions;
 
 public class SnapGroupMorphingModeler extends GroupMorphingModeler {
 	

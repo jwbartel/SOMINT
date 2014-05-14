@@ -6,13 +6,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import recommendation.groups.evolution.GroupPredictionList;
-import recommendation.groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
 
 
 public abstract class PredictionListMaker<V> {
 	
 	public Set<GroupPredictionList<V>> getAllMatchings(Collection<Set<V>> unusedOldGroups, Collection<Set<V>> unusedRecommenderEngineResults, 
-			Collection<OldGroupAndPredictionPair<V>> usedPairings, Set<V> newIndividuals, double percentNew, double threshold){
+			Collection<GroupAndPredictionPair<V>> usedPairings, Set<V> newIndividuals, double percentNew, double threshold){
 		
 		Set<GroupPredictionList<V>> unusedPredictionLists = new TreeSet<GroupPredictionList<V>>();
 		
@@ -29,8 +28,8 @@ public abstract class PredictionListMaker<V> {
 
 	
 	public abstract GroupPredictionList<V> getPredictionList(Set<V> oldGroup, Collection<Set<V>> unusedRecommenderEngineResults,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings, Set<V> newIndividuals, double percentNew, double threshold);
+			Collection<GroupAndPredictionPair<V>> usedPairings, Set<V> newIndividuals, double percentNew, double threshold);
 
 	public abstract GroupPredictionList<V> getPredictionList(Set<V> oldGroup, String oldGroupName, Collection<Set<V>> unusedRecommenderEngineResults,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings, Set<V> newIndividuals, double percentNew, double threshold, Map<Set<V>, String> predictionNames);
+			Collection<GroupAndPredictionPair<V>> usedPairings, Set<V> newIndividuals, double percentNew, double threshold, Map<Set<V>, String> predictionNames);
 }

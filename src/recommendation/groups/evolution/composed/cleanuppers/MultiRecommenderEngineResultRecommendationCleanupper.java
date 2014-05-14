@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import recommendation.groups.evolution.GroupPredictionList;
-import recommendation.groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
+import recommendation.groups.evolution.composed.listmaker.GroupAndPredictionPair;
 
 
 
@@ -15,14 +15,14 @@ public class MultiRecommenderEngineResultRecommendationCleanupper<V>
 	@Override
 	public void removeSelection(Set<V> usedOldGroup, Set<V> usedRecommendedEvolution, 
 			Collection<GroupPredictionList<V>> predictionLists, 
-			Collection<OldGroupAndPredictionPair<V>> usedPairings,
+			Collection<GroupAndPredictionPair<V>> usedPairings,
 			Collection<Set<V>> usedOldGroups, Collection<Set<V>> usedRecommendedEvolutions){
 		
 		usedOldGroups.add(usedOldGroup);
 		usedRecommendedEvolutions.add(usedRecommendedEvolution);
 		
 		//Only use each (old group, prediction) pair at most once
-		OldGroupAndPredictionPair<V> currPair = new OldGroupAndPredictionPair<V>(usedOldGroup, usedRecommendedEvolution);
+		GroupAndPredictionPair<V> currPair = new GroupAndPredictionPair<V>(usedOldGroup, usedRecommendedEvolution);
 		usedPairings.add(currPair);
 		
 		

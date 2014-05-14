@@ -8,7 +8,7 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.BronKerboschCliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 
-import recommendation.groups.evolution.evaluation.snap.SnapTestingConstants;
+import recommendation.groups.old.evolution.snap.SnapTestingConstants;
 import recommendation.groups.seedless.hybrid.IOFunctions;
 import bus.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
 import bus.tools.FileFinder;

@@ -1,4 +1,4 @@
-package recommendation.groups.evolution.old.snap;
+package recommendation.groups.old.evolution.snap;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

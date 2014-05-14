@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import recommendation.groups.evolution.GroupPredictionList;
-import recommendation.groups.evolution.composed.oldchoosers.OldGroupAndPredictionPair;
 
 
 public class ExpectedScalingPredictionListMaker<V> extends
@@ -15,13 +14,13 @@ public class ExpectedScalingPredictionListMaker<V> extends
 
 	@Override
 	public GroupPredictionList<V> getPredictionList(Set<V> oldGroup, Collection<Set<V>> unusedRecommenderEngineResults,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings, Set<V> newIndividuals, double percentNew, double threshold){
+			Collection<GroupAndPredictionPair<V>> usedPairings, Set<V> newIndividuals, double percentNew, double threshold){
 		
 		GroupPredictionList<V> predictionList = new GroupPredictionList<V>(oldGroup);
 		
 		for(Set<V> recommenderEngineResult: unusedRecommenderEngineResults){
 						
-			OldGroupAndPredictionPair<V> currPair = new OldGroupAndPredictionPair<V>(oldGroup, recommenderEngineResult);
+			GroupAndPredictionPair<V> currPair = new GroupAndPredictionPair<V>(oldGroup, recommenderEngineResult);
 			if(usedPairings.contains(currPair)) continue;  //If we've already matched a pair don't recommend them again
 			
 			Set<V> existingMembersInResult = new HashSet<V>(recommenderEngineResult);
@@ -76,7 +75,7 @@ public class ExpectedScalingPredictionListMaker<V> extends
 	@Override
 	public GroupPredictionList<V> getPredictionList(Set<V> oldGroup,
 			String oldGroupName, Collection<Set<V>> unusedRecommenderEngineResults,
-			Collection<OldGroupAndPredictionPair<V>> usedPairings,
+			Collection<GroupAndPredictionPair<V>> usedPairings,
 			Set<V> newIndividuals, double percentNew, double threshold,
 			Map<Set<V>, String> predictionNames) {
 
@@ -86,7 +85,7 @@ public class ExpectedScalingPredictionListMaker<V> extends
 		for(Set<V> recommenderEngineResult: unusedRecommenderEngineResults){
 			String predictedGroupName = predictionNames.get(recommenderEngineResult);
 			
-			OldGroupAndPredictionPair<V> currPair = new OldGroupAndPredictionPair<V>(oldGroup, recommenderEngineResult);
+			GroupAndPredictionPair<V> currPair = new GroupAndPredictionPair<V>(oldGroup, recommenderEngineResult);
 			if(usedPairings.contains(currPair)) continue;
 			
 			Set<V> existingMembersInResult = new HashSet<V>(recommenderEngineResult);
