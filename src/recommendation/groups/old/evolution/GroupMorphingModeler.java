@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import recommendation.groups.evolution.composed.loading.HybridPredictionLoaderFactory;
-import recommendation.groups.evolution.composed.loading.PredictionLoaderSelector;
 import recommendation.groups.old.evolution.analysis.EvolutionStats;
 import recommendation.groups.old.evolution.analysis.EvolutionStatsBuilder;
 import recommendation.groups.old.evolution.predictions.choosers.MultiRecommenderEngineResultRecommendationChooserFactory;
@@ -24,6 +22,8 @@ import recommendation.groups.old.evolution.predictions.choosers.SingleRecommende
 import recommendation.groups.old.evolution.predictions.lists.ExpectedScalingPredictionListMakerFactory;
 import recommendation.groups.old.evolution.predictions.lists.JaccardCoefficientPredictionListMakerFactory;
 import recommendation.groups.old.evolution.predictions.lists.PredictionListSelector;
+import recommendation.groups.old.evolution.predictions.loading.HybridPredictionLoaderFactory;
+import recommendation.groups.old.evolution.predictions.loading.PredictionLoaderSelector;
 import recommendation.groups.old.evolution.predictions.oldchoosers.MultiPredictionMultiIdealPredictionChooserFactory;
 import recommendation.groups.old.evolution.predictions.oldchoosers.MultiPredictionSingleIdealPredictionChooserFactory;
 import recommendation.groups.old.evolution.predictions.oldchoosers.OldGroupAndPredictionPair;

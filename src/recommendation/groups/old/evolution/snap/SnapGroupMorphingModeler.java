@@ -10,11 +10,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import recommendation.groups.evolution.composed.loading.PredictionLoaderSelector;
-import recommendation.groups.evolution.composed.loading.SnapHybridPredictionLoaderFactory;
 import recommendation.groups.old.evolution.GroupMorphingModeler;
 import recommendation.groups.old.evolution.MembershipChangeFinder;
 import recommendation.groups.old.evolution.analysis.EvolutionStats;
+import recommendation.groups.old.evolution.predictions.loading.PredictionLoaderSelector;
+import recommendation.groups.old.evolution.predictions.loading.SnapHybridPredictionLoaderFactory;
 import bus.tools.FileFinder;
 import bus.tools.TestingConstants;
 

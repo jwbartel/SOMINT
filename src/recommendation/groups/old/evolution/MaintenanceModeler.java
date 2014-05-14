@@ -17,12 +17,12 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.BronKerboschCliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 
-import recommendation.groups.evolution.composed.loading.HybridPredictionLoaderFactory;
-import recommendation.groups.evolution.composed.loading.PredictionLoaderSelector;
 import recommendation.groups.old.evolution.old.GroupMaintainer;
 import recommendation.groups.old.evolution.predictions.lists.ExpectedScalingPredictionListMakerFactory;
 import recommendation.groups.old.evolution.predictions.lists.JaccardCoefficientPredictionListMakerFactory;
 import recommendation.groups.old.evolution.predictions.lists.PredictionListSelector;
+import recommendation.groups.old.evolution.predictions.loading.HybridPredictionLoaderFactory;
+import recommendation.groups.old.evolution.predictions.loading.PredictionLoaderSelector;
 import recommendation.groups.seedless.hybrid.IOFunctions;
 import bus.tools.TestingConstants;
 
