@@ -1,4 +1,4 @@
-package recommendation.groups.seedless;
+package recommendation.groups.old.seedless;
 
 public class CommunityScorerSelector {
 

@@ -1,7 +1,7 @@
-package recommendation.groups.seedless.fellows;
+package recommendation.groups.old.seedless.fellows;
 
-import recommendation.groups.seedless.CommunityScorer;
-import recommendation.groups.seedless.CommunityScorerFactory;
+import recommendation.groups.old.seedless.CommunityScorer;
+import recommendation.groups.old.seedless.CommunityScorerFactory;
 
 public class ClaudetCommunityScorerFactory<V> implements CommunityScorerFactory<V> {
 

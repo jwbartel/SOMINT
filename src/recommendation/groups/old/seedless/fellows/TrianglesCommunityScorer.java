@@ -1,4 +1,4 @@
-package recommendation.groups.seedless.fellows;
+package recommendation.groups.old.seedless.fellows;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -11,7 +11,8 @@ import java.util.TreeSet;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import recommendation.groups.seedless.CommunityScorer;
+import recommendation.groups.old.seedless.CommunityScorer;
+import recommendation.groups.seedless.fellows.Triangle;
 
 public class TrianglesCommunityScorer<V extends Comparable<V>> implements CommunityScorer<V> {
 

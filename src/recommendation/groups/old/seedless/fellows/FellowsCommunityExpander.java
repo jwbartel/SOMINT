@@ -1,4 +1,4 @@
-package recommendation.groups.seedless.fellows;
+package recommendation.groups.old.seedless.fellows;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -12,9 +12,10 @@ import java.util.TreeSet;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import recommendation.groups.seedless.CommunityScorer;
-import recommendation.groups.seedless.CommunityScorerSelector;
+import recommendation.groups.old.seedless.CommunityScorer;
+import recommendation.groups.old.seedless.CommunityScorerSelector;
 import recommendation.groups.seedless.LocalCommunityExpander;
+import recommendation.groups.seedless.fellows.Triangle;
 import recommendation.groups.seedless.hybrid.IOFunctions;
 
 public class FellowsCommunityExpander<V extends Comparable<V>> extends LocalCommunityExpander<V>{

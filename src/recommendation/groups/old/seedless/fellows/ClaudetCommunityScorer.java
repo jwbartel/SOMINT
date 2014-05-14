@@ -1,4 +1,4 @@
-package recommendation.groups.seedless.fellows;
+package recommendation.groups.old.seedless.fellows;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,7 +7,7 @@ import java.util.TreeSet;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import recommendation.groups.seedless.CommunityScorer;
+import recommendation.groups.old.seedless.CommunityScorer;
 import recommendation.groups.seedless.LocalCommunityExpander;
 
 

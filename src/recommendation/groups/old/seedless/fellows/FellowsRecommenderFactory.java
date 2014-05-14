@@ -1,4 +1,4 @@
-package recommendation.groups.seedless.fellows;
+package recommendation.groups.old.seedless.fellows;
 
 import java.util.Collection;
 import java.util.Set;
@@ -8,6 +8,7 @@ import org.jgrapht.graph.DefaultEdge;
 
 import recommendation.groups.seedless.SeedlessGroupRecommender;
 import recommendation.groups.seedless.SeedlessGroupRecommenderFactory;
+import recommendation.groups.seedless.fellows.Fellows;
 
 public class FellowsRecommenderFactory<V extends Comparable<V>> implements SeedlessGroupRecommenderFactory<V>{
 

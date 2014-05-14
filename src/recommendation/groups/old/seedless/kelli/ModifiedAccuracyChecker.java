@@ -1,4 +1,4 @@
-package recommendation.groups.seedless.hybrid;
+package recommendation.groups.old.seedless.kelli;
 
 import java.awt.Point;
 import java.io.DataInputStream;
