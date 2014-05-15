@@ -44,7 +44,7 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 	}
 	
 	private UndirectedGraph<CollaboratorType, DefaultEdge> buildGraph() {
-		if (mostRecentAction != null) {
+		if (mostRecentAction == null) {
 			return new SimpleGraph<>(DefaultEdge.class);
 		}
 		Graph<CollaboratorType, DefaultEdge> graph = graphBuilder.addActionToGraph(null,
