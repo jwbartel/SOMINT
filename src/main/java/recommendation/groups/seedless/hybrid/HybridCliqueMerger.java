@@ -16,12 +16,17 @@ import org.jgrapht.graph.SimpleGraph;
 import recommendation.groups.seedless.SeedlessGroupRecommender;
 import bus.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
 import bus.tools.FileFinder;
+import bus.tools.io.ValueParser;
 
 public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 
 	public static final int LARGE_GROUP_MIN_SIZE = 50;
 
 	double S = 0.0, D = 1.0;
+	
+	ValueParser<V> parser = null;
+	Integer maxVerticesForCliquesInMemory = null;
+	
 	protected UndirectedGraph<V, DefaultEdge> graph = null;
 	protected final Collection<Set<V>> precomputedMaximalCliques;
 	protected IOFunctions<V> ioHelp;
@@ -31,6 +36,14 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 	public HybridCliqueMerger(UndirectedGraph<V, DefaultEdge> graph) {
 		this.graph = graph;
 		precomputedMaximalCliques = null;
+	}
+
+
+	public HybridCliqueMerger(UndirectedGraph<V, DefaultEdge> graph, ValueParser<V> parser, int maxVerticesForCliquesInMemory) {
+		this.graph = graph;
+		precomputedMaximalCliques = null;
+		this.parser = parser;
+		this.maxVerticesForCliquesInMemory = maxVerticesForCliquesInMemory;
 	}
 	
 	public HybridCliqueMerger(UndirectedGraph<V, DefaultEdge> graph, Collection<Set<V>> maximalCliques) {
@@ -240,7 +253,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		Collection<Set<V>> maximalCliques;
 		if (maximalCliqueFile == null || !maximalCliqueFile.exists()) {
 			BronKerboschCliqueFinder<V, DefaultEdge> BKcliqueFind = new FileAndMemoryBasedBronKerboschCliqueFinder<V, DefaultEdge>(
-					graph);
+					graph, parser, maxVerticesForCliquesInMemory);
 			maximalCliques = BKcliqueFind.getAllMaximalCliques();
 			if (maximalCliqueFile != null) {
 				ioHelp.printCliqueIDsToFile(maximalCliqueFile.getPath(), maximalCliques);

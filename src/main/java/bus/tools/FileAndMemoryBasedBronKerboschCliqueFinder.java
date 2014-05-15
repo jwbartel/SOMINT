@@ -29,6 +29,7 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
     private Collection<Set<V>> cliques;
     private final Graph<V, E> graph;
     private final ValueParser<V> parser;
+    private final Integer maxVerticesInMemory;
 
     //private Collection<Set<V>> cliques;
 
@@ -45,6 +46,7 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
     	super(graph);
         this.graph = graph;
         this.parser = null;
+        this.maxVerticesInMemory = null;
     }
 
     /**
@@ -52,12 +54,37 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
      *
      * @param graph the graph in which cliques are to be found; graph must be
      * simple
+     * @param parser the parser used for file storage and retrieval to avoid 
+     * OutOfMemory exceptions
      */
     public FileAndMemoryBasedBronKerboschCliqueFinder(Graph<V, E> graph, ValueParser<V> parser)
     {
     	super(graph);
         this.graph = graph;
         this.parser = parser;
+        this.maxVerticesInMemory = null;
+    }
+    
+
+
+    /**
+     * Creates a new clique finder.
+     *
+     * @param graph the graph in which cliques are to be found; graph must be
+     * simple
+     * @param parser the parser used for file storage and retrieval to avoid 
+     * OutOfMemory exceptions
+     * @param maxVerticesInMemory the maximum number of vertices a graph can
+     * have where the clique finder will run all operations in memory rather
+     * than on file
+     */
+    public FileAndMemoryBasedBronKerboschCliqueFinder(Graph<V, E> graph, ValueParser<V> parser,
+    		Integer maxVerticesInMemory)
+    {
+    	super(graph);
+        this.graph = graph;
+        this.parser = parser;
+        this.maxVerticesInMemory = maxVerticesInMemory;
     }
 
     //~ Methods ----------------------------------------------------------------
@@ -72,9 +99,10 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
      */
     public Collection<Set<V>> getAllMaximalCliques() {
 
-    	if (parser == null) {
-    		return super.getAllMaximalCliques();
-    	}
+		if (parser == null || (maxVerticesInMemory != null
+				&& maxVerticesInMemory >= graph.vertexSet().size())) {
+			return super.getAllMaximalCliques();
+		}
     	
     	try {
 			findTempCliqueFile();
