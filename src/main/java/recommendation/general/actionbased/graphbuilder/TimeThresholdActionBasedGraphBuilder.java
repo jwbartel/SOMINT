@@ -4,9 +4,9 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 import org.jgrapht.Graph;
-import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
@@ -34,10 +34,15 @@ public class TimeThresholdActionBasedGraphBuilder<CollaboratorType, ActionType e
 		calendar.setTimeInMillis(currentAction.getLastActiveDate().getTime() - thresholdAge);
 		Date threshold = calendar.getTime();
 
+		pastActions = new HashSet<>(pastActions);
+		pastActions.add(currentAction);
 		for (CollaborativeAction<CollaboratorType> action : pastActions) {
 			if (action.getLastActiveDate().before(threshold))
 				continue;
 			for (CollaboratorType collaborator : action.getCollaborators()) {
+				if (graph.containsVertex(collaborator)) {
+					continue;
+				}
 				graph.addVertex(collaborator);
 				for (CollaboratorType collaborator2 : action.getCollaborators()) {
 					if (!collaborator2.equals(collaborator)) {

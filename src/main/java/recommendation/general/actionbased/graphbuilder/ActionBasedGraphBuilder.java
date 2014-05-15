@@ -7,10 +7,10 @@ import org.jgrapht.graph.DefaultEdge;
 
 import recommendation.general.actionbased.CollaborativeAction;
 
-public interface ActionBasedGraphBuilder<CollaboratorType, ActionType extends CollaborativeAction<CollaboratorType>> {
+public interface ActionBasedGraphBuilder<RecipientType, ActionType extends CollaborativeAction<RecipientType>> {
 
-	public Graph<CollaboratorType, DefaultEdge> addActionToGraph(
-			Graph<CollaboratorType, DefaultEdge> graph,
+	public Graph<RecipientType, DefaultEdge> addActionToGraph(
+			Graph<RecipientType, DefaultEdge> graph,
 			ActionType currentAction,
 			Collection<ActionType> pastActions);
 }

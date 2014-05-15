@@ -11,7 +11,7 @@ import recommendation.general.actionbased.CollaborativeAction;
 public abstract class WeightedActionBasedGraphBuilder<CollaboratorType, ActionType extends CollaborativeAction<CollaboratorType>>
 		implements ActionBasedGraphBuilder<CollaboratorType, ActionType> {
 
-	public abstract WeightedGraph<CollaboratorType, DefaultEdge> addActionToGraph(
+	public abstract WeightedGraph<CollaboratorType, DefaultEdge> addActionToWeightedGraph(
 			WeightedGraph<CollaboratorType, DefaultEdge> graph, ActionType currentAction,
 			Collection<ActionType> pastActions);
 
@@ -21,7 +21,7 @@ public abstract class WeightedActionBasedGraphBuilder<CollaboratorType, ActionTy
 			ActionType currentAction,
 			Collection<ActionType> pastActions) {
 		if (graph == null || graph instanceof WeightedGraph) {
-			return addActionToGraph((WeightedGraph<CollaboratorType, DefaultEdge>) graph,
+			return addActionToWeightedGraph((WeightedGraph<CollaboratorType, DefaultEdge>) graph,
 					currentAction, pastActions);
 		}
 		return null;

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jgrapht.Graph;
 import org.jgrapht.WeightedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -17,9 +18,11 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
 		extends WeightedActionBasedGraphBuilder<CollaboratorType, ActionType> {
 
 	private final GroupScorer<CollaboratorType> scorer;
+	private final double edgeThreshold;
 	
-	public InteractionRankWeightedActionBasedGraphBuilder(long halfLife, double sentImportance) {
+	public InteractionRankWeightedActionBasedGraphBuilder(long halfLife, double sentImportance, double edgeThreshold) {
 		scorer = new TopContactScore<>(sentImportance, halfLife);
+		this.edgeThreshold = edgeThreshold;
 	}
 	
 	private class Pair<V> {
@@ -42,7 +45,7 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
 	
 	
 	@Override
-	public WeightedGraph<CollaboratorType, DefaultEdge> addActionToGraph(
+	public WeightedGraph<CollaboratorType, DefaultEdge> addActionToWeightedGraph(
 			WeightedGraph<CollaboratorType, DefaultEdge> graph,
 			ActionType currentAction,
 			Collection<ActionType> pastActions) {
@@ -50,12 +53,17 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
 		if (graph == null) {
 			graph = new SimpleWeightedGraph<CollaboratorType,DefaultEdge>(DefaultWeightedEdge.class);
 		}
+		pastActions = new HashSet<>(pastActions);
+		pastActions.add(currentAction);
         for(ActionType action : pastActions) {
         	
             Set<Pair<CollaboratorType>> seenCollaboratorPairs = new HashSet<>();
         	double actionScore = scorer.getInteractionRankScoreOfPastAction(currentAction, action);
         	
         	 for(CollaboratorType collaborator1 : action.getCollaborators()) {
+				if (graph.containsVertex(collaborator1)) {
+					continue;
+				}
         		 graph.addVertex(collaborator1);
         		 for (CollaboratorType collaborator2 : action.getCollaborators()) {
         			 if (!collaborator1.equals(collaborator2) && !graph.containsVertex(collaborator2)) {
@@ -77,6 +85,28 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
         return graph;
 	}
 
-
+	@Override
+	public Graph<CollaboratorType, DefaultEdge> addActionToGraph(
+			Graph<CollaboratorType, DefaultEdge> graph,
+			ActionType currentAction,
+			Collection<ActionType> pastActions) {
+		if (graph == null || graph instanceof WeightedGraph) {
+			graph = addActionToWeightedGraph(
+					(WeightedGraph<CollaboratorType, DefaultEdge>) graph, currentAction,
+					pastActions);
+			
+			Set<CollaboratorType> allVertices = graph.vertexSet();
+	        for (CollaboratorType vertex : allVertices) {
+	            for (CollaboratorType vertex2: allVertices){
+	                DefaultEdge edge = graph.getEdge(vertex, vertex2);
+					if (graph.getEdgeWeight(edge) < edgeThreshold) {
+						graph.removeEdge(edge);
+					}
+	            }
+	        }
+	        return graph;
+		}
+		return null;
+	}
 
 }

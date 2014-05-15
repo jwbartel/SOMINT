@@ -1,9 +1,9 @@
 package recommendation.general.actionbased.graphbuilder;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.jgrapht.Graph;
-import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
@@ -22,8 +22,13 @@ public class SimpleActionBasedGraphBuilder<CollaboratorType, ActionType extends 
 			graph = new SimpleGraph<>(DefaultEdge.class);
 		}
 
+		pastActions = new HashSet<>(pastActions);
+		pastActions.add(currentAction);
 		for (CollaborativeAction<CollaboratorType> action : pastActions) {
 			for (CollaboratorType collaborator : action.getCollaborators()) {
+				if (graph.containsVertex(collaborator)) {
+					continue;
+				}
 				graph.addVertex(collaborator);
 				for (CollaboratorType collaborator2 : action.getCollaborators()) {
 					if (!collaborator2.equals(collaborator)) {
