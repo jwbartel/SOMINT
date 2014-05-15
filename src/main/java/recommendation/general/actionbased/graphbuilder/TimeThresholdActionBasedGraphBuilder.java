@@ -12,8 +12,8 @@ import org.jgrapht.graph.SimpleGraph;
 
 import recommendation.general.actionbased.CollaborativeAction;
 
-public class TimeThresholdActionBasedGraphBuilder<RecipientType> implements
-		ActionBasedGraphBuilder<RecipientType> {
+public class TimeThresholdActionBasedGraphBuilder<CollaboratorType, ActionType extends CollaborativeAction<CollaboratorType>>
+		implements ActionBasedGraphBuilder<CollaboratorType, ActionType> {
 
 	private final long thresholdAge;
 
@@ -22,22 +22,24 @@ public class TimeThresholdActionBasedGraphBuilder<RecipientType> implements
 	}
 
 	@Override
-	public Graph<RecipientType, DefaultEdge> addActionToGraph(
-			CollaborativeAction<RecipientType> currentAction,
-			Collection<CollaborativeAction<RecipientType>> pastActions) {
+	public Graph<CollaboratorType, DefaultEdge> addActionToGraph(
+			Graph<CollaboratorType, DefaultEdge> graph,
+			ActionType currentAction,
+			Collection<ActionType> pastActions) {
 
-		UndirectedGraph<RecipientType, DefaultEdge> graph = new SimpleGraph<RecipientType, DefaultEdge>(
-				DefaultEdge.class);
+		if (graph == null) {
+			graph = new SimpleGraph<>(DefaultEdge.class);
+		}
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTimeInMillis(currentAction.getLastActiveDate().getTime() - thresholdAge);
 		Date threshold = calendar.getTime();
 
-		for (CollaborativeAction<RecipientType> action : pastActions) {
+		for (CollaborativeAction<CollaboratorType> action : pastActions) {
 			if (action.getLastActiveDate().before(threshold))
 				continue;
-			for (RecipientType collaborator : action.getCollaborators()) {
+			for (CollaboratorType collaborator : action.getCollaborators()) {
 				graph.addVertex(collaborator);
-				for (RecipientType collaborator2 : action.getCollaborators()) {
+				for (CollaboratorType collaborator2 : action.getCollaborators()) {
 					if (!collaborator2.equals(collaborator)) {
 						if (!graph.containsVertex(collaborator2)) {
 							graph.addVertex(collaborator2);

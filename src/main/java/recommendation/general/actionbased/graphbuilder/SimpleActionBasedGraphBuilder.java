@@ -9,19 +9,23 @@ import org.jgrapht.graph.SimpleGraph;
 
 import recommendation.general.actionbased.CollaborativeAction;
 
-public class SimpleActionBasedGraphBuilder<RecipientType> implements ActionBasedGraphBuilder<RecipientType> {
+public class SimpleActionBasedGraphBuilder<CollaboratorType, ActionType extends CollaborativeAction<CollaboratorType>>
+		implements ActionBasedGraphBuilder<CollaboratorType, ActionType> {
 
 	@Override
-	public Graph<RecipientType, DefaultEdge> addActionToGraph(
-			CollaborativeAction<RecipientType> currentAction,
-			Collection<CollaborativeAction<RecipientType>> pastActions) {
-		
-		UndirectedGraph<RecipientType, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+	public Graph<CollaboratorType, DefaultEdge> addActionToGraph(
+			Graph<CollaboratorType, DefaultEdge> graph,
+			ActionType currentAction,
+			Collection<ActionType> pastActions) {
 
-        for(CollaborativeAction<RecipientType> action : pastActions) {
-			for (RecipientType collaborator : action.getCollaborators()) {
+		if (graph == null) {
+			graph = new SimpleGraph<>(DefaultEdge.class);
+		}
+
+		for (CollaborativeAction<CollaboratorType> action : pastActions) {
+			for (CollaboratorType collaborator : action.getCollaborators()) {
 				graph.addVertex(collaborator);
-				for (RecipientType collaborator2 : action.getCollaborators()) {
+				for (CollaboratorType collaborator2 : action.getCollaborators()) {
 					if (!collaborator2.equals(collaborator)) {
 						if (!graph.containsVertex(collaborator2)) {
 							graph.addVertex(collaborator2);
@@ -32,8 +36,8 @@ public class SimpleActionBasedGraphBuilder<RecipientType> implements ActionBased
 					}
 				}
 			}
-        }
-        return graph;
+		}
+		return graph;
 	}
 
 }

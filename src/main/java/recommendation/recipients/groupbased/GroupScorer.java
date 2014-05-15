@@ -23,7 +23,7 @@ public abstract class GroupScorer<V> {
 		return intersection;
 	}
 	
-	private double getInteractionRankScoreOfPastAction(CollaborativeAction<V> currentAction,
+	public double getInteractionRankScoreOfPastAction(CollaborativeAction<V> currentAction,
 			CollaborativeAction<V> pastAction) {
 
 		if (currentAction.getCreators() == null
