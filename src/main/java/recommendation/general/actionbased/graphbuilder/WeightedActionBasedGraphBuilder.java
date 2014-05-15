@@ -20,7 +20,7 @@ public abstract class WeightedActionBasedGraphBuilder<CollaboratorType, ActionTy
 			Graph<CollaboratorType, DefaultEdge> graph,
 			ActionType currentAction,
 			Collection<ActionType> pastActions) {
-		if (graph instanceof WeightedGraph) {
+		if (graph == null || graph instanceof WeightedGraph) {
 			return addActionToGraph((WeightedGraph<CollaboratorType, DefaultEdge>) graph,
 					currentAction, pastActions);
 		}
