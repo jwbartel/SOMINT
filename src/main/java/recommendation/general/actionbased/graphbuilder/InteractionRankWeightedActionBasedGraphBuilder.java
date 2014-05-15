@@ -65,8 +65,7 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
         			 if (!seenCollaboratorPairs.contains(pair)) {
         				 DefaultEdge edge = graph.getEdge(collaborator1, collaborator2);
         				 if (edge == null) {
-        					 edge = new DefaultEdge();
-        					 graph.addEdge(collaborator1, collaborator2, edge);
+        					 edge = graph.addEdge(collaborator1, collaborator2);
         					 graph.setEdgeWeight(edge, 0);
         				 }
         				 double currWeight = graph.getEdgeWeight(edge);
@@ -78,6 +77,6 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
         return graph;
 	}
 
-	
+
 
 }
