@@ -11,7 +11,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 
 import recommendation.general.actionbased.CollaborativeAction;
 import recommendation.recipients.groupbased.GroupScorer;
-import recommendation.recipients.groupbased.google.scoring.TopContactScore;
+import recommendation.recipients.groupbased.interactionrank.scoring.TopContactScore;
 
 public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, ActionType extends CollaborativeAction<CollaboratorType>>
 		extends WeightedActionBasedGraphBuilder<CollaboratorType, ActionType> {

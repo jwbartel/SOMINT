@@ -1,24 +1,31 @@
-package recommendation.recipients.groupbased.google.scoring;
+package recommendation.recipients.groupbased.interactionrank.scoring;
 
 import java.util.Collection;
 
 import recommendation.general.actionbased.CollaborativeAction;
 import recommendation.recipients.groupbased.GroupScorer;
 
-public class SubsetGroupCount<V> extends GroupScorer<V> {
+public class SubsetWeightedScore<V> extends GroupScorer<V> {
 
 	@Override
 	public String getName() {
-		return "SubsetGroupCount";
+		return "SubsetWeightedScore";
 	}
 
+	public SubsetWeightedScore(double wOut, double halfLife) {
+		this.wOut = wOut;
+		this.halfLife = halfLife;
+	}
+	
 	@Override
 	public double score(Collection<V> group,
 			CollaborativeAction<V> currentAction,
 			Collection<CollaborativeAction<V>> pastGroupActions) {
-		
+
 		if (group.containsAll(currentAction.getCollaborators())) {
-			return 1.0;
+			return ((double) currentAction.getCollaborators().size() / group
+					.size())
+					* getInteractionRank(currentAction, pastGroupActions);
 		} else {
 			return 0.0;
 		}
@@ -30,7 +37,7 @@ public class SubsetGroupCount<V> extends GroupScorer<V> {
 
 			@Override
 			public GroupScorer<V> create(double wOut, double halfLife) {
-				return new SubsetGroupCount<>();
+				return new SubsetWeightedScore<>(wOut, halfLife);
 			}
 		};
 	}

@@ -14,7 +14,7 @@ import java.util.TreeSet;
 
 import javax.mail.MessagingException;
 
-import recommendation.recipients.groupbased.google.GoogleAccount;
+import recommendation.recipients.groupbased.interactionrank.GoogleAccount;
 import bus.accounts.Account;
 import bus.data.parsers.MessageFrequencyParser;
 

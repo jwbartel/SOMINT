@@ -1,4 +1,4 @@
-package recommendation.recipients.groupbased.google;
+package recommendation.recipients.groupbased.interactionrank;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

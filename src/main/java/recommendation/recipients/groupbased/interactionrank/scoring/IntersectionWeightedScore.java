@@ -1,4 +1,4 @@
-package recommendation.recipients.groupbased.google.scoring;
+package recommendation.recipients.groupbased.interactionrank.scoring;
 
 import java.util.Collection;
 

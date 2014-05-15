@@ -1,18 +1,18 @@
-package recommendation.recipients.groupbased.google.scoring;
+package recommendation.recipients.groupbased.interactionrank.scoring;
 
 import java.util.Collection;
 
 import recommendation.general.actionbased.CollaborativeAction;
 import recommendation.recipients.groupbased.GroupScorer;
 
-public class IntersectionGroupScore<V> extends GroupScorer<V> {
+public class SubsetGroupScore<V> extends GroupScorer<V> {
 
 	@Override
 	public String getName() {
-		return "IntersectiongGroupScore";
+		return "SubsetGroupScore";
 	}
 
-	public IntersectionGroupScore(double wOut, double halfLife) {
+	public SubsetGroupScore(double wOut, double halfLife) {
 		this.wOut = wOut;
 		this.halfLife = halfLife;
 	}
@@ -22,8 +22,7 @@ public class IntersectionGroupScore<V> extends GroupScorer<V> {
 			CollaborativeAction<V> currentAction,
 			Collection<CollaborativeAction<V>> pastGroupActions) {
 		
-		Collection<V> intersection = getGroupIntersection(group, currentAction);
-		if (intersection.size() > 0) {
+		if (group.containsAll(currentAction.getCollaborators())) {
 			return getInteractionRank(currentAction, pastGroupActions);
 		} else {
 			return 0.0;
@@ -36,7 +35,7 @@ public class IntersectionGroupScore<V> extends GroupScorer<V> {
 
 			@Override
 			public GroupScorer<V> create(double wOut, double halfLife) {
-				return new IntersectionGroupScore<>(wOut, halfLife);
+				return new SubsetGroupScore<>(wOut, halfLife);
 			}
 		};
 	}

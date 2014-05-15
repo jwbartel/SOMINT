@@ -1,4 +1,4 @@
-package recommendation.recipients.groupbased.google;
+package recommendation.recipients.groupbased.interactionrank;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,20 +15,20 @@ import recommendation.recipients.RecipientRecommendation;
 import recommendation.recipients.ScoredRecipientRecommendation;
 import recommendation.recipients.groupbased.GroupBasedRecipientRecommender;
 import recommendation.recipients.groupbased.GroupScorer;
-import recommendation.recipients.groupbased.google.scoring.SubsetWeightedScore;
+import recommendation.recipients.groupbased.interactionrank.scoring.SubsetWeightedScore;
 
-public class GoogleGroupBasedRecipientRecommender<V extends Comparable<V>> extends
+public class InteractionRankGroupBasedRecipientRecommender<V extends Comparable<V>> extends
 		GroupBasedRecipientRecommender<V> {
 
 	private final GroupScorer<V> groupScorer;
 	private Collection<CollaborativeAction<V>> actions = new HashSet<>();
 	private Map<Set<V>, Collection<CollaborativeAction<V>>> groupsToActions = new HashMap<>();
 
-	public GoogleGroupBasedRecipientRecommender(GroupScorer<V> groupScorer) {
+	public InteractionRankGroupBasedRecipientRecommender(GroupScorer<V> groupScorer) {
 		this.groupScorer = groupScorer;
 	}
 
-	public GoogleGroupBasedRecipientRecommender(double wOut, double halfLife) {
+	public InteractionRankGroupBasedRecipientRecommender(double wOut, double halfLife) {
 		this.groupScorer = new SubsetWeightedScore<>(wOut, halfLife);
 	}
 	
