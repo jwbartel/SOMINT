@@ -5,18 +5,18 @@ import java.util.Collection;
 
 import recommendation.general.actionbased.messages.MessageThread;
 
-public class EmailThread<V> extends MessageThread<V, EmailMessage<V>>{
-	
-	Collection<EmailMessage<V>> messages = new ArrayList<>();
-	
+public class EmailThread<RecipientType, MessageType extends EmailMessage<RecipientType>> extends
+		MessageThread<RecipientType, MessageType> {
+
+	Collection<MessageType> messages = new ArrayList<>();
 
 	@Override
-	public void addThreadedAction(EmailMessage<V> message) {
+	public void addThreadedAction(MessageType message) {
 		messages.add(message);
 	}
 
 	@Override
-	public Collection<EmailMessage<V>> getThreadedActions() {
+	public Collection<MessageType> getThreadedActions() {
 		return new ArrayList<>(messages);
 	}
 
