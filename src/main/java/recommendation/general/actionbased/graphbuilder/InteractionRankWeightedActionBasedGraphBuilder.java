@@ -20,6 +20,40 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
 	private final GroupScorer<CollaboratorType> scorer;
 	private final double edgeThreshold;
 	
+	public static <Collaborator, Action extends CollaborativeAction<Collaborator>> ActionBasedGraphBuilderFactory<Collaborator, Action> factory(Class<Collaborator> collaboratorClass, Class<Action> ActionClass) {
+		return new ActionBasedGraphBuilderFactory<Collaborator, Action>() {
+
+			@Override
+			public boolean takesTime() {
+				return false;
+			}
+
+			@Override
+			public boolean takesScoredEdgeWithThreshold() {
+				return true;
+			}
+
+			@Override
+			public ActionBasedGraphBuilder<Collaborator, Action> create() {
+				return null;
+			}
+
+			@Override
+			public ActionBasedGraphBuilder<Collaborator, Action> create(
+					long time) {
+				return null;
+			}
+
+			@Override
+			public ActionBasedGraphBuilder<Collaborator, Action> create(
+					long halfLife, double sentImportance, double threshold) {
+				return new InteractionRankWeightedActionBasedGraphBuilder<>(
+						halfLife, sentImportance, threshold);
+			}
+
+		};
+	}
+	
 	public InteractionRankWeightedActionBasedGraphBuilder(long halfLife, double sentImportance, double edgeThreshold) {
 		scorer = new TopContactScore<>(sentImportance, halfLife);
 		this.edgeThreshold = edgeThreshold;
@@ -43,6 +77,10 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
 		}
 	}
 	
+	public String getName() {
+		return "Interaction Rank";
+	}
+	
 	
 	@Override
 	public WeightedGraph<CollaboratorType, DefaultEdge> addActionToWeightedGraph(
@@ -59,28 +97,33 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
         	
             Set<Pair<CollaboratorType>> seenCollaboratorPairs = new HashSet<>();
         	double actionScore = scorer.getInteractionRankScoreOfPastAction(currentAction, action);
-        	
-        	 for(CollaboratorType collaborator1 : action.getCollaborators()) {
-				if (graph.containsVertex(collaborator1)) {
-					continue;
-				}
-        		 graph.addVertex(collaborator1);
-        		 for (CollaboratorType collaborator2 : action.getCollaborators()) {
-        			 if (!collaborator1.equals(collaborator2) && !graph.containsVertex(collaborator2)) {
-        				 graph.addVertex(collaborator2);
-        			 }
-        			 Pair<CollaboratorType> pair = new Pair<>(collaborator1, collaborator2);
-        			 if (!seenCollaboratorPairs.contains(pair)) {
-        				 DefaultEdge edge = graph.getEdge(collaborator1, collaborator2);
-        				 if (edge == null) {
-        					 edge = graph.addEdge(collaborator1, collaborator2);
-        					 graph.setEdgeWeight(edge, 0);
-        				 }
-        				 double currWeight = graph.getEdgeWeight(edge);
-        				 graph.setEdgeWeight(edge, currWeight + actionScore);
-        			 }
-        		 }
-             }
+        	if (actionScore == 0.0) {
+        		continue;
+        	}
+
+        	for(CollaboratorType collaborator1 : action.getCollaborators()) {
+        		if (graph.containsVertex(collaborator1)) {
+        			continue;
+        		}
+        		graph.addVertex(collaborator1);
+        		for (CollaboratorType collaborator2 : action.getCollaborators()) {
+        			if (!collaborator1.equals(collaborator2)) {
+        				if(!graph.containsVertex(collaborator2)) {
+        					graph.addVertex(collaborator2);
+        				}
+        				Pair<CollaboratorType> pair = new Pair<>(collaborator1, collaborator2);
+        				if (!seenCollaboratorPairs.contains(pair)) {
+        					DefaultEdge edge = graph.getEdge(collaborator1, collaborator2);
+        					if (edge == null) {
+        						edge = graph.addEdge(collaborator1, collaborator2);
+        						graph.setEdgeWeight(edge, 0);
+        					}
+        					double currWeight = graph.getEdgeWeight(edge);
+        					graph.setEdgeWeight(edge, currWeight + actionScore);
+        				}
+        			}
+        		}
+        	}
         }
         return graph;
 	}

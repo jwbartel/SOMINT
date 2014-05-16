@@ -12,20 +12,56 @@ import org.jgrapht.graph.SimpleGraph;
 
 import recommendation.general.actionbased.CollaborativeAction;
 
-public class TimeThresholdActionBasedGraphBuilder<CollaboratorType, ActionType extends CollaborativeAction<CollaboratorType>>
-		implements ActionBasedGraphBuilder<CollaboratorType, ActionType> {
+public class TimeThresholdActionBasedGraphBuilder<Collaborator, Action extends CollaborativeAction<Collaborator>>
+		implements ActionBasedGraphBuilder<Collaborator, Action> {
 
 	private final long thresholdAge;
+	
+	public static <Collaborator, Action extends CollaborativeAction<Collaborator>> ActionBasedGraphBuilderFactory<Collaborator, Action> factory(Class<Collaborator> collaboratorClass, Class<Action> ActionClass) {
+		return new ActionBasedGraphBuilderFactory<Collaborator, Action> () {
+
+			@Override
+			public boolean takesTime() {
+				return true;
+			}
+
+			@Override
+			public boolean takesScoredEdgeWithThreshold() {
+				return false;
+			}
+
+			@Override
+			public ActionBasedGraphBuilder<Collaborator, Action> create() {
+				return null;
+			}
+
+			@Override
+			public ActionBasedGraphBuilder<Collaborator, Action> create(long time) {
+				return new TimeThresholdActionBasedGraphBuilder<>(time);
+			}
+
+			@Override
+			public ActionBasedGraphBuilder<Collaborator, Action> create(long halfLife,
+					double sentImportance, double threshold) {
+				return null;
+			}
+
+		};
+	}
 
 	public TimeThresholdActionBasedGraphBuilder(long thresholdAge) {
 		this.thresholdAge = thresholdAge;
 	}
+	
+	public String getName() {
+		return "Time Threshold";
+	}
 
 	@Override
-	public Graph<CollaboratorType, DefaultEdge> addActionToGraph(
-			Graph<CollaboratorType, DefaultEdge> graph,
-			ActionType currentAction,
-			Collection<ActionType> pastActions) {
+	public Graph<Collaborator, DefaultEdge> addActionToGraph(
+			Graph<Collaborator, DefaultEdge> graph,
+			Action currentAction,
+			Collection<Action> pastActions) {
 
 		if (graph == null) {
 			graph = new SimpleGraph<>(DefaultEdge.class);
@@ -36,15 +72,15 @@ public class TimeThresholdActionBasedGraphBuilder<CollaboratorType, ActionType e
 
 		pastActions = new HashSet<>(pastActions);
 		pastActions.add(currentAction);
-		for (CollaborativeAction<CollaboratorType> action : pastActions) {
+		for (CollaborativeAction<Collaborator> action : pastActions) {
 			if (action.getLastActiveDate().before(threshold))
 				continue;
-			for (CollaboratorType collaborator : action.getCollaborators()) {
+			for (Collaborator collaborator : action.getCollaborators()) {
 				if (graph.containsVertex(collaborator)) {
 					continue;
 				}
 				graph.addVertex(collaborator);
-				for (CollaboratorType collaborator2 : action.getCollaborators()) {
+				for (Collaborator collaborator2 : action.getCollaborators()) {
 					if (!collaborator2.equals(collaborator)) {
 						if (!graph.containsVertex(collaborator2)) {
 							graph.addVertex(collaborator2);

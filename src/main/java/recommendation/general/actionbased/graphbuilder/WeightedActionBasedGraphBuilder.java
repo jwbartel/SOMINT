@@ -8,20 +8,20 @@ import org.jgrapht.graph.DefaultEdge;
 
 import recommendation.general.actionbased.CollaborativeAction;
 
-public abstract class WeightedActionBasedGraphBuilder<CollaboratorType, ActionType extends CollaborativeAction<CollaboratorType>>
-		implements ActionBasedGraphBuilder<CollaboratorType, ActionType> {
+public abstract class WeightedActionBasedGraphBuilder<Collaborator, Action extends CollaborativeAction<Collaborator>>
+		implements ActionBasedGraphBuilder<Collaborator, Action> {
 
-	public abstract WeightedGraph<CollaboratorType, DefaultEdge> addActionToWeightedGraph(
-			WeightedGraph<CollaboratorType, DefaultEdge> graph, ActionType currentAction,
-			Collection<ActionType> pastActions);
+	public abstract WeightedGraph<Collaborator, DefaultEdge> addActionToWeightedGraph(
+			WeightedGraph<Collaborator, DefaultEdge> graph, Action currentAction,
+			Collection<Action> pastActions);
 
 	@Override
-	public Graph<CollaboratorType, DefaultEdge> addActionToGraph(
-			Graph<CollaboratorType, DefaultEdge> graph,
-			ActionType currentAction,
-			Collection<ActionType> pastActions) {
+	public Graph<Collaborator, DefaultEdge> addActionToGraph(
+			Graph<Collaborator, DefaultEdge> graph,
+			Action currentAction,
+			Collection<Action> pastActions) {
 		if (graph == null || graph instanceof WeightedGraph) {
-			return addActionToWeightedGraph((WeightedGraph<CollaboratorType, DefaultEdge>) graph,
+			return addActionToWeightedGraph((WeightedGraph<Collaborator, DefaultEdge>) graph,
 					currentAction, pastActions);
 		}
 		return null;

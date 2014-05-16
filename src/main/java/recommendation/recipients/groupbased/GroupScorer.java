@@ -26,11 +26,7 @@ public abstract class GroupScorer<V> {
 	public double getInteractionRankScoreOfPastAction(CollaborativeAction<V> currentAction,
 			CollaborativeAction<V> pastAction) {
 
-		if (currentAction.getCreators() == null
-				|| pastAction.getCreators() == null
-				|| currentAction.getCreators().size() != 1
-				|| pastAction.getCreators().size() != 1
-				|| currentAction.getLastActiveDate() == null
+		if (currentAction.getLastActiveDate() == null
 				|| pastAction.getLastActiveDate() == null) {
 			return 0.0;
 		}
