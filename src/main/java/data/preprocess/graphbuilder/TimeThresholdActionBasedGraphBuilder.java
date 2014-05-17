@@ -1,4 +1,4 @@
-package data.representation.actionbased.graphbuilder;
+package data.preprocess.graphbuilder;
 
 import java.util.Calendar;
 import java.util.Collection;
