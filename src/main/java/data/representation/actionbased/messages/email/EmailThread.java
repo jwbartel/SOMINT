@@ -8,7 +8,7 @@ import data.representation.actionbased.messages.MessageThread;
 public class EmailThread<RecipientType, MessageType extends EmailMessage<RecipientType>> extends
 		MessageThread<RecipientType, MessageType> {
 
-	Collection<MessageType> messages = new ArrayList<>();
+	private Collection<MessageType> messages = new ArrayList<>();
 
 	@Override
 	public void addThreadedAction(MessageType message) {
