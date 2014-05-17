@@ -1,4 +1,4 @@
-package recommendation.general.actionbased;
+package data.representation.actionbased;
 
 import java.util.Collection;
 

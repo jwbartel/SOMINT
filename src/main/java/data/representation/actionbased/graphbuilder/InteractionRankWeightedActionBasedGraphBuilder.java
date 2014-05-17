@@ -1,4 +1,4 @@
-package recommendation.general.actionbased.graphbuilder;
+package data.representation.actionbased.graphbuilder;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -10,7 +10,7 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
-import recommendation.general.actionbased.CollaborativeAction;
+import data.representation.actionbased.CollaborativeAction;
 import recommendation.recipients.groupbased.GroupScorer;
 import recommendation.recipients.groupbased.interactionrank.scoring.TopContactScore;
 

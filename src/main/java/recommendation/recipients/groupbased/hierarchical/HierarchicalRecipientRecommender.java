@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import recommendation.general.actionbased.CollaborativeAction;
+import data.representation.actionbased.CollaborativeAction;
 import recommendation.recipients.RecipientRecommendation;
 import recommendation.recipients.ScoredRecipientRecommendation;
 import recommendation.recipients.groupbased.GroupBasedRecipientRecommender;

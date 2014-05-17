@@ -1,4 +1,4 @@
-package recommendation.general.actionbased.graphbuilder;
+package data.representation.actionbased.graphbuilder;
 
 import java.util.Collection;
 
@@ -6,7 +6,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.WeightedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import recommendation.general.actionbased.CollaborativeAction;
+import data.representation.actionbased.CollaborativeAction;
 
 public abstract class WeightedActionBasedGraphBuilder<Collaborator, Action extends CollaborativeAction<Collaborator>>
 		implements ActionBasedGraphBuilder<Collaborator, Action> {

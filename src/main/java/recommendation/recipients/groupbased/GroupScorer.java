@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import recommendation.general.actionbased.CollaborativeAction;
+import data.representation.actionbased.CollaborativeAction;
 
 public abstract class GroupScorer<V> {
 

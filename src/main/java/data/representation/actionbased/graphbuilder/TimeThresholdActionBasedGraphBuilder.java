@@ -1,4 +1,4 @@
-package recommendation.general.actionbased.graphbuilder;
+package data.representation.actionbased.graphbuilder;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -10,7 +10,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import recommendation.general.actionbased.CollaborativeAction;
+import data.representation.actionbased.CollaborativeAction;
 
 public class TimeThresholdActionBasedGraphBuilder<Collaborator, Action extends CollaborativeAction<Collaborator>>
 		implements ActionBasedGraphBuilder<Collaborator, Action> {

@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
-import recommendation.general.actionbased.CollaborativeAction;
+import data.representation.actionbased.CollaborativeAction;
 import recommendation.recipients.RecipientRecommender;
 import recommendation.recipients.ScoredRecipientRecommendation;
 

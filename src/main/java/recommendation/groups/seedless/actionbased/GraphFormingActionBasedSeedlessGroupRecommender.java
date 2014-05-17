@@ -9,8 +9,8 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import recommendation.general.actionbased.CollaborativeAction;
-import recommendation.general.actionbased.graphbuilder.ActionBasedGraphBuilder;
+import data.representation.actionbased.CollaborativeAction;
+import data.representation.actionbased.graphbuilder.ActionBasedGraphBuilder;
 import recommendation.groups.seedless.SeedlessGroupRecommender;
 import recommendation.groups.seedless.SeedlessGroupRecommenderFactory;
 

@@ -2,7 +2,7 @@ package recommendation.recipients.groupbased.interactionrank.scoring;
 
 import java.util.Collection;
 
-import recommendation.general.actionbased.CollaborativeAction;
+import data.representation.actionbased.CollaborativeAction;
 import recommendation.recipients.groupbased.GroupScorer;
 
 public class IntersectionGroupScore<V> extends GroupScorer<V> {

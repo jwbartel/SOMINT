@@ -1,6 +1,6 @@
-package recommendation.general.actionbased.graphbuilder;
+package data.representation.actionbased.graphbuilder;
 
-import recommendation.general.actionbased.CollaborativeAction;
+import data.representation.actionbased.CollaborativeAction;
 
 public interface ActionBasedGraphBuilderFactory <Collaborator, Action extends CollaborativeAction<Collaborator>> {
 

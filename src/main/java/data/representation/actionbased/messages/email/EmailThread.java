@@ -1,9 +1,9 @@
-package recommendation.general.actionbased.messages.email;
+package data.representation.actionbased.messages.email;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import recommendation.general.actionbased.messages.MessageThread;
+import data.representation.actionbased.messages.MessageThread;
 
 public class EmailThread<RecipientType, MessageType extends EmailMessage<RecipientType>> extends
 		MessageThread<RecipientType, MessageType> {
