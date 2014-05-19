@@ -32,6 +32,7 @@ public class EmailMessage<RecipientType> implements SingleMessage<RecipientType>
 	static Pattern SUBJ_BLOB_PATTERN = Pattern.compile(SUBJ_BLOB);
 	static Pattern SUBJ_LEADER_PATTERN = Pattern.compile(SUBJ_LEADER);
 
+	private EmailMessage<RecipientType> parent;
 	private String messageId;
 	private String threadId;
 
@@ -48,6 +49,10 @@ public class EmailMessage<RecipientType> implements SingleMessage<RecipientType>
 	protected String body;
 
 	protected EmailMessage() {
+	}
+	
+	public EmailMessage(EmailMessage<RecipientType> parent) {
+		this.parent = parent;
 	}
 
 	public EmailMessage(String messageId, String threadId, Date date,
@@ -76,31 +81,38 @@ public class EmailMessage<RecipientType> implements SingleMessage<RecipientType>
 	}
 
 	public String getMessageId() throws MessagingException {
-		return messageId;
+		if (parent == null) return messageId;
+		return parent.getMessageId();
 	}
 
 	public String getThreadId() {
-		return threadId;
+		if (parent == null) return threadId;
+		return parent.getThreadId();
 	}
 
 	public Collection<RecipientType> getFrom() throws MessagingException {
-		return getCreators();
+		if (parent == null) return getCreators();
+		return parent.getFrom();
 	}
 
 	public ArrayList<RecipientType> getTo() throws MessagingException {
-		return to;
+		if (parent == null) return to;
+		return parent.getTo();
 	}
 
 	public ArrayList<RecipientType> getCc() throws MessagingException {
-		return cc;
+		if (parent == null) return cc;
+		return parent.getCc();
 	}
 
 	public ArrayList<RecipientType> getBcc() throws MessagingException {
-		return bcc;
+		if (parent == null) return bcc;
+		return parent.getBcc();
 	}
 
 	public ArrayList<RecipientType> getNewsgroups() throws MessagingException {
-		return newsgroups;
+		if (parent == null) return newsgroups;
+		return parent.getBcc();
 	}
 
 	public String getSubject() throws MessagingException {
@@ -108,6 +120,7 @@ public class EmailMessage<RecipientType> implements SingleMessage<RecipientType>
 	}
 
 	public String getBaseSubject() throws MessagingException {
+		if (parent != null) return parent.getBaseSubject();
 		if (baseSubject == null && getSubject() != null) {
 			try {
 				baseSubject = extractBaseSubject();
@@ -170,31 +183,37 @@ public class EmailMessage<RecipientType> implements SingleMessage<RecipientType>
 	}
 
 	public String getBody() {
+		if (parent != null) return parent.getBody();
 		return body;
 	}
 
 	@Override
 	public Collection<RecipientType> getCreators() {
+		if (parent != null) return parent.getCreators();
 		return from;
 	}
 
 	@Override
 	public Date getStartDate() {
+		if (parent != null) return parent.getStartDate();
 		return date;
 	}
 
 	@Override
 	public Date getLastActiveDate() {
+		if (parent != null) return parent.getLastActiveDate();
 		return date;
 	}
 
 	@Override
 	public boolean wasSent() {
+		if (parent != null) return parent.wasSent();
 		return wasSent;
 	}
 
 	@Override
 	public Collection<RecipientType> getCollaborators() {
+		if (parent != null) return parent.getCollaborators();
 		Collection<RecipientType> collaborators = new ArrayList<>();
 		try {
 			for (RecipientType collaborator : getFrom()) {
@@ -246,6 +265,7 @@ public class EmailMessage<RecipientType> implements SingleMessage<RecipientType>
 
 	@Override
 	public String toString() {
+		if (parent != null) return parent.toString();
 		try {
 			String retVal = getLastActiveDate() + " from:[";
 			boolean addComma = false;

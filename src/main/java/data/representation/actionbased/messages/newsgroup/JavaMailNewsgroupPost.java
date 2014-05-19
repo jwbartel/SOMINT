@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
+import data.representation.actionbased.messages.ComparableAddress;
 import data.representation.actionbased.messages.JavaMailMessage;
 import data.representation.actionbased.messages.email.JavaMailEmailMessage;
 import data.representation.actionbased.messages.email.PrefetchOptions;
 
-public class JavaMailNewsgroupPost extends NewsgroupPost<Address> implements JavaMailMessage {
+public class JavaMailNewsgroupPost extends NewsgroupPost<ComparableAddress> implements JavaMailMessage {
 
 	public JavaMailNewsgroupPost(Message parent, boolean wasSent)
 			throws MessagingException, IOException {
@@ -36,23 +36,23 @@ public class JavaMailNewsgroupPost extends NewsgroupPost<Address> implements Jav
 		return getParent().getSubject();
 	}
 
-	public Collection<Address> getFrom() throws MessagingException {
+	public Collection<ComparableAddress> getFrom() throws MessagingException {
 		return getParent().getFrom();
 	}
 
-	public ArrayList<Address> getTo() throws MessagingException {
+	public ArrayList<ComparableAddress> getTo() throws MessagingException {
 		return getParent().getTo();
 	}
 
-	public ArrayList<Address> getCc() throws MessagingException {
+	public ArrayList<ComparableAddress> getCc() throws MessagingException {
 		return getParent().getCc();
 	}
 
-	public ArrayList<Address> getBcc() throws MessagingException {
+	public ArrayList<ComparableAddress> getBcc() throws MessagingException {
 		return getParent().getBcc();
 	}
 
-	public ArrayList<Address> getNewsgroups() throws MessagingException {
+	public ArrayList<ComparableAddress> getNewsgroups() throws MessagingException {
 		return getParent().getNewsgroups();
 	}
 	

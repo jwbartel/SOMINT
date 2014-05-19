@@ -38,7 +38,6 @@ public abstract class GroupBasedRecipientRecommender<V extends Comparable<V>>
 			Map<V, Double> recipientToScore, Map<Set<V>, Double> groupToScore) {
 
 		for (Set<V> pastGroup : getGroups()) {
-
 			double score = getGroupScore(action, pastGroup);
 			if (updateIndividualScores(pastGroup, score, recipientToScore)) {
 				groupToScore.put(pastGroup, score);
@@ -48,7 +47,7 @@ public abstract class GroupBasedRecipientRecommender<V extends Comparable<V>>
 
 	protected Collection<ScoredRecipientRecommendation<V>> getAllSingleRecipientRecommendations(
 			CollaborativeAction<V> action, Map<V, Double> recipientToScore) {
-		Collection<V> collaborators = new HashSet<>(action.getCollaborators());
+		Collection<V> collaborators = new TreeSet<>(action.getCollaborators());
 		Collection<ScoredRecipientRecommendation<V>> recommendations = new TreeSet<>();
 		for (Entry<V, Double> entry : recipientToScore.entrySet()) {
 

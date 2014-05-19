@@ -15,7 +15,7 @@ public class NewsgroupPost<RecipientType> extends EmailMessage<RecipientType> {
 	String baseSubject = null;
 	
 	public NewsgroupPost(EmailMessage<RecipientType> parent) {
-		super();
+		super(parent);
 		this.parent = parent;
 	}
 	
@@ -99,6 +99,17 @@ public class NewsgroupPost<RecipientType> extends EmailMessage<RecipientType> {
 			}
 		}
 		return baseSubject;
+	}
+	
+	@Override
+	public Collection<RecipientType> getCollaborators() {
+		super.getCollaborators();
+		try {
+			return getNewsgroups();
+		} catch (MessagingException e) {
+			System.out.println("error retrieving newsgroups");
+			return null;
+		}
 	}
 
 	@Override

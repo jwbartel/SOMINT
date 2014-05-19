@@ -18,15 +18,18 @@ import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
 
+import data.representation.actionbased.messages.ComparableAddress;
 import data.representation.actionbased.messages.JavaMailMessage;
 
-public class JavaMailEmailMessage extends EmailMessage<Address> implements JavaMailMessage {
+public class JavaMailEmailMessage extends EmailMessage<ComparableAddress> implements JavaMailMessage {
 
 	final static DateFormat[] dateFormats = {
 			new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z"),
 			new SimpleDateFormat("dd MMM yyyy HH:mm:ss z"),
 			new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss"),
-			new SimpleDateFormat("dd MMM yyyy HH:mm:ss"), };
+			new SimpleDateFormat("dd MMM yyyy HH:mm:ss"), 
+			new SimpleDateFormat("dd MMM yyyy HH:mm z"), 
+			new SimpleDateFormat("EEE, dd MMM yyyy  HH:mm z"), };
 
 	Message parent;
 	private final Map<String, String[]> seenHeaders = new TreeMap<String, String[]>();
@@ -71,17 +74,17 @@ public class JavaMailEmailMessage extends EmailMessage<Address> implements JavaM
 		}
 	}
 
-	private ArrayList<Address> createList(RecipientType recipientType)
+	private ArrayList<ComparableAddress> createList(RecipientType recipientType)
 			throws MessagingException {
 		Address[] addresses = parent.getRecipients(recipientType);
 		return createList(addresses);
 	}
 
-	private ArrayList<Address> createList(Address[] addresses) {
-		ArrayList<Address> addressesList = new ArrayList<>();
+	private ArrayList<ComparableAddress> createList(Address[] addresses) {
+		ArrayList<ComparableAddress> addressesList = new ArrayList<>();
 		if (addresses != null) {
 			for (Address address : addresses) {
-				addressesList.add(address);
+				addressesList.add(new ComparableAddress(address));
 			}
 		}
 		return addressesList;
@@ -94,6 +97,9 @@ public class JavaMailEmailMessage extends EmailMessage<Address> implements JavaM
 			try {
 				if (header != null && header.length > 0) {
 					String dateStr = header[0];
+					if (dateStr.toUpperCase().endsWith(" UT")) {
+						dateStr += "C";
+					}
 					Date date = dateFormat.parse(dateStr);
 					return date;
 				}
@@ -136,7 +142,7 @@ public class JavaMailEmailMessage extends EmailMessage<Address> implements JavaM
 	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getFrom()
 	 */
 	@Override
-	public Collection<Address> getFrom() throws MessagingException {
+	public Collection<ComparableAddress> getFrom() throws MessagingException {
 		if (from == null) {
 			from = createList(parent.getFrom());
 		}
@@ -147,7 +153,7 @@ public class JavaMailEmailMessage extends EmailMessage<Address> implements JavaM
 	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getTo()
 	 */
 	@Override
-	public ArrayList<Address> getTo() throws MessagingException {
+	public ArrayList<ComparableAddress> getTo() throws MessagingException {
 		if (to == null) {
 			to = createList(RecipientType.TO);
 		}
@@ -158,7 +164,7 @@ public class JavaMailEmailMessage extends EmailMessage<Address> implements JavaM
 	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getCc()
 	 */
 	@Override
-	public ArrayList<Address> getCc() throws MessagingException {
+	public ArrayList<ComparableAddress> getCc() throws MessagingException {
 		if (cc == null) {
 			cc = createList(RecipientType.CC);
 		}
@@ -169,7 +175,7 @@ public class JavaMailEmailMessage extends EmailMessage<Address> implements JavaM
 	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getBcc()
 	 */
 	@Override
-	public ArrayList<Address> getBcc() throws MessagingException {
+	public ArrayList<ComparableAddress> getBcc() throws MessagingException {
 		if (bcc == null) {
 			bcc = createList(RecipientType.BCC);
 		}
@@ -180,7 +186,7 @@ public class JavaMailEmailMessage extends EmailMessage<Address> implements JavaM
 	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getNewsgroups()
 	 */
 	@Override
-	public ArrayList<Address> getNewsgroups() throws MessagingException {
+	public ArrayList<ComparableAddress> getNewsgroups() throws MessagingException {
 		if (newsgroups == null) {
 			newsgroups = createList(javax.mail.internet.MimeMessage.RecipientType.NEWSGROUPS);
 		}

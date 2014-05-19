@@ -6,15 +6,14 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.mail.Address;
 import javax.mail.MessagingException;
 
+import data.representation.actionbased.messages.ComparableAddress;
 import data.representation.actionbased.messages.JavaMailMessage;
 import data.representation.actionbased.messages.MessageThread;
-import data.representation.actionbased.messages.email.JavaMailEmailThread;
 
-public abstract class JavaMailThreadRetriever<Message extends JavaMailMessage, ThreadType extends MessageThread<Address, Message>>
-		implements ThreadRetriever<Address, Message, ThreadType> {
+public abstract class JavaMailThreadRetriever<Message extends JavaMailMessage, ThreadType extends MessageThread<ComparableAddress, Message>>
+		implements ThreadRetriever<ComparableAddress, Message, ThreadType> {
 
 	protected Long timeout = null;
 	

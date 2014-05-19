@@ -4,15 +4,16 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.mail.Address;
 import javax.mail.MessagingException;
 
-public class JavaMailEmailThread<Message extends JavaMailEmailMessage> extends EmailThread<Address, Message>{
+import data.representation.actionbased.messages.ComparableAddress;
+
+public class JavaMailEmailThread<Message extends JavaMailEmailMessage> extends EmailThread<ComparableAddress, Message>{
 	
 	private Long responseTime = null;
 	private boolean searchedForResponseTime = false;
 	
-	private Set<Address> addresses = null;
+	private Set<ComparableAddress> addresses = null;
 	
 	private String subject = null;
 	private boolean searchedForSubject = false;
@@ -48,9 +49,9 @@ public class JavaMailEmailThread<Message extends JavaMailEmailMessage> extends E
 		return responseTime;
 	}
 	
-	public Set<Address> getAddresses() throws MessagingException {
+	public Set<ComparableAddress> getAddresses() throws MessagingException {
 		if (addresses == null) {
-			addresses = new HashSet<Address>();
+			addresses = new HashSet<ComparableAddress>();
 			for (JavaMailEmailMessage message : getThreadedActions()) {
 				if (message.getCollaborators() != null) {
 					addresses.addAll(message.getCollaborators());
