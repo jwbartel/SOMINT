@@ -9,32 +9,26 @@ import java.util.TreeSet;
 import javax.mail.Address;
 import javax.mail.MessagingException;
 
-import data.representation.actionbased.messages.email.JavaMailMessage;
-import data.representation.actionbased.messages.email.JavaMailThread;
+import data.representation.actionbased.messages.JavaMailMessage;
+import data.representation.actionbased.messages.MessageThread;
+import data.representation.actionbased.messages.email.JavaMailEmailThread;
 
-public class EmailThreadRetriever implements
-		ThreadRetriever<Address, JavaMailMessage, JavaMailThread> {
+public abstract class JavaMailThreadRetriever<Message extends JavaMailMessage, ThreadType extends MessageThread<Address, Message>>
+		implements ThreadRetriever<Address, Message, ThreadType> {
 
 	protected Long timeout = null;
-
-	public EmailThreadRetriever() {
-
-	}
-
-	public EmailThreadRetriever(long timeout) {
-		this.timeout = timeout;
-	}
+	
+	public abstract ThreadType createThread();
 
 	@Override
-	public Collection<JavaMailThread> retrieveThreads(
-			Collection<JavaMailMessage> actions) {
+	public Collection<ThreadType> retrieveThreads(Collection<Message> actions) {
 
 		try {
-			ArrayList<Set<JavaMailMessage>> threadSets = new ArrayList<Set<JavaMailMessage>>();
+			ArrayList<Set<Message>> threadSets = new ArrayList<Set<Message>>();
 			ArrayList<ArrayList<String>> idsForThreads = new ArrayList<>();
 			Set<String> seenMessages = new TreeSet<String>();
 
-			for (JavaMailMessage message : actions) {
+			for (Message message : actions) {
 				if (timeout != null) {
 					try {
 						Thread.sleep(timeout);
@@ -59,10 +53,10 @@ public class EmailThreadRetriever implements
 						idsForThreads, threadSets);
 			}
 
-			ArrayList<JavaMailThread> threads = new ArrayList<>();
-			for (Set<JavaMailMessage> threadSet : threadSets) {
-				JavaMailThread thread = new JavaMailThread();
-				for (JavaMailMessage message : threadSet) {
+			ArrayList<ThreadType> threads = new ArrayList<>();
+			for (Set<Message> threadSet : threadSets) {
+				ThreadType thread = createThread();
+				for (Message message : threadSet) {
 					thread.addThreadedAction(message);
 				}
 				threads.add(thread);
@@ -72,12 +66,12 @@ public class EmailThreadRetriever implements
 			return null;
 		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	private void sortIntoThreads(JavaMailMessage message, String messageID,
+	private void sortIntoThreads(Message message, String messageID,
 			ArrayList<String> references, String inReplyTo,
 			ArrayList<ArrayList<String>> idsForThreads,
-			ArrayList<Set<JavaMailMessage>> threads) {
+			ArrayList<Set<Message>> threads) {
 
 		if (references.size() == 0) {
 			references = new ArrayList<String>();
@@ -92,7 +86,7 @@ public class EmailThreadRetriever implements
 		Integer prevThread = null;
 		for (int i = 0; i < idsForThreads.size(); i++) {
 			ArrayList<String> threadIDs = idsForThreads.get(i);
-			Set<JavaMailMessage> thread = threads.get(i);
+			Set<Message> thread = threads.get(i);
 
 			if (getIntersectionSize(references, threadIDs) > 0) {
 				if (prevThread == null) {
@@ -123,7 +117,7 @@ public class EmailThreadRetriever implements
 
 		if (prevThread == null) {
 			idsForThreads.add(new ArrayList<String>(references));
-			Set<JavaMailMessage> thread = new HashSet<JavaMailMessage>();
+			Set<Message> thread = new HashSet<Message>();
 			thread.add(message);
 			threads.add(thread);
 		}
@@ -135,5 +129,4 @@ public class EmailThreadRetriever implements
 		intersection.retainAll(group2);
 		return intersection.size();
 	}
-
 }

@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.mail.Address;
 import javax.mail.MessagingException;
 
-public class JavaMailThread extends EmailThread<Address, JavaMailMessage>{
+public class JavaMailEmailThread<Message extends JavaMailEmailMessage> extends EmailThread<Address, Message>{
 	
 	private Long responseTime = null;
 	private boolean searchedForResponseTime = false;
@@ -17,7 +17,7 @@ public class JavaMailThread extends EmailThread<Address, JavaMailMessage>{
 	private String subject = null;
 	private boolean searchedForSubject = false;
 	
-	public JavaMailThread() {
+	public JavaMailEmailThread() {
 	}
 	
 	public String getSubject() {
@@ -51,7 +51,7 @@ public class JavaMailThread extends EmailThread<Address, JavaMailMessage>{
 	public Set<Address> getAddresses() throws MessagingException {
 		if (addresses == null) {
 			addresses = new HashSet<Address>();
-			for (JavaMailMessage message : getThreadedActions()) {
+			for (JavaMailEmailMessage message : getThreadedActions()) {
 				if (message.getCollaborators() != null) {
 					addresses.addAll(message.getCollaborators());
 				}

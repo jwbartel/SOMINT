@@ -11,7 +11,7 @@ import javax.mail.MessagingException;
 
 import data.representation.actionbased.messages.SingleMessage;
 
-public class EmailMessage<V> implements SingleMessage<V> {
+public class EmailMessage<RecipientType> implements SingleMessage<RecipientType> {
 
 	static String NON_WSP = "([^\\s])"; // any CHAR other than WSP
 	static String WSP = "([\\s])";
@@ -38,29 +38,29 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	protected Date date;
 	protected boolean wasSent;
 
-	protected Collection<V> from;
-	protected ArrayList<V> to;
-	protected ArrayList<V> cc;
-	protected ArrayList<V> bcc;
-	protected ArrayList<V> newsgroups;
+	protected Collection<RecipientType> from;
+	protected ArrayList<RecipientType> to;
+	protected ArrayList<RecipientType> cc;
+	protected ArrayList<RecipientType> bcc;
+	protected ArrayList<RecipientType> newsgroups;
 	protected String subject;
 	private String baseSubject = null;
 	protected String body;
 
-	EmailMessage() {
+	protected EmailMessage() {
 	}
 
 	public EmailMessage(String messageId, String threadId, Date date,
-			boolean wasSent, ArrayList<V> from, ArrayList<V> to,
-			ArrayList<V> cc, ArrayList<V> bcc, ArrayList<V> newsgroups,
+			boolean wasSent, ArrayList<RecipientType> from, ArrayList<RecipientType> to,
+			ArrayList<RecipientType> cc, ArrayList<RecipientType> bcc, ArrayList<RecipientType> newsgroups,
 			String subject, String body) {
 		init(messageId, threadId, date, wasSent, from, to, cc, bcc, newsgroups,
 				subject, body);
 	}
 
 	protected void init(String messageId, String threadId, Date date,
-			boolean wasSent, ArrayList<V> from, ArrayList<V> to,
-			ArrayList<V> cc, ArrayList<V> bcc, ArrayList<V> newsgroups,
+			boolean wasSent, ArrayList<RecipientType> from, ArrayList<RecipientType> to,
+			ArrayList<RecipientType> cc, ArrayList<RecipientType> bcc, ArrayList<RecipientType> newsgroups,
 			String subject, String body) {
 		this.messageId = messageId;
 		this.threadId = threadId;
@@ -83,23 +83,23 @@ public class EmailMessage<V> implements SingleMessage<V> {
 		return threadId;
 	}
 
-	public Collection<V> getFrom() throws MessagingException {
+	public Collection<RecipientType> getFrom() throws MessagingException {
 		return getCreators();
 	}
 
-	public ArrayList<V> getTo() throws MessagingException {
+	public ArrayList<RecipientType> getTo() throws MessagingException {
 		return to;
 	}
 
-	public ArrayList<V> getCc() throws MessagingException {
+	public ArrayList<RecipientType> getCc() throws MessagingException {
 		return cc;
 	}
 
-	public ArrayList<V> getBcc() throws MessagingException {
+	public ArrayList<RecipientType> getBcc() throws MessagingException {
 		return bcc;
 	}
 
-	public ArrayList<V> getNewsgroups() throws MessagingException {
+	public ArrayList<RecipientType> getNewsgroups() throws MessagingException {
 		return newsgroups;
 	}
 
@@ -118,7 +118,7 @@ public class EmailMessage<V> implements SingleMessage<V> {
 		return baseSubject;
 	}
 
-	private String extractBaseSubject() throws UnsupportedEncodingException,
+	protected String extractBaseSubject() throws UnsupportedEncodingException,
 			MessagingException {
 
 		String baseSubject = new String(getSubject().getBytes("UTF-8"), "UTF-8")
@@ -174,7 +174,7 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	}
 
 	@Override
-	public Collection<V> getCreators() {
+	public Collection<RecipientType> getCreators() {
 		return from;
 	}
 
@@ -194,32 +194,52 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	}
 
 	@Override
-	public Collection<V> getCollaborators() {
-		Collection<V> collaborators = new ArrayList<>();
-		for (V collaborator : from) {
-			if (!collaborators.contains(collaborator)) {
-				collaborators.add(collaborator);
+	public Collection<RecipientType> getCollaborators() {
+		Collection<RecipientType> collaborators = new ArrayList<>();
+		try {
+			for (RecipientType collaborator : getFrom()) {
+				if (!collaborators.contains(collaborator)) {
+					collaborators.add(collaborator);
+				}
 			}
+		} catch (MessagingException e) {
+			System.out.println("Error retrieving from");
 		}
-		for (V collaborator : to) {
-			if (!collaborators.contains(collaborator)) {
-				collaborators.add(collaborator);
+		try {
+			for (RecipientType collaborator : getTo()) {
+				if (!collaborators.contains(collaborator)) {
+					collaborators.add(collaborator);
+				}
 			}
+		} catch (MessagingException e) {
+			System.out.println("Error retrieving to");
 		}
-		for (V collaborator : cc) {
-			if (!collaborators.contains(collaborator)) {
-				collaborators.add(collaborator);
+		try {
+			for (RecipientType collaborator : getCc()) {
+				if (!collaborators.contains(collaborator)) {
+					collaborators.add(collaborator);
+				}
 			}
+		} catch (MessagingException e) {
+			System.out.println("Error retrieving cc");
 		}
-		for (V collaborator : bcc) {
-			if (!collaborators.contains(collaborator)) {
-				collaborators.add(collaborator);
+		try {
+			for (RecipientType collaborator : getBcc()) {
+				if (!collaborators.contains(collaborator)) {
+					collaborators.add(collaborator);
+				}
 			}
+		} catch (MessagingException e) {
+			System.out.println("Error retrieving bcc");
 		}
-		for (V collaborator : newsgroups) {
-			if (!collaborators.contains(collaborator)) {
-				collaborators.add(collaborator);
+		try {
+			for (RecipientType collaborator : getNewsgroups()) {
+				if (!collaborators.contains(collaborator)) {
+					collaborators.add(collaborator);
+				}
 			}
+		} catch (MessagingException e) {
+			System.out.println("Error retrieving newsgroups");
 		}
 		return collaborators;
 	}
@@ -229,7 +249,7 @@ public class EmailMessage<V> implements SingleMessage<V> {
 		try {
 			String retVal = getLastActiveDate() + " from:[";
 			boolean addComma = false;
-			for (V sender : getFrom()) {
+			for (RecipientType sender : getFrom()) {
 				retVal += sender;
 				if (addComma)
 					retVal += ",";
@@ -238,7 +258,7 @@ public class EmailMessage<V> implements SingleMessage<V> {
 			}
 			retVal += "] to:[";
 			addComma = false;
-			for (V recipient : getTo()) {
+			for (RecipientType recipient : getTo()) {
 				retVal += recipient;
 				if (addComma)
 					retVal += ",";
@@ -247,7 +267,7 @@ public class EmailMessage<V> implements SingleMessage<V> {
 			}
 			retVal += "] cc:[";
 			addComma = false;
-			for (V recipient : getCc()) {
+			for (RecipientType recipient : getCc()) {
 				retVal += recipient;
 				if (addComma)
 					retVal += ",";
@@ -256,7 +276,7 @@ public class EmailMessage<V> implements SingleMessage<V> {
 			}
 			retVal += "] bcc:[";
 			addComma = false;
-			for (V recipient : getBcc()) {
+			for (RecipientType recipient : getBcc()) {
 				retVal += recipient;
 				if (addComma)
 					retVal += ",";

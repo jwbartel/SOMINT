@@ -18,7 +18,9 @@ import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
 
-public class JavaMailMessage extends EmailMessage<Address> {
+import data.representation.actionbased.messages.JavaMailMessage;
+
+public class JavaMailEmailMessage extends EmailMessage<Address> implements JavaMailMessage {
 
 	final static DateFormat[] dateFormats = {
 			new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z"),
@@ -30,7 +32,7 @@ public class JavaMailMessage extends EmailMessage<Address> {
 	private final Map<String, String[]> seenHeaders = new TreeMap<String, String[]>();
 	private final ArrayList<String> attachedFiles = new ArrayList<String>();
 
-	public JavaMailMessage(Message parent, boolean wasSent)
+	public JavaMailEmailMessage(Message parent, boolean wasSent)
 			throws MessagingException, IOException {
 		this.parent = parent;
 		this.wasSent = wasSent;
@@ -39,7 +41,7 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		preloadData(new PrefetchOptions(prefetchedHeaders, false));
 	}
 
-	public JavaMailMessage(Message parent, boolean wasSent,
+	public JavaMailEmailMessage(Message parent, boolean wasSent,
 			PrefetchOptions prefetchOptions) throws MessagingException,
 			IOException {
 		super();
@@ -52,26 +54,7 @@ public class JavaMailMessage extends EmailMessage<Address> {
 	private void preloadData(PrefetchOptions prefetchOptions)
 			throws MessagingException, IOException {
 		date = extractDate();
-		try {
-			getFrom();
-		} catch (MessagingException e) {
-			System.out.println("Error retrieving from addresses");
-		}
-		try {
-			getTo();
-		} catch (MessagingException e) {
-			System.out.println("Error retrieving to addresses");
-		}
-		try {
-			getCc();
-		} catch (MessagingException e) {
-			System.out.println("Error retrieving cc addresses");
-		}
-		try {
-			getBcc();
-		} catch (MessagingException e) {
-			System.out.println("Error retrieving bcc addresses");
-		}
+		getCollaborators();
 		getSubject();
 		try {
 			getNewsgroups();
@@ -125,6 +108,10 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		return parent.getReceivedDate();
 	}
 
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getHeader(java.lang.String)
+	 */
+	@Override
 	public String[] getHeader(String header) throws MessagingException {
 		if (!seenHeaders.containsKey(header)) {
 			throw new MessagingException("Header value " + header
@@ -134,6 +121,10 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getSubject()
+	 */
+	@Override
 	public String getSubject() throws MessagingException {
 		if (subject == null) {
 			subject = parent.getSubject();
@@ -141,6 +132,10 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		return subject;
 	}
 
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getFrom()
+	 */
+	@Override
 	public Collection<Address> getFrom() throws MessagingException {
 		if (from == null) {
 			from = createList(parent.getFrom());
@@ -148,6 +143,10 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		return from;
 	}
 
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getTo()
+	 */
+	@Override
 	public ArrayList<Address> getTo() throws MessagingException {
 		if (to == null) {
 			to = createList(RecipientType.TO);
@@ -155,6 +154,10 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		return to;
 	}
 
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getCc()
+	 */
+	@Override
 	public ArrayList<Address> getCc() throws MessagingException {
 		if (cc == null) {
 			cc = createList(RecipientType.CC);
@@ -162,6 +165,10 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		return cc;
 	}
 
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getBcc()
+	 */
+	@Override
 	public ArrayList<Address> getBcc() throws MessagingException {
 		if (bcc == null) {
 			bcc = createList(RecipientType.BCC);
@@ -169,6 +176,10 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		return bcc;
 	}
 
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getNewsgroups()
+	 */
+	@Override
 	public ArrayList<Address> getNewsgroups() throws MessagingException {
 		if (newsgroups == null) {
 			newsgroups = createList(javax.mail.internet.MimeMessage.RecipientType.NEWSGROUPS);
@@ -176,6 +187,9 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		return newsgroups;
 	}
 	
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getMessageId()
+	 */
 	@Override
 	public String getMessageId() throws MessagingException {
 		String[] messageIds = getHeader("Message-ID");
@@ -185,6 +199,10 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		return messageIds[0];
 	}
 
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getReferences()
+	 */
+	@Override
 	public ArrayList<String> getReferences() throws MessagingException {
 		ArrayList<String> references = new ArrayList<String>();
 		if (getHeader("References") != null) {
@@ -200,6 +218,10 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		return references;
 	}
 
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getInReplyTo()
+	 */
+	@Override
 	public String getInReplyTo() throws MessagingException {
 		String inReplyTo = null;
 		if (getHeader("In-Reply-To") != null
@@ -209,6 +231,10 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		return inReplyTo;
 	}
 
+	/* (non-Javadoc)
+	 * @see data.representation.actionbased.messages.email.JavaMailSingleMessage#getAttachedFiles()
+	 */
+	@Override
 	public ArrayList<String> getAttachedFiles() {
 		return attachedFiles;
 	}
