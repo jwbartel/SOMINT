@@ -31,8 +31,8 @@ public class EmailThreadRetriever implements
 
 		try {
 			ArrayList<Set<JavaMailMessage>> threadSets = new ArrayList<Set<JavaMailMessage>>();
+			ArrayList<ArrayList<String>> idsForThreads = new ArrayList<>();
 			Set<String> seenMessages = new TreeSet<String>();
-			Set<String> unseenMessages = new TreeSet<String>();
 
 			for (JavaMailMessage message : actions) {
 				if (timeout != null) {
@@ -56,7 +56,7 @@ public class EmailThreadRetriever implements
 				ArrayList<String> references = message.getReferences();
 				String inReplyTo = message.getInReplyTo();
 				sortIntoThreads(message, messageID, references, inReplyTo,
-						new ArrayList<ArrayList<String>>(), threadSets);
+						idsForThreads, threadSets);
 			}
 
 			ArrayList<JavaMailThread> threads = new ArrayList<>();
@@ -121,13 +121,11 @@ public class EmailThreadRetriever implements
 			}
 		}
 
-		boolean added = false;
 		if (prevThread == null) {
 			idsForThreads.add(new ArrayList<String>(references));
 			Set<JavaMailMessage> thread = new HashSet<JavaMailMessage>();
 			thread.add(message);
 			threads.add(thread);
-			added = true;
 		}
 	}
 

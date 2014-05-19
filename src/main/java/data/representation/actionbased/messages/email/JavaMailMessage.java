@@ -12,23 +12,24 @@ import java.util.TreeMap;
 
 import javax.mail.Address;
 import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMessage.RecipientType;
 
 public class JavaMailMessage extends EmailMessage<Address> {
 
 	final static DateFormat[] dateFormats = {
+		new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss"),
 			new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z"),
 			new SimpleDateFormat("dd MMM yyyy HH:mm:ss z"), };
 
-	MimeMessage parent;
+	Message parent;
 	private final Map<String, String[]> seenHeaders = new TreeMap<String, String[]>();
 	private final ArrayList<String> attachedFiles = new ArrayList<String>();
 
-	public JavaMailMessage(MimeMessage parent, boolean wasSent)
+	public JavaMailMessage(Message parent, boolean wasSent)
 			throws MessagingException, IOException {
 		this.parent = parent;
 		this.wasSent = wasSent;
@@ -37,7 +38,7 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		preloadData(new PrefetchOptions(prefetchedHeaders, false));
 	}
 
-	public JavaMailMessage(MimeMessage parent, boolean wasSent,
+	public JavaMailMessage(Message parent, boolean wasSent,
 			PrefetchOptions prefetchOptions) throws MessagingException,
 			IOException {
 		super();
@@ -70,6 +71,7 @@ public class JavaMailMessage extends EmailMessage<Address> {
 		} catch (MessagingException e) {
 			System.out.println("Error retrieving bcc addresses");
 		}
+		getSubject();
 		try {
 			getNewsgroups();
 		} catch (MessagingException e) {
@@ -147,28 +149,28 @@ public class JavaMailMessage extends EmailMessage<Address> {
 
 	public ArrayList<Address> getTo() throws MessagingException {
 		if (to == null) {
-			to = createList((RecipientType) RecipientType.TO);
+			to = createList(RecipientType.TO);
 		}
 		return to;
 	}
 
 	public ArrayList<Address> getCc() throws MessagingException {
 		if (cc == null) {
-			cc = createList((RecipientType) RecipientType.CC);
+			cc = createList(RecipientType.CC);
 		}
 		return cc;
 	}
 
 	public ArrayList<Address> getBcc() throws MessagingException {
 		if (bcc == null) {
-			bcc = createList((RecipientType) RecipientType.BCC);
+			bcc = createList(RecipientType.BCC);
 		}
 		return bcc;
 	}
 
 	public ArrayList<Address> getNewsgroups() throws MessagingException {
 		if (newsgroups == null) {
-			newsgroups = createList((RecipientType) RecipientType.NEWSGROUPS);
+			newsgroups = createList(javax.mail.internet.MimeMessage.RecipientType.NEWSGROUPS);
 		}
 		return newsgroups;
 	}

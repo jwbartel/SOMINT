@@ -20,4 +20,12 @@ public class EmailThread<RecipientType, MessageType extends EmailMessage<Recipie
 		return new ArrayList<>(messages);
 	}
 
+	@Override
+	public String toString() {
+		String retVal = "";
+		for (MessageType message : getThreadedActions()) {
+			retVal += message.toString() + "\n";
+		}
+		return retVal;
+	}
 }

@@ -17,13 +17,16 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	static String WSP = "([\\s])";
 	static String BLOBCHAR = "([^\\[\\]])"; // any CHAR except '[' and ']
 
-	static String SUBJ_BLOB = "(" + "\\[" + BLOBCHAR + "*" + "\\]" + WSP + "*" + ")";
-	static String SUBJ_REFWD = "(" + "((re)|(fw[d]?))" + WSP + "*" + SUBJ_BLOB + "?" + ":" + ")";
+	static String SUBJ_BLOB = "(" + "\\[" + BLOBCHAR + "*" + "\\]" + WSP + "*"
+			+ ")";
+	static String SUBJ_REFWD = "(" + "((re)|(fw[d]?))" + WSP + "*" + SUBJ_BLOB
+			+ "?" + ":" + ")";
 
 	static String SUBJ_FWD_HDR = "[fwd:";
 	static String SUBJ_FWD_TRL = "]";
 
-	static String SUBJ_LEADER = "(" + "(" + SUBJ_BLOB + "*" + SUBJ_REFWD + ")" + "|" + WSP + ")";
+	static String SUBJ_LEADER = "(" + "(" + SUBJ_BLOB + "*" + SUBJ_REFWD + ")"
+			+ "|" + WSP + ")";
 	static String SUBJ_TRAILER = "(" + "([(]fwd[)])" + "|" + WSP + ")";
 
 	static Pattern SUBJ_BLOB_PATTERN = Pattern.compile(SUBJ_BLOB);
@@ -31,10 +34,10 @@ public class EmailMessage<V> implements SingleMessage<V> {
 
 	private String messageId;
 	private String threadId;
-	
+
 	protected Date date;
 	protected boolean wasSent;
-	
+
 	protected Collection<V> from;
 	protected ArrayList<V> to;
 	protected ArrayList<V> cc;
@@ -46,16 +49,19 @@ public class EmailMessage<V> implements SingleMessage<V> {
 
 	EmailMessage() {
 	}
-	
-	public EmailMessage(String messageId, String threadId, Date date, boolean wasSent, ArrayList<V> from,
-			ArrayList<V> to, ArrayList<V> cc, ArrayList<V> bcc, ArrayList<V> newsgroups, String subject,
-			String body) {
-		init(messageId, threadId, date, wasSent, from, to, cc, bcc, newsgroups, subject, body);
+
+	public EmailMessage(String messageId, String threadId, Date date,
+			boolean wasSent, ArrayList<V> from, ArrayList<V> to,
+			ArrayList<V> cc, ArrayList<V> bcc, ArrayList<V> newsgroups,
+			String subject, String body) {
+		init(messageId, threadId, date, wasSent, from, to, cc, bcc, newsgroups,
+				subject, body);
 	}
-	
-	protected void init(String messageId, String threadId, Date date, boolean wasSent, ArrayList<V> from,
-			ArrayList<V> to, ArrayList<V> cc, ArrayList<V> bcc, ArrayList<V> newsgroups, String subject,
-			String body) {
+
+	protected void init(String messageId, String threadId, Date date,
+			boolean wasSent, ArrayList<V> from, ArrayList<V> to,
+			ArrayList<V> cc, ArrayList<V> bcc, ArrayList<V> newsgroups,
+			String subject, String body) {
 		this.messageId = messageId;
 		this.threadId = threadId;
 		this.date = date;
@@ -112,18 +118,22 @@ public class EmailMessage<V> implements SingleMessage<V> {
 		return baseSubject;
 	}
 
-	private String extractBaseSubject() throws UnsupportedEncodingException, MessagingException {
+	private String extractBaseSubject() throws UnsupportedEncodingException,
+			MessagingException {
 
-		String baseSubject = new String(getSubject().getBytes("UTF-8"), "UTF-8").toLowerCase();
+		String baseSubject = new String(getSubject().getBytes("UTF-8"), "UTF-8")
+				.toLowerCase();
 		baseSubject = baseSubject.replaceAll("\t", " ");
 		baseSubject = baseSubject.replaceAll("[ ]+", " ");
 
 		while (true) {
 			while (baseSubject.matches(".*" + SUBJ_TRAILER)) {
 				if (baseSubject.endsWith("(fwd)")) {
-					baseSubject = baseSubject.substring(0, baseSubject.length() - 5);
+					baseSubject = baseSubject.substring(0,
+							baseSubject.length() - 5);
 				} else {
-					baseSubject = baseSubject.substring(0, baseSubject.length() - 1);
+					baseSubject = baseSubject.substring(0,
+							baseSubject.length() - 1);
 				}
 			}
 
@@ -131,23 +141,27 @@ public class EmailMessage<V> implements SingleMessage<V> {
 			while (shouldCheckAgain) {
 				Matcher matcher = SUBJ_LEADER_PATTERN.matcher(baseSubject);
 				if (matcher.find() && matcher.start() == 0) {
-					baseSubject = baseSubject.substring(matcher.group().length());
+					baseSubject = baseSubject.substring(matcher.group()
+							.length());
 					shouldCheckAgain = true;
 				} else {
 					shouldCheckAgain = false;
 				}
 
 				matcher = SUBJ_BLOB_PATTERN.matcher(baseSubject);
-				if (matcher.find() && matcher.start() == 0 && matcher.end() != baseSubject.length()) {
-					baseSubject = baseSubject.substring(matcher.group().length());
+				if (matcher.find() && matcher.start() == 0
+						&& matcher.end() != baseSubject.length()) {
+					baseSubject = baseSubject.substring(matcher.group()
+							.length());
 					shouldCheckAgain = true;
 				}
 
 			}
 
-			if (baseSubject.startsWith(SUBJ_FWD_HDR) && baseSubject.endsWith(SUBJ_FWD_TRL)) {
-				baseSubject = baseSubject.substring(SUBJ_FWD_HDR.length(), baseSubject.length()
-						- SUBJ_FWD_TRL.length());
+			if (baseSubject.startsWith(SUBJ_FWD_HDR)
+					&& baseSubject.endsWith(SUBJ_FWD_TRL)) {
+				baseSubject = baseSubject.substring(SUBJ_FWD_HDR.length(),
+						baseSubject.length() - SUBJ_FWD_TRL.length());
 			} else {
 				break;
 			}
@@ -173,7 +187,7 @@ public class EmailMessage<V> implements SingleMessage<V> {
 	public Date getLastActiveDate() {
 		return date;
 	}
-	
+
 	@Override
 	public boolean wasSent() {
 		return wasSent;
@@ -208,6 +222,52 @@ public class EmailMessage<V> implements SingleMessage<V> {
 			}
 		}
 		return collaborators;
+	}
+
+	@Override
+	public String toString() {
+		try {
+			String retVal = getLastActiveDate() + " from:[";
+			boolean addComma = false;
+			for (V sender : getFrom()) {
+				retVal += sender;
+				if (addComma)
+					retVal += ",";
+				else
+					addComma = true;
+			}
+			retVal += "] to:[";
+			addComma = false;
+			for (V recipient : getTo()) {
+				retVal += recipient;
+				if (addComma)
+					retVal += ",";
+				else
+					addComma = true;
+			}
+			retVal += "] cc:[";
+			addComma = false;
+			for (V recipient : getCc()) {
+				retVal += recipient;
+				if (addComma)
+					retVal += ",";
+				else
+					addComma = true;
+			}
+			retVal += "] bcc:[";
+			addComma = false;
+			for (V recipient : getBcc()) {
+				retVal += recipient;
+				if (addComma)
+					retVal += ",";
+				else
+					addComma = true;
+			}
+			retVal += "] subject:" + getSubject();
+			return retVal;
+		} catch (MessagingException e) {
+			return super.toString();
+		}
 	}
 
 }
