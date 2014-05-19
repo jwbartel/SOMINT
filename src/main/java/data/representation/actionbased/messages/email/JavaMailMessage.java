@@ -21,9 +21,10 @@ import javax.mail.Part;
 public class JavaMailMessage extends EmailMessage<Address> {
 
 	final static DateFormat[] dateFormats = {
-		new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss"),
 			new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z"),
-			new SimpleDateFormat("dd MMM yyyy HH:mm:ss z"), };
+			new SimpleDateFormat("dd MMM yyyy HH:mm:ss z"),
+			new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss"),
+			new SimpleDateFormat("dd MMM yyyy HH:mm:ss"), };
 
 	Message parent;
 	private final Map<String, String[]> seenHeaders = new TreeMap<String, String[]>();
