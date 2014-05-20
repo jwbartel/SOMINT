@@ -62,7 +62,7 @@ public class InteractionRankGroupBasedRecipientRecommender<V extends Comparable<
 		
 		actions.add(action);
 
-		Set<V> group = new HashSet<>(action.getCollaborators());
+		Set<V> group = new TreeSet<>(action.getCollaborators());
 		for (Entry<Set<V>, Collection<CollaborativeAction<V>>> entry : groupsToActions
 				.entrySet()) {
 
