@@ -30,6 +30,16 @@ public class IntersectionGroupCount<V> extends GroupScorer<V> {
 		return new GroupScorerFactory<V>() {
 
 			@Override
+			public boolean takesWOutAndHalfLife() {
+				return false;
+			}
+
+			@Override
+			public GroupScorer<V> create() {
+				return new IntersectionGroupCount<>();
+			}
+
+			@Override
 			public GroupScorer<V> create(double wOut, double halfLife) {
 				return new IntersectionGroupCount<>();
 			}

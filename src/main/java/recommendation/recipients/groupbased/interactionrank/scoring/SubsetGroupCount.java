@@ -29,6 +29,16 @@ public class SubsetGroupCount<V> extends GroupScorer<V> {
 		return new GroupScorerFactory<V>() {
 
 			@Override
+			public boolean takesWOutAndHalfLife() {
+				return false;
+			}
+
+			@Override
+			public GroupScorer<V> create() {
+				return new SubsetGroupCount<>();
+			}
+
+			@Override
 			public GroupScorer<V> create(double wOut, double halfLife) {
 				return new SubsetGroupCount<>();
 			}

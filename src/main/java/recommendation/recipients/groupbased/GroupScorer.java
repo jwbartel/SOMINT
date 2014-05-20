@@ -12,6 +12,8 @@ public abstract class GroupScorer<V> {
 	protected double halfLife;
 	
 	public interface GroupScorerFactory<V> {
+		public boolean takesWOutAndHalfLife();
+		public GroupScorer<V> create();
 		public GroupScorer<V> create(double wOut, double halfLife);
 	}
 

@@ -34,6 +34,16 @@ public class SubsetGroupScore<V> extends GroupScorer<V> {
 		return new GroupScorerFactory<V>() {
 
 			@Override
+			public boolean takesWOutAndHalfLife() {
+				return true;
+			}
+
+			@Override
+			public GroupScorer<V> create() {
+				return null;
+			}
+
+			@Override
 			public GroupScorer<V> create(double wOut, double halfLife) {
 				return new SubsetGroupScore<>(wOut, halfLife);
 			}
