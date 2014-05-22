@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 import data.representation.actionbased.messages.SingleMessage;
 
-public class StackOverflowMessage implements SingleMessage<String>, Comparable<StackOverflowMessage> {
+public class StackOverflowMessage<Recipient> implements SingleMessage<Recipient>, Comparable<StackOverflowMessage<Recipient>> {
 
 	public static enum MessageType {
 		Question,
@@ -16,16 +16,16 @@ public class StackOverflowMessage implements SingleMessage<String>, Comparable<S
 	}
 	
 	private Long id;
-	private String ownerId;
+	private Recipient ownerId;
 	private Date date;
 	private Long threadId;
 	private MessageType type;
-	private Collection<String> tags;
+	private Collection<Recipient> tags;
 	private String title;
 	private boolean wasSent;
 	
-	public StackOverflowMessage(long id, String owner, Date date,
-			long threadId, MessageType type, Collection<String> tags,
+	public StackOverflowMessage(long id, Recipient owner, Date date,
+			long threadId, MessageType type, Collection<Recipient> tags,
 			String title, boolean wasSent) {
 		this.id = id;
 		this.ownerId = owner;
@@ -41,7 +41,7 @@ public class StackOverflowMessage implements SingleMessage<String>, Comparable<S
 		return id;
 	}
 	
-	public String getOwner() {
+	public Recipient getOwner() {
 		return ownerId;
 	}
 	
@@ -57,7 +57,7 @@ public class StackOverflowMessage implements SingleMessage<String>, Comparable<S
 		return type;
 	}
 	
-	public Collection<String> getTags() {
+	public Collection<Recipient> getTags() {
 		return new TreeSet<>(tags);
 	}
 	
@@ -66,7 +66,7 @@ public class StackOverflowMessage implements SingleMessage<String>, Comparable<S
 	}
 
 	@Override
-	public Collection<String> getCreators() {
+	public Collection<Recipient> getCreators() {
 		return Arrays.asList(ownerId);
 	}
 
@@ -81,7 +81,7 @@ public class StackOverflowMessage implements SingleMessage<String>, Comparable<S
 	}
 
 	@Override
-	public Collection<String> getCollaborators() {
+	public Collection<Recipient> getCollaborators() {
 		return getTags();
 	}
 
@@ -91,7 +91,7 @@ public class StackOverflowMessage implements SingleMessage<String>, Comparable<S
 	}
 	
 	@Override
-	public int compareTo(StackOverflowMessage message) {
+	public int compareTo(StackOverflowMessage<Recipient> message) {
 		if (!getStartDate().equals(message.getStartDate())) {
 			return getStartDate().compareTo(message.getStartDate());
 		}
