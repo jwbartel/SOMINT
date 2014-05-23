@@ -252,9 +252,11 @@ public class EmailMessage<RecipientType> implements SingleMessage<RecipientType>
 			System.out.println("Error retrieving bcc");
 		}
 		try {
-			for (RecipientType collaborator : getNewsgroups()) {
-				if (!collaborators.contains(collaborator)) {
-					collaborators.add(collaborator);
+			if (getNewsgroups() != null) {
+				for (RecipientType collaborator : getNewsgroups()) {
+					if (!collaborators.contains(collaborator)) {
+						collaborators.add(collaborator);
+					}
 				}
 			}
 		} catch (MessagingException e) {
