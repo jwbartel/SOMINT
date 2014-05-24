@@ -16,7 +16,7 @@ import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
-import bus.tools.io.CollectionIOAssist;
+import util.tools.io.CollectionIOAssist;
 
 public class RecommendationChecker {
 

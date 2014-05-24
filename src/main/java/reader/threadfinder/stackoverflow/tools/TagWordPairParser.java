@@ -1,6 +1,6 @@
 package reader.threadfinder.stackoverflow.tools;
 
-import bus.tools.io.ValueParser;
+import util.tools.io.ValueParser;
 
 public class TagWordPairParser implements ValueParser<TagWordPair> {
 

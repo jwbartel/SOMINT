@@ -12,12 +12,12 @@ import java.util.TreeSet;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import data.parsers.AddressParser;
+import data.parsers.MessageFrequencyParser;
+import data.structures.AddressLists;
+import data.structures.ComparableSet;
 import recommendation.recipients.old.contentbased.AdaptedAgedContentAccount;
 import bus.accounts.Account;
-import bus.data.parsers.AddressParser;
-import bus.data.parsers.MessageFrequencyParser;
-import bus.data.structures.AddressLists;
-import bus.data.structures.ComparableSet;
 
 public class PredictionAcceptanceModeler extends AdaptedAgedContentAccount {
 

@@ -10,10 +10,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import data.representation.actionbased.CollaborativeAction;
+import data.structures.ComparableSet;
 import recommendation.recipients.RecipientRecommendation;
 import recommendation.recipients.ScoredRecipientRecommendation;
 import recommendation.recipients.groupbased.GroupBasedRecipientRecommender;
-import bus.data.structures.ComparableSet;
 
 public class HierarchicalRecipientRecommender<V extends Comparable<V>> extends
 		GroupBasedRecipientRecommender<V> {

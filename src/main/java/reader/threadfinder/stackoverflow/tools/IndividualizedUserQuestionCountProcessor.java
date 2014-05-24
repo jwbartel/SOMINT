@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import bus.tools.io.CollectionIOAssist;
-import bus.tools.io.IntegerValueParser;
+import util.tools.io.CollectionIOAssist;
+import util.tools.io.IntegerValueParser;
 
 public class IndividualizedUserQuestionCountProcessor extends IndividualizedQuestionProcessor {
 

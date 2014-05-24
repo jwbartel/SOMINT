@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-import bus.tools.io.IntegerValueParser;
-import bus.tools.io.MapIOAssist;
-import bus.tools.io.StringValueWriterAndParser;
+import util.tools.io.IntegerValueParser;
+import util.tools.io.MapIOAssist;
+import util.tools.io.StringValueWriterAndParser;
 
 public class IndividualizedWordQuestionListProcessor extends IndividualizedQuestionProcessor {
 

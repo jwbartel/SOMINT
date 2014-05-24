@@ -9,8 +9,8 @@ import java.util.TreeMap;
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 
-import bus.tools.io.CollectionIOAssist;
-import bus.tools.io.LongValueParser;
+import util.tools.io.CollectionIOAssist;
+import util.tools.io.LongValueParser;
 
 public class IndividualizedPairsBuilderProcessor<V1 extends Comparable<V1>, V2 extends Comparable<V2>>
 		extends IndividualizedQuestionProcessor {

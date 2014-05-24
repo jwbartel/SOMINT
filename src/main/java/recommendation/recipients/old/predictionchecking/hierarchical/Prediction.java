@@ -2,7 +2,7 @@ package recommendation.recipients.old.predictionchecking.hierarchical;
 
 import java.util.Set;
 
-import bus.data.structures.ComparableSet;
+import data.structures.ComparableSet;
 
 public interface Prediction {
 	

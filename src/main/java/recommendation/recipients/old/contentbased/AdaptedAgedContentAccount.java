@@ -23,12 +23,12 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
+import data.parsers.MessageFrequencyParser;
+import data.structures.AddressLists;
+import data.structures.DirectedEmailInteraction;
+import data.structures.EmailInteraction;
+import util.tools.AdaptedMessageListBuilder.AdaptedMessage;
 import bus.accounts.Account;
-import bus.data.parsers.MessageFrequencyParser;
-import bus.data.structures.AddressLists;
-import bus.data.structures.DirectedEmailInteraction;
-import bus.data.structures.EmailInteraction;
-import bus.tools.AdaptedMessageListBuilder.AdaptedMessage;
 
 public class AdaptedAgedContentAccount extends SimpleTFIDFAccount{
 	static String msg_list =  Account.ALL_MSGS_ADAPTED_NO_LATE_DRAFTS;

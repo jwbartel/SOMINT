@@ -10,12 +10,12 @@ import java.util.TreeMap;
 
 import javax.mail.MessagingException;
 
+import data.structures.ComparableSet;
+import data.structures.DirectedEmailInteraction;
+import data.structures.EmailInteraction;
+import data.structures.groups.GoogleGroupTracker;
+import data.structures.groups.Group;
 import bus.accounts.Account;
-import bus.data.structures.ComparableSet;
-import bus.data.structures.DirectedEmailInteraction;
-import bus.data.structures.EmailInteraction;
-import bus.data.structures.groups.GoogleGroupTracker;
-import bus.data.structures.groups.Group;
 
 public class TimeAndDirectionPredictionMaker extends PredictionMaker{
 	

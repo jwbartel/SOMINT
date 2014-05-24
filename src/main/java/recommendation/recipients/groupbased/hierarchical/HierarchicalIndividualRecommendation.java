@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
+import data.structures.ComparableSet;
 import recommendation.recipients.SingleRecipientRecommendation;
-import bus.data.structures.ComparableSet;
 
 public class HierarchicalIndividualRecommendation<V extends Comparable<V>>
 		implements HierarchicalRecommendation<V>,

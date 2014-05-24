@@ -9,7 +9,7 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.JProgressBar;
 
 import reader.threadfinder.EmailThread;
-import bus.tools.Logger;
+import util.tools.Logger;
 import dropbox.converter.EmailToDropboxTranslator;
 
 public class EmailThreadSorter implements Runnable{

@@ -8,7 +8,7 @@ import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
-import bus.tools.Logger;
+import util.tools.Logger;
 import dropbox.converter.EmailToDropboxTranslator;
 
 public class TranslateListener implements ActionListener {

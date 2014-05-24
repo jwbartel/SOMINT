@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import bus.tools.io.MapIOAssist.MapLineReader;
+import util.tools.io.MapIOAssist.MapLineReader;
 
 public class PairFinder<V1 extends Comparable<V1>, V2 extends Comparable<V2>> implements
 		MapLineReader<V2, Collection<Integer>> {

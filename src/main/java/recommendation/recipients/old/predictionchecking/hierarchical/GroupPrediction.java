@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
-import bus.data.structures.ComparableSet;
+import data.structures.ComparableSet;
 
 public class GroupPrediction implements Prediction {
 	int size = 0;

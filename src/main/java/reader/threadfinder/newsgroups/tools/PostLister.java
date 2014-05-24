@@ -32,8 +32,8 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import reader.threadfinder.EmailThread;
 import reader.threadfinder.IteratedThreadStatistics;
 import reader.threadfinder.ThreadStatistics;
+import util.tools.Histogram;
 import bus.accounts.FileNameByOS;
-import bus.tools.Histogram;
 
 public class PostLister {
 	

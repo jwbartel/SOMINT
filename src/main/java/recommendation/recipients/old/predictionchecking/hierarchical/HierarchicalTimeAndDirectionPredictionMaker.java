@@ -8,12 +8,12 @@ import java.util.Iterator;
 
 import javax.mail.MessagingException;
 
+import data.structures.ComparableSet;
+import data.structures.EmailInteraction;
+import data.structures.groups.GoogleGroupTracker;
+import data.structures.groups.Group;
 import recommendation.recipients.old.predictionchecking.TimeAndDirectionPredictionMaker;
 import bus.accounts.Account;
-import bus.data.structures.ComparableSet;
-import bus.data.structures.EmailInteraction;
-import bus.data.structures.groups.GoogleGroupTracker;
-import bus.data.structures.groups.Group;
 
 public class HierarchicalTimeAndDirectionPredictionMaker extends TimeAndDirectionPredictionMaker {
 

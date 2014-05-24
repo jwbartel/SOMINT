@@ -17,16 +17,16 @@ import java.util.TreeSet;
 
 import javax.mail.MessagingException;
 
+import data.parsers.MessageFrequencyParser;
+import data.structures.AddressLists;
+import data.structures.ComparableSet;
+import data.structures.groups.GoogleGroupTracker;
+import data.structures.groups.Group;
 import recommendation.recipients.old.groupbased.GroupAccount;
 import recommendation.recipients.old.predictionchecking.TopGroupPrediction;
+import util.tools.EmailAccountAdjuster;
 import bus.accounts.Account;
 import bus.accounts.FileNameByOS;
-import bus.data.parsers.MessageFrequencyParser;
-import bus.data.structures.AddressLists;
-import bus.data.structures.ComparableSet;
-import bus.data.structures.groups.GoogleGroupTracker;
-import bus.data.structures.groups.Group;
-import bus.tools.EmailAccountAdjuster;
 
 public class SimpleTFIDFAccount extends GroupAccount {
 	static String msg_list =  Account.ALL_MSGS_ADAPTED;

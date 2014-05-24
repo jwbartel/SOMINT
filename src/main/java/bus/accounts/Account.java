@@ -19,8 +19,8 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
-import bus.data.parsers.AddressParser;
-import bus.data.structures.AddressLists;
+import data.parsers.AddressParser;
+import data.structures.AddressLists;
 
 public abstract class Account {
 	public static final double TRAINING_RATIO = 0.9;

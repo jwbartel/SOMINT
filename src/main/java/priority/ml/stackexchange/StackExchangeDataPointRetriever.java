@@ -29,7 +29,7 @@ import priority.ml.DataPointRetriever;
 import priority.ml.InteractionDataPoint;
 import priority.ml.ThreadDataPoint;
 import priority.ml.VectorGenerator;
-import bus.tools.ResultsZipManager;
+import util.tools.ResultsZipManager;
 
 public class StackExchangeDataPointRetriever implements DataPointRetriever {
 

@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import bus.tools.io.CollectionIOAssist;
+import util.tools.io.CollectionIOAssist;
 
 public class IndividualizedTagQuestionCountProcessor extends IndividualizedQuestionProcessor {
 

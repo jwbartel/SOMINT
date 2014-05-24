@@ -29,10 +29,10 @@ import priority.ml.RecommendationBuilder;
 import priority.ml.RecommendationChecker;
 import priority.ml.SlopeOneRecommendationBuilder;
 import reader.threadfinder.stackoverflow.tools.Pair;
-import bus.tools.io.CollectionIOAssist;
-import bus.tools.io.CsvCollectionValueWriter;
-import bus.tools.io.DoubleValueWriter;
-import bus.tools.io.MapIOAssist;
+import util.tools.io.CollectionIOAssist;
+import util.tools.io.CsvCollectionValueWriter;
+import util.tools.io.DoubleValueWriter;
+import util.tools.io.MapIOAssist;
 
 public class StackOverflowRecommendationChecker {
 

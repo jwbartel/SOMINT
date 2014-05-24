@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
-import bus.data.structures.ComparableSet;
+import data.structures.ComparableSet;
 
 public class HierarchicalGroupRecommendation<V extends Comparable<V>> implements HierarchicalRecommendation<V> {
 	int size = 0;

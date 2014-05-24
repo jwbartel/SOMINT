@@ -17,7 +17,7 @@ import org.jgrapht.graph.DefaultEdge;
 
 import recommendation.groups.seedless.SeedlessGroupRecommender;
 import recommendation.groups.seedless.hybrid.IOFunctions;
-import bus.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
+import util.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
 
 public class Fellows<V extends Comparable<V>> implements
 		SeedlessGroupRecommender<V> {

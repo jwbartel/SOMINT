@@ -10,12 +10,12 @@ import java.util.TreeSet;
 
 import javax.mail.MessagingException;
 
+import data.parsers.MessageFrequencyParser;
+import data.structures.AddressLists;
 import recommendation.recipients.old.predictionchecking.MultispacePredictionMaker;
 import recommendation.recipients.old.predictionchecking.PredictionAcceptanceModeler;
 import recommendation.recipients.old.predictionchecking.PredictionMaker;
 import bus.accounts.Account;
-import bus.data.parsers.MessageFrequencyParser;
-import bus.data.structures.AddressLists;
 
 public class HierarchicalPredictionAcceptanceModeler extends 	PredictionAcceptanceModeler {
 

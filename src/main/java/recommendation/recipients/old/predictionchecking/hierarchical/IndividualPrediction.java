@@ -3,7 +3,7 @@ package recommendation.recipients.old.predictionchecking.hierarchical;
 import java.util.Set;
 import java.util.TreeSet;
 
-import bus.data.structures.ComparableSet;
+import data.structures.ComparableSet;
 
 public class IndividualPrediction implements Prediction{
 	String value;

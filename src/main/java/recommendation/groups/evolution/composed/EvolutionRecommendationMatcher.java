@@ -14,7 +14,7 @@ import recommendation.groups.evolution.composed.listmaker.ExpectedScalingPredict
 import recommendation.groups.evolution.composed.listmaker.GroupAndPredictionPair;
 import recommendation.groups.evolution.composed.listmaker.PredictionListMakerFactory;
 import recommendation.groups.evolution.recommendations.RecommendedGroupChangeEvolution;
-import bus.tools.TestingConstants;
+import util.tools.TestingConstants;
 
 //Selects recommendations based on a one-to-one mapping
 //It would be good to include one-to-many, many-to-one, and many-to-many mappings here too

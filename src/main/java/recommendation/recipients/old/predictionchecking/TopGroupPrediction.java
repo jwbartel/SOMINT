@@ -3,7 +3,7 @@ package recommendation.recipients.old.predictionchecking;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import bus.data.structures.ComparableSet;
+import data.structures.ComparableSet;
 
 public class TopGroupPrediction implements Comparable<TopGroupPrediction>{
 	public final ComparableSet<String> recipients;

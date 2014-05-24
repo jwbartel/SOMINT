@@ -2,8 +2,8 @@ package recommendation.recipients.groupbased.hierarchical;
 
 import java.util.Set;
 
+import data.structures.ComparableSet;
 import recommendation.recipients.RecipientRecommendation;
-import bus.data.structures.ComparableSet;
 
 public interface HierarchicalRecommendation<V extends Comparable<V>> extends
 		RecipientRecommendation<V> {

@@ -6,10 +6,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-import bus.tools.io.CollectionIOAssist;
-import bus.tools.io.IntegerValueParser;
-import bus.tools.io.MapIOAssist;
-import bus.tools.io.StringValueWriterAndParser;
+import util.tools.io.CollectionIOAssist;
+import util.tools.io.IntegerValueParser;
+import util.tools.io.MapIOAssist;
+import util.tools.io.StringValueWriterAndParser;
 
 public class IndividualizedTagWordQuestionCountProcessor extends IndividualizedQuestionProcessor {
 

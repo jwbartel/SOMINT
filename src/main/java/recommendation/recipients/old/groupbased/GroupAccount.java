@@ -16,11 +16,11 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
+import data.structures.AddressLists;
+import data.structures.groups.GoogleGroupTracker;
+import util.tools.AdaptedMessageListBuilder.AdaptedMessage;
 import bus.accounts.Account;
 import bus.accounts.FileNameByOS;
-import bus.data.structures.AddressLists;
-import bus.data.structures.groups.GoogleGroupTracker;
-import bus.tools.AdaptedMessageListBuilder.AdaptedMessage;
 
 public class GroupAccount extends Account {
 	

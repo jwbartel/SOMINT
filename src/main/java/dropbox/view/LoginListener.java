@@ -8,10 +8,9 @@ import javax.mail.MessagingException;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-
 import reader.ImapConnector;
 import reader.MailReader;
-import bus.tools.Logger;
+import util.tools.Logger;
 
 public class LoginListener implements ActionListener{
 	

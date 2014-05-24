@@ -7,9 +7,9 @@ import java.util.Map;
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 
-import bus.tools.io.CollectionIOAssist;
-import bus.tools.io.IntegerValueParser;
-import bus.tools.io.LongValueParser;
+import util.tools.io.CollectionIOAssist;
+import util.tools.io.IntegerValueParser;
+import util.tools.io.LongValueParser;
 
 public class IndividualizedUserAnswerTimeProcessor extends IndividualizedQuestionProcessor {
 

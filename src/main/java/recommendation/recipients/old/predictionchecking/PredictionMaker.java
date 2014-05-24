@@ -5,10 +5,10 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 
+import data.structures.ComparableSet;
+import data.structures.groups.GoogleGroupTracker;
 import recommendation.recipients.old.contentbased.AdaptedAgedContentAccount;
 import bus.accounts.Account;
-import bus.data.structures.ComparableSet;
-import bus.data.structures.groups.GoogleGroupTracker;
 
 
 public abstract class PredictionMaker extends AdaptedAgedContentAccount{

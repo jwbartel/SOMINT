@@ -14,9 +14,9 @@ import java.util.TreeSet;
 
 import javax.mail.MessagingException;
 
+import data.parsers.MessageFrequencyParser;
 import recommendation.recipients.groupbased.interactionrank.GoogleAccount;
 import bus.accounts.Account;
-import bus.data.parsers.MessageFrequencyParser;
 
 public class AgedContentAccount extends GoogleAccount{
 	

@@ -9,12 +9,12 @@ import java.util.Set;
 
 import javax.mail.MessagingException;
 
+import data.structures.ComparableSet;
+import data.structures.EmailInteraction;
+import data.structures.groups.GoogleGroupTracker;
+import data.structures.groups.Group;
 import recommendation.recipients.old.predictionchecking.SocialConnectionPredictionMaker;
 import bus.accounts.Account;
-import bus.data.structures.ComparableSet;
-import bus.data.structures.EmailInteraction;
-import bus.data.structures.groups.GoogleGroupTracker;
-import bus.data.structures.groups.Group;
 
 public class HierarchicalSocialConnectionPredictionMaker extends SocialConnectionPredictionMaker{
 

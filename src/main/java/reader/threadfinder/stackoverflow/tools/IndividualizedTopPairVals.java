@@ -9,10 +9,10 @@ import java.util.TreeSet;
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 
-import bus.tools.io.CollectionIOAssist;
-import bus.tools.io.IntegerValueParser;
-import bus.tools.io.LongValueParser;
-import bus.tools.io.MapIOAssist;
+import util.tools.io.CollectionIOAssist;
+import util.tools.io.IntegerValueParser;
+import util.tools.io.LongValueParser;
+import util.tools.io.MapIOAssist;
 
 public class IndividualizedTopPairVals extends IndividualizedQuestionProcessor {
 

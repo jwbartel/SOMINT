@@ -13,10 +13,10 @@ import java.util.TreeSet;
 
 import javax.mail.MessagingException;
 
+import data.structures.ComparableSet;
 import recommendation.recipients.old.predictionchecking.PredictionAcceptanceModeler;
 import recommendation.recipients.old.predictionchecking.TopGroupPrediction;
 import recommendation.recipients.old.predictionchecking.TopPrediction;
-import bus.data.structures.ComparableSet;
 
 public class MultispaceIndividualsWithTopGroup {
 	public static final int prediction_list_size = PredictionAcceptanceModeler.PREDICTION_LIST_SIZE;

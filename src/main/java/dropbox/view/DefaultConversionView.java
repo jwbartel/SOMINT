@@ -25,7 +25,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import bus.tools.Logger;
+import util.tools.Logger;
 import dropbox.converter.EmailToDropboxTranslator;
 import dropbox.converter.ImapException;
 

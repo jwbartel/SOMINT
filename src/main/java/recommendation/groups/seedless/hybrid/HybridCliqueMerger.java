@@ -14,9 +14,9 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
 import recommendation.groups.seedless.SeedlessGroupRecommender;
-import bus.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
-import bus.tools.FileFinder;
-import bus.tools.io.ValueParser;
+import util.tools.FileAndMemoryBasedBronKerboschCliqueFinder;
+import util.tools.FileFinder;
+import util.tools.io.ValueParser;
 
 public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 

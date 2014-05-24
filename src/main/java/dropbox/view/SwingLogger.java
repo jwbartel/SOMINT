@@ -2,7 +2,7 @@ package dropbox.view;
 
 import javax.swing.JTextArea;
 
-import bus.tools.LogWriter;
+import util.tools.LogWriter;
 
 public class SwingLogger implements LogWriter{
 

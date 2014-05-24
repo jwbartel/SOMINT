@@ -11,9 +11,9 @@ import java.util.TreeMap;
 
 import javax.mail.MessagingException;
 
+import data.structures.EmailInteraction;
+import data.structures.groups.Group;
 import recommendation.recipients.old.predictionchecking.ContentPredictionMaker;
-import bus.data.structures.EmailInteraction;
-import bus.data.structures.groups.Group;
 
 public class HierarchicalContentPredictionMaker extends ContentPredictionMaker{
 
