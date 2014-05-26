@@ -1,13 +1,13 @@
-package pool.thread;
+package util.pool.thread;
 
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import pool.process.ActionHandlerCombo;
-import pool.process.QueueableAction;
-import pool.process.ReturnValueHandler;
 import tracer.Tracer;
+import util.pool.process.ActionHandlerCombo;
+import util.pool.process.QueueableAction;
+import util.pool.process.ReturnValueHandler;
 
 public class ThreadPool extends Thread{
 	static final int DEFAULT_INITIAL_SIZE = 5;

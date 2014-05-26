@@ -1,4 +1,4 @@
-package pool.thread;
+package util.pool.thread;
 
 public class ThreadPoolException extends RuntimeException {
 	

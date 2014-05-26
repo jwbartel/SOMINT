@@ -1,6 +1,6 @@
-package pool.process;
+package util.pool.process;
 
-import pool.thread.ThreadPoolException;
+import util.pool.thread.ThreadPoolException;
 
 public class ProcessPoolException extends ThreadPoolException {
 	

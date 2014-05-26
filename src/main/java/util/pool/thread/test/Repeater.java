@@ -1,8 +1,8 @@
-package pool.thread.test;
+package util.pool.thread.test;
 
-import pool.process.ObjectReturnValue;
-import pool.process.QueueableAction;
-import pool.process.ReturnValue;
+import util.pool.process.ObjectReturnValue;
+import util.pool.process.QueueableAction;
+import util.pool.process.ReturnValue;
 
 public class Repeater implements QueueableAction {
 	static final int printCount = 200000;
