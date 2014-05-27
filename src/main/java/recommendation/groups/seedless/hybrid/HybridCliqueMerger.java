@@ -1,6 +1,7 @@
 package recommendation.groups.seedless.hybrid;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -81,36 +82,58 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 	@Override
 	public Collection<Set<V>> getRecommendations() {
 		if (precomputedMaximalCliques == null) {
-			return findNetworksAndSubgroups();
+			//return findNetworksAndSubgroups();
 		} else {
-			return findNetworksAndSubgroups(precomputedMaximalCliques);
+			//return findNetworksAndSubgroups(precomputedMaximalCliques);
 		}
+		return null;
 	}
 
 	public Collection<Set<V>> findNetworksAndSubgroups() {
-		return findNetworksAndSubgroups(getMaximalCliques());
+		//PrintWriter prin =log;
+		return findNetworksAndSubgroups(getMaximalCliques(),null);
+	}
+	
+	public Collection<Set<V>> findNetworksAndSubgroups(PrintWriter log) {
+		//PrintWriter prin =log;
+		return findNetworksAndSubgroups(getMaximalCliques(),log);
 	}
 
-	public Collection<Set<V>> findNetworksAndSubgroups(IOFunctions<V> ioHelp) {
+	public Collection<Set<V>> findNetworksAndSubgroups(IOFunctions<V> ioHelp,PrintWriter log) {
 		File maximalCliquesFile = new File(ioHelp.getSubStepsFolder(), "maximal_cliques");
-		return findNetworksAndSubgroups(getMaximalCliques(graph, maximalCliquesFile));
+		return findNetworksAndSubgroups(getMaximalCliques(graph, maximalCliquesFile),log);
 	}
 
-	public Collection<Set<V>> findNetworksAndSubgroups(Collection<Set<V>> cliques) {
+	public Collection<Set<V>> findNetworksAndSubgroups(Collection<Set<V>> cliques,PrintWriter log) {
 		// Finds networks and subcliques using the default S and D values
-		return findNetworksAndSubgroups(cliques, 0.9, 0.35, 1.0, 0.15);
+		return findNetworksAndSubgroups(cliques, 0.9, 0.35, 1.0, 0.15, log);
 	}
 
 	public Collection<Set<V>> findNetworksAndSubgroups(Collection<Set<V>> cliques, double networkS,
-			double networkD, double subgroupS, double subgroupD) {
+			double networkD, double subgroupS, double subgroupD, PrintWriter log) {
+		log.println("Hybrid started!");
+		log.flush();
 		setSAndD(networkS, networkD);
+		log.println("setSAndD(networkS, networkD) is done!");
+		log.flush();
 		Collection<Set<V>> networks = findNetworks(cliques);
+		log.println("findNetworks(cliques) is done!");
+		log.flush();
 		setSAndD(subgroupS, subgroupD);
+		log.println("setSAndD(subgroupS, subgroupD) is done!");
+		log.flush();
 		Collection<Set<V>> subgroups = findSubgroups(networks);
-
+		log.println("findSubgroups(networks) is done!");
+		log.flush();
 		Collection<Set<V>> networksAndSubgroups = new HashSet<Set<V>>();
+		log.println("new HashSet<Set<V>>() is done!");
+		log.flush();
 		networksAndSubgroups.addAll(networks);
+		log.println("addAll(networks) is done!");
+		log.flush();
 		networksAndSubgroups.addAll(subgroups);
+		log.println("addAll(subgroups) is done!");
+		log.flush();
 		return networksAndSubgroups;
 	}
 
