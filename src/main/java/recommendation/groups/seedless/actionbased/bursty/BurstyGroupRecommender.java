@@ -68,7 +68,8 @@ public class BurstyGroupRecommender<Collaborator extends Comparable<Collaborator
 	public void addPastAction(CollaborativeAction<Collaborator> action) {
 		graphBasedRecommender.addPastAction(action);
 		if (mostRecentAction == null
-				|| mostRecentAction.getLastActiveDate().before(action.getLastActiveDate())) {
+				|| mostRecentAction.getLastActiveDate().before(action.getLastActiveDate())
+				|| mostRecentAction.getLastActiveDate().equals(action.getLastActiveDate())) {
 			if (mostRecentAction != null) {
 				previousSeeds.add(new TreeSet<>(mostRecentAction.getCollaborators()));
 			}
