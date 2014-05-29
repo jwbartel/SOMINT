@@ -16,7 +16,7 @@ public class RelativeEditsThresholdMatcher<Collaborator> implements GroupMatcher
 			Set<Collaborator> group2) {
 		
 		Set<Collaborator> difference = new HashSet<Collaborator>(group1);
-		difference.retainAll(group2);
+		difference.removeAll(group2);
 		
 		double score = Double.POSITIVE_INFINITY;
 		if(group1.size() != 0 && group2.size() != 0) {
