@@ -82,11 +82,10 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 	@Override
 	public Collection<Set<V>> getRecommendations() {
 		if (precomputedMaximalCliques == null) {
-			//return findNetworksAndSubgroups();
+			return findNetworksAndSubgroups();
 		} else {
-			//return findNetworksAndSubgroups(precomputedMaximalCliques);
+			return findNetworksAndSubgroups(precomputedMaximalCliques);
 		}
-		return null;
 	}
 
 	public Collection<Set<V>> findNetworksAndSubgroups() {
@@ -103,37 +102,40 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		File maximalCliquesFile = new File(ioHelp.getSubStepsFolder(), "maximal_cliques");
 		return findNetworksAndSubgroups(getMaximalCliques(graph, maximalCliquesFile),log);
 	}
+	
+	public Collection<Set<V>> findNetworksAndSubgroups(Collection<Set<V>> cliques) {
+		return findNetworksAndSubgroups(cliques, null);
+	}
 
 	public Collection<Set<V>> findNetworksAndSubgroups(Collection<Set<V>> cliques,PrintWriter log) {
 		// Finds networks and subcliques using the default S and D values
 		return findNetworksAndSubgroups(cliques, 0.9, 0.35, 1.0, 0.15, log);
 	}
+	
+	private void writeToLog(PrintWriter log, String message) {
+		if (log != null) {
+			log.println(message);
+			log.flush();
+		}
+	}
 
 	public Collection<Set<V>> findNetworksAndSubgroups(Collection<Set<V>> cliques, double networkS,
 			double networkD, double subgroupS, double subgroupD, PrintWriter log) {
-		log.println("Hybrid started!");
-		log.flush();
+		writeToLog(log, "Hybrid started!");
 		setSAndD(networkS, networkD);
-		log.println("setSAndD(networkS, networkD) is done!");
-		log.flush();
+		writeToLog(log, "setSAndD(networkS, networkD) is done!");
 		Collection<Set<V>> networks = findNetworks(cliques);
-		log.println("findNetworks(cliques) is done!");
-		log.flush();
+		writeToLog(log, "findNetworks(cliques) is done!");
 		setSAndD(subgroupS, subgroupD);
-		log.println("setSAndD(subgroupS, subgroupD) is done!");
-		log.flush();
+		writeToLog(log, "setSAndD(subgroupS, subgroupD) is done!");
 		Collection<Set<V>> subgroups = findSubgroups(networks);
-		log.println("findSubgroups(networks) is done!");
-		log.flush();
+		writeToLog(log, "findSubgroups(networks) is done!");
 		Collection<Set<V>> networksAndSubgroups = new HashSet<Set<V>>();
-		log.println("new HashSet<Set<V>>() is done!");
-		log.flush();
+		writeToLog(log, "new HashSet<Set<V>>() is done!");
 		networksAndSubgroups.addAll(networks);
-		log.println("addAll(networks) is done!");
-		log.flush();
+		writeToLog(log, "addAll(networks) is done!");
 		networksAndSubgroups.addAll(subgroups);
-		log.println("addAll(subgroups) is done!");
-		log.flush();
+		writeToLog(log, "addAll(subgroups) is done!");
 		return networksAndSubgroups;
 	}
 
