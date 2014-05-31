@@ -11,15 +11,29 @@ import recommendation.groups.seedless.SeedlessGroupRecommenderFactory;
 
 public class HybridRecommenderFactory<V> implements SeedlessGroupRecommenderFactory<V>{
 
+	boolean shouldPrintStatus = true;
+	
+	public HybridRecommenderFactory() {
+		
+	}
+	
+	public HybridRecommenderFactory(boolean shouldPrintStatus) {
+		this.shouldPrintStatus = shouldPrintStatus;
+	}
+	
 	@Override
 	public SeedlessGroupRecommender<V> create(UndirectedGraph<V, DefaultEdge> graph) {
-		return new HybridCliqueMerger<>(graph);
+		HybridCliqueMerger<V> recommender = new HybridCliqueMerger<>(graph);
+		recommender.setShouldPrintStatus(shouldPrintStatus);
+		return recommender;
 	}
 
 	@Override
 	public SeedlessGroupRecommender<V> create(UndirectedGraph<V, DefaultEdge> graph,
 			Collection<Set<V>> maximalCliques) {
-		return new HybridCliqueMerger<>(graph, maximalCliques);
+		HybridCliqueMerger<V> recommender = new HybridCliqueMerger<>(graph, maximalCliques);
+		recommender.setShouldPrintStatus(shouldPrintStatus);
+		return recommender;
 	}
 
 }

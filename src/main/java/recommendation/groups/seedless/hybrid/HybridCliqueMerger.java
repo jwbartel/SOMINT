@@ -28,6 +28,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 	ValueParser<V> parser = null;
 	Integer maxVerticesForCliquesInMemory = null;
 	
+	boolean shouldPrintStatus = true;
 	protected UndirectedGraph<V, DefaultEdge> graph = null;
 	protected final Collection<Set<V>> precomputedMaximalCliques;
 	protected IOFunctions<V> ioHelp;
@@ -59,6 +60,16 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		this.ioHelp = new IOFunctions<V>(genericClass);
 		this.genericClass = genericClass;
 		precomputedMaximalCliques = null;
+	}
+	
+	public void setShouldPrintStatus(boolean shouldPrintStatus) {
+		this.shouldPrintStatus = shouldPrintStatus;
+	}
+
+	public void printStatus(String message) {
+		if (shouldPrintStatus) {
+			System.out.println(message);
+		}
 	}
 	
 	@Override
@@ -141,9 +152,9 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 
 	protected void preprocessCliques(Collection<Set<V>> cliques) {
 
-		System.out.println("~~~~~~~~~Preprocess cliques~~~~~~~~~~~~");
-		System.out.println("cliques.size = " + cliques.size());
-		System.out.println("removing all cliques <= size 2");
+		printStatus("~~~~~~~~~Preprocess cliques~~~~~~~~~~~~");
+		printStatus("cliques.size = " + cliques.size());
+		printStatus("removing all cliques <= size 2");
 		Iterator<Set<V>> cliqueIter = cliques.iterator();
 		Set<V> currClique;
 		while (cliqueIter.hasNext()) {
@@ -151,14 +162,14 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 			if (currClique.size() <= 2)
 				cliqueIter.remove();
 		}
-		System.out.println("cliques.size = " + cliques.size());
+		printStatus("cliques.size = " + cliques.size());
 	}
 
 	public Collection<Set<V>> findNetworks(Collection<Set<V>> cliques) {
 
 		preprocessCliques(cliques);
 
-		System.out.println("~~~~~~~~~~~~Find Networks~~~~~~~~~~~~~~~~~~");
+		printStatus("~~~~~~~~~~~~Find Networks~~~~~~~~~~~~~~~~~~");
 
 		Collection<Set<V>> networkCliques = makeMerges(cliques, 0);
 
@@ -178,7 +189,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 
 		UndirectedGraph<V, DefaultEdge> subGraph = findSubgraph(networks);
 
-		System.out.println("~~~~~~~~~~~~~Find subgroups~~~~~~~~~~~~~");
+		printStatus("~~~~~~~~~~~~~Find subgroups~~~~~~~~~~~~~");
 		Collection<Set<V>> subgroupCliques;
 		if (ioHelp != null && ioHelp.getStoreSubSteps()) {
 			File maximalCliqueFile = FileFinder.getHybridMaximalCliquesFile(ioHelp, participantID);
@@ -188,15 +199,15 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		}
 
 		int passNumber = 1;
-		System.out.println("Finding first level merges...");
+		printStatus("Finding first level merges...");
 		subgroupCliques = getFirstLevelMerges(subgroupCliques);
 
-		System.out.println("pass " + passNumber + " cliques.size: " + subgroupCliques.size());
+		printStatus("pass " + passNumber + " cliques.size: " + subgroupCliques.size());
 		passNumber++;
 
 		subgroupCliques = makeMerges(subgroupCliques, passNumber);
 
-		System.out.println("subgroups size: " + subgroupCliques.size());
+		printStatus("subgroups size: " + subgroupCliques.size());
 
 		if (ioHelp != null && ioHelp.getStoreSubSteps()) {
 			String outputFile = FileFinder.getHybridSubcliquesFileName(ioHelp, participantID);
@@ -251,7 +262,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		}
 
 		long end = System.currentTimeMillis();
-		System.out.println("finshed in " + (end - start) + "ms");
+		printStatus("finshed in " + (end - start) + "ms");
 
 		return mergedCliques;
 	}
@@ -267,12 +278,12 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 	public Collection<Set<V>> getMaximalCliques(UndirectedGraph<V, DefaultEdge> graph,
 			File maximalCliqueFile) {
 
-		System.out.println("~~~~~~~~~~Find All Maximal Cliques~~~~~~~~~~");
+		printStatus("~~~~~~~~~~Find All Maximal Cliques~~~~~~~~~~");
 		long start, elapsedTime, getAllTime;
 		// BronKerboschCliqueFinder<Integer, DefaultEdge> BKcliqueFind = new
 		// BronKerboschCliqueFinder<Integer, DefaultEdge>(UIDGraph);
 		// status message
-		System.out.println("running getAllMaximalCliques");
+		printStatus("running getAllMaximalCliques");
 		start = System.currentTimeMillis();
 
 		Collection<Set<V>> maximalCliques;
@@ -282,10 +293,10 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 			maximalCliques = BKcliqueFind.getAllMaximalCliques();
 			if (maximalCliqueFile != null) {
 				ioHelp.printCliqueIDsToFile(maximalCliqueFile.getPath(), maximalCliques);
-				System.out.println("Can be found in " + maximalCliqueFile.getPath());
+				printStatus("Can be found in " + maximalCliqueFile.getPath());
 			}
 		} else {
-			System.out.println("Loading cliques from file " + maximalCliqueFile.getPath());
+			printStatus("Loading cliques from file " + maximalCliqueFile.getPath());
 			maximalCliques = ioHelp.loadCliqueIDs(maximalCliqueFile.getPath());
 		}
 
@@ -293,12 +304,12 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		getAllTime = System.currentTimeMillis() - start;
 		float elapsedTimeMin = getAllTime / (60 * 1000F);
 		// status message
-		System.out.println("found AllMaximalCliques (" + maximalCliques.size() + ") in "
+		printStatus("found AllMaximalCliques (" + maximalCliques.size() + ") in "
 				+ elapsedTimeMin + " minutes");
 		elapsedTime = System.currentTimeMillis() - start;
 		elapsedTimeMin = elapsedTime / (60 * 1000F);
 		// status message: all done :)
-		System.out.println("this stage done in " + elapsedTimeMin + " minutes !!!");
+		printStatus("this stage done in " + elapsedTimeMin + " minutes !!!");
 
 		return maximalCliques;
 	}
@@ -339,7 +350,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		int passNumber = initialPassNumber;
 		// ioHelp.printCliqueNamesToFile("data/Jacob/temp/my_pass"+passNumber+".txt",
 		// cliques);
-		System.out.println("pass " + passNumber + " cliques.size: " + cliques.size());
+		printStatus("pass " + passNumber + " cliques.size: " + cliques.size());
 
 		while (true) {
 			boolean mergeHappened = false;
@@ -381,9 +392,9 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 					}
 					if (passNumber == -1) {
 						if (merged) {
-							System.out.println("" + compareCount + ":merged");
+							printStatus("" + compareCount + ":merged");
 						} else {
-							System.out.println("" + compareCount + ":not merged");
+							printStatus("" + compareCount + ":not merged");
 						}
 					}
 					compareCount++;
@@ -397,7 +408,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 
 			// ioHelp.printCliqueNamesToFile("data/Jacob/temp/my_pass"+passNumber+".txt",
 			// cliques);
-			System.out.println("pass " + passNumber + " cliques.size: " + cliques.size());
+			printStatus("pass " + passNumber + " cliques.size: " + cliques.size());
 		}
 
 		return cliques;
@@ -412,7 +423,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		V source, target;
 		Set<V> largeGroups = findLargeGroupMembers(networks);
 
-		System.out.println("~~~~~~~~~~~Find subgraph~~~~~~~~~~~~~~");
+		printStatus("~~~~~~~~~~~Find subgraph~~~~~~~~~~~~~~");
 		for (V v : vSet) {
 			if (largeGroups.contains(v)) {
 				subGraph.addVertex(v);
@@ -430,14 +441,14 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 				}
 			}
 		}
-		System.out.println("Vertices: " + subGraph.vertexSet().size());
-		System.out.println("Edges: " + subGraph.edgeSet().size());
+		printStatus("Vertices: " + subGraph.vertexSet().size());
+		printStatus("Edges: " + subGraph.edgeSet().size());
 		return subGraph;
 	}
 
 	protected Set<V> findLargeGroupMembers(Collection<Set<V>> networks) {
 
-		System.out.println("~~~~~~~~~~Find large group Members~~~~~~~~~~~~~~~~");
+		printStatus("~~~~~~~~~~Find large group Members~~~~~~~~~~~~~~~~");
 
 		Iterator<Set<V>> cliqueIter = networks.iterator();
 		Set<V> currClique;
@@ -452,7 +463,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 				}
 			}
 		}
-		System.out.println("" + largeGroups.size() + " members of large groups");
+		printStatus("" + largeGroups.size() + " members of large groups");
 		return largeGroups;
 	}
 
