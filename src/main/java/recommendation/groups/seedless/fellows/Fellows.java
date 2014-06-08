@@ -75,7 +75,7 @@ public class Fellows<V extends Comparable<V>> implements
 	
 	@Override
 	public String getTypeOfRecommender() {
-		return "fellows";
+		return "Fellows";
 	}
 
 	public void setIOHelp(IOFunctions<V> ioHelp) {

@@ -84,7 +84,7 @@ public class ComposedGroupEvolutionRecommender<V> implements GroupEvolutionRecom
 		newMembers.removeAll(oldSocialGraph.vertexSet());
 
 		Set<V> removedMembers = new HashSet<V>(oldSocialGraph.vertexSet());
-		newMembers.removeAll(socialGraph.vertexSet());
+		removedMembers.removeAll(socialGraph.vertexSet());
 
 		Collection<DefaultEdge> removedEdgeObjs = new HashSet<DefaultEdge>(oldSocialGraph.edgeSet());
 		removedEdgeObjs.removeAll(socialGraph.edgeSet());

@@ -74,7 +74,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 	
 	@Override
 	public String getTypeOfRecommender() {
-		return "hybrid";
+		return "Hybrid";
 	}
 
 	public void setIOHelp(IOFunctions<V> ioHelp) {
