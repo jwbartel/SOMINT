@@ -114,6 +114,16 @@ public class EmailMessage<RecipientType> implements SingleMessage<RecipientType>
 		if (parent == null) return newsgroups;
 		return parent.getBcc();
 	}
+	
+	@Override
+	public String getTitle() {
+		try {
+			return getSubject();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public String getSubject() throws MessagingException {
 		return subject;
