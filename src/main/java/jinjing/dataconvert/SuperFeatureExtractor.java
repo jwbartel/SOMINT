@@ -1,4 +1,4 @@
-package jinjingdataconvert;
+package jinjing.dataconvert;
 
 import jinjing.rule.DateFeatureRule;
 import jinjing.rule.superfeature.ISuperFeatureRule;

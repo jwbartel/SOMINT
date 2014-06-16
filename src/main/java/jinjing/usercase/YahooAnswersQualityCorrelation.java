@@ -2,6 +2,11 @@ package jinjing.usercase;
 
 import java.io.File;
 
+import jinjing.dataconvert.BasicFeatureExtractor;
+import jinjing.dataconvert.IntermediateDataSet;
+import jinjing.dataconvert.SuperFeatureExtractor;
+import jinjing.dataconvert.WekaDataInitializer;
+import jinjing.dataconvert.WekaDataSet;
 import jinjing.dataimport.ThreadDataSet;
 import jinjing.dataimport.json.JsonDataConfig;
 import jinjing.dataimport.json.JsonThreadParser;
@@ -17,11 +22,6 @@ import jinjing.rule.superfeature.ISuperFeatureRule;
 import jinjing.rule.superfeature.WeightedSumRule;
 import jinjing.rule.superfeature.model.weka.IWekaModelRule;
 import jinjing.rule.superfeature.model.weka.WekaLinearRegressionModelRule;
-import jinjingdataconvert.BasicFeatureExtractor;
-import jinjingdataconvert.IntermediateDataSet;
-import jinjingdataconvert.SuperFeatureExtractor;
-import jinjingdataconvert.WekaDataInitializer;
-import jinjingdataconvert.WekaDataSet;
 
 /**
  * We use a YahooAnswers answer quality correlation case derived from F.M. Harper and his colleagues' 

@@ -1,8 +1,8 @@
 package jinjing.rule.superfeature.copy;
 
+import jinjing.dataconvert.IntermediateData;
 import jinjing.rule.DateFeatureRule;
 import jinjing.rule.superfeature.ISuperFeatureRule;
-import jinjingdataconvert.IntermediateData;
 
 /**
  * Copy date feature from intermediate data

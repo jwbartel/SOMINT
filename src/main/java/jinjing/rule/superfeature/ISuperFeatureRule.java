@@ -1,7 +1,7 @@
 package jinjing.rule.superfeature;
 
+import jinjing.dataconvert.IntermediateData;
 import jinjing.rule.IFeatureRule;
-import jinjingdataconvert.IntermediateData;
 
 /**
  * Interface of all super feature extracting (from intermediate data) rules

@@ -2,9 +2,9 @@ package jinjing.rule.superfeature.copy;
 
 import java.util.ArrayList;
 
+import jinjing.dataconvert.IntermediateData;
 import jinjing.rule.NominalFeatureRule;
 import jinjing.rule.superfeature.ISuperFeatureRule;
-import jinjingdataconvert.IntermediateData;
 
 /**
  * Copy nominal feature from intermediate data

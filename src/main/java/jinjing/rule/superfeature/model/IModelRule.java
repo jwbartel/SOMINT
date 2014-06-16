@@ -1,7 +1,7 @@
 package jinjing.rule.superfeature.model;
 
+import jinjing.dataconvert.IntermediateDataSet;
 import jinjing.rule.superfeature.ISuperFeatureRule;
-import jinjingdataconvert.IntermediateDataSet;
 
 /**
  * interface of all model extracting feature rules

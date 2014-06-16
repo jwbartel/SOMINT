@@ -1,4 +1,4 @@
-package jinjingdataconvert;
+package jinjing.dataconvert;
 
 import jinjing.dataimport.ThreadData;
 import jinjing.dataimport.ThreadDataSet;

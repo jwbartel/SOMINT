@@ -1,7 +1,7 @@
 package jinjing.rule.superfeature.model.weka;
 
+import jinjing.dataconvert.WekaDataSet;
 import jinjing.rule.superfeature.model.IModelRule;
-import jinjingdataconvert.WekaDataSet;
 
 /**
  * interface of all model extracting feature rules 

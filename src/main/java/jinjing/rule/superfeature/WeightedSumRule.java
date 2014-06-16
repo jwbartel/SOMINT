@@ -1,6 +1,6 @@
 package jinjing.rule.superfeature;
 
-import jinjingdataconvert.IntermediateData;
+import jinjing.dataconvert.IntermediateData;
 
 /**
  * Calculate the weighted sum of all attributes of  a intermediate data

@@ -2,8 +2,8 @@ package jinjing.rule.superfeature;
 
 import java.util.ArrayList;
 
+import jinjing.dataconvert.IntermediateData;
 import jinjing.rule.BinaryFeatureRule;
-import jinjingdataconvert.IntermediateData;
 
 /**
  * Decide if a sting feature contains given string tokens

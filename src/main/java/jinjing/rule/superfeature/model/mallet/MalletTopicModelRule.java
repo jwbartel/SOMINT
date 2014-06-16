@@ -9,9 +9,9 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import jinjing.dataconvert.IntermediateData;
+import jinjing.dataconvert.IntermediateDataSet;
 import jinjing.rule.superfeature.model.NumericVectorModelRule;
-import jinjingdataconvert.IntermediateData;
-import jinjingdataconvert.IntermediateDataSet;
 import cc.mallet.pipe.CharSequence2TokenSequence;
 import cc.mallet.pipe.Input2CharSequence;
 import cc.mallet.pipe.Pipe;

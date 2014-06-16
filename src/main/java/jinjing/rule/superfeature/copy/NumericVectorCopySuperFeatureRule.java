@@ -1,8 +1,8 @@
 package jinjing.rule.superfeature.copy;
 
+import jinjing.dataconvert.IntermediateData;
 import jinjing.rule.NumericVectorFeatureRule;
 import jinjing.rule.superfeature.ISuperFeatureRule;
-import jinjingdataconvert.IntermediateData;
 
 /**
  * Copy numeric vector feature from intermediate data

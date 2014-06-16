@@ -1,4 +1,4 @@
-package jinjingdataconvert;
+package jinjing.dataconvert;
 
 /**
  * Intermediate data set interface. All schemes of intermediate dataset in

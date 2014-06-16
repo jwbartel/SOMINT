@@ -2,8 +2,8 @@ package jinjing.rule.superfeature.model.weka;
 
 import java.util.ArrayList;
 
-import jinjingdataconvert.IntermediateDataSet;
-import jinjingdataconvert.WekaDataSet;
+import jinjing.dataconvert.IntermediateDataSet;
+import jinjing.dataconvert.WekaDataSet;
 import weka.classifiers.functions.SimpleLogistic;
 import weka.core.Instances;
 

@@ -1,4 +1,4 @@
-package jinjingdataconvert;
+package jinjing.dataconvert;
 
 /**
  * Feature extractor interface. All schemes for feature extraction in

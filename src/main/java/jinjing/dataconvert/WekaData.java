@@ -1,4 +1,4 @@
-package jinjingdataconvert;
+package jinjing.dataconvert;
 
 import java.lang.reflect.Array;
 import java.text.ParseException;

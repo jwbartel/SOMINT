@@ -2,10 +2,10 @@ package jinjing.rule.superfeature.model.weka;
 
 import java.util.ArrayList;
 
-import jinjingdataconvert.IntermediateData;
-import jinjingdataconvert.IntermediateDataSet;
-import jinjingdataconvert.WekaData;
-import jinjingdataconvert.WekaDataSet;
+import jinjing.dataconvert.IntermediateData;
+import jinjing.dataconvert.IntermediateDataSet;
+import jinjing.dataconvert.WekaData;
+import jinjing.dataconvert.WekaDataSet;
 import weka.clusterers.SimpleKMeans;
 
 /**

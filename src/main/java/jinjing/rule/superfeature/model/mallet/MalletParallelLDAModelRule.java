@@ -2,8 +2,8 @@ package jinjing.rule.superfeature.model.mallet;
 
 import java.io.File;
 
-import jinjingdataconvert.IntermediateData;
-import jinjingdataconvert.IntermediateDataSet;
+import jinjing.dataconvert.IntermediateData;
+import jinjing.dataconvert.IntermediateDataSet;
 import cc.mallet.topics.ParallelTopicModel;
 import cc.mallet.topics.TopicInferencer;
 import cc.mallet.types.Instance;

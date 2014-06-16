@@ -1,9 +1,9 @@
 package jinjing.rule.superfeature.model.weka;
 
+import jinjing.dataconvert.IntermediateData;
+import jinjing.dataconvert.WekaData;
+import jinjing.dataconvert.WekaDataSet;
 import jinjing.rule.superfeature.model.NumericModelRule;
-import jinjingdataconvert.IntermediateData;
-import jinjingdataconvert.WekaData;
-import jinjingdataconvert.WekaDataSet;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.core.Instance;

@@ -7,9 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import jinjing.dataconvert.IntermediateData;
+import jinjing.dataconvert.IntermediateDataSet;
 import jinjing.rule.superfeature.model.ClassifyModelRule;
-import jinjingdataconvert.IntermediateData;
-import jinjingdataconvert.IntermediateDataSet;
 import cc.mallet.classify.Classifier;
 
 /**

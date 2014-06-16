@@ -1,7 +1,7 @@
 package jinjing.rule.superfeature.model.weka;
 
-import jinjingdataconvert.IntermediateDataSet;
-import jinjingdataconvert.WekaDataSet;
+import jinjing.dataconvert.IntermediateDataSet;
+import jinjing.dataconvert.WekaDataSet;
 import weka.classifiers.functions.SimpleLinearRegression;
 import weka.core.Instances;
 

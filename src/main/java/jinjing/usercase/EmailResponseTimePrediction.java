@@ -2,6 +2,12 @@ package jinjing.usercase;
 
 import java.util.ArrayList;
 
+import jinjing.dataconvert.BasicFeatureExtractor;
+import jinjing.dataconvert.IntermediateDataSet;
+import jinjing.dataconvert.SuperFeatureExtractor;
+import jinjing.dataconvert.ThreadDataFilter;
+import jinjing.dataconvert.WekaDataInitializer;
+import jinjing.dataconvert.WekaDataSet;
 import jinjing.dataimport.ThreadDataSet;
 import jinjing.dataimport.email.EmailThreadParser;
 import jinjing.rule.basicfeature.ContainsFollowMessageRule;
@@ -16,12 +22,6 @@ import jinjing.rule.superfeature.ISuperFeatureRule;
 import jinjing.rule.superfeature.model.weka.IWekaModelRule;
 import jinjing.rule.superfeature.model.weka.WekaLinearRegressionModelRule;
 import jinjing.rule.superfeature.model.weka.WekaLogisticRegressionModelRule;
-import jinjingdataconvert.BasicFeatureExtractor;
-import jinjingdataconvert.IntermediateDataSet;
-import jinjingdataconvert.SuperFeatureExtractor;
-import jinjingdataconvert.ThreadDataFilter;
-import jinjingdataconvert.WekaDataInitializer;
-import jinjingdataconvert.WekaDataSet;
 
 /**
  * We use an email response time prediction case derived from the ongoing work of 
