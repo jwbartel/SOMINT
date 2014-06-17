@@ -8,9 +8,6 @@ import snml.dataimport.MsgDataConfig;
  */
 public class MessageDataConfig extends MsgDataConfig {
 	
-	/** message id */
-	public static String ID			= "Id";
-	
 	/** message title */
 	public static String TITLE 	= "Title";
 	
@@ -43,7 +40,6 @@ public class MessageDataConfig extends MsgDataConfig {
 	public MessageDataConfig(){
 		super();
 		
-		attributeTypes.put(ID, INT);
 		attributeTypes.put(TITLE, STRING);
 		attributeTypes.put(TITLE_WORDS, "string array");
 		attributeTypes.put(ATTACHMENT_NUM, DOUBLE);
