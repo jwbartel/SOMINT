@@ -11,8 +11,11 @@ public class MessageDataConfig extends MsgDataConfig {
 	/** message id */
 	public static String ID			= "Id";
 	
-	/** message subject */
+	/** message title */
 	public static String TITLE 	= "Title";
+	
+	/** words in the message title */
+	public static String TITLE_WORDS 	= "Title_Words";
 	
 	/** message attach file number */
 	public static String ATTACHMENT_NUM 	= "Num_Attachments";
@@ -20,10 +23,10 @@ public class MessageDataConfig extends MsgDataConfig {
 	/** message attach file names */
 	public static String ATTACHMENTS		= "Attachments";
 	
-	/** message sender internal id */
+	/** message creators internal ids */
 	public static String CREATORS				= "Creators";
 	
-	/** message recipient ids */
+	/** message collaborator ids */
 	public static String COLLABORATORS			= "Collaborators";
 	
 	/** message sending day of the week */
@@ -42,12 +45,13 @@ public class MessageDataConfig extends MsgDataConfig {
 		
 		attributeTypes.put(ID, INT);
 		attributeTypes.put(TITLE, STRING);
+		attributeTypes.put(TITLE_WORDS, "string array");
 		attributeTypes.put(ATTACHMENT_NUM, DOUBLE);
 		attributeTypes.put(DAYOFWEEK, "{Mon, Tue, Wed, Thu, Fri, Sat, Sun}");
 		attributeTypes.put(TIMEZONE, STRING);
 
 		attributeTypes.put(CREATORS, "int array");
-		attributeTypes.put(COLLABORATORS, "int array");	
+		attributeTypes.put(COLLABORATORS, "int array");
 		attributeTypes.put(ATTACHMENTS, "string array");	
 	}
 }
