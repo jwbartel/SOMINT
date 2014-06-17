@@ -18,12 +18,14 @@ public interface MessageLivenessPredictor<Collaborator, Message extends SingleMe
 	 * 			The thread to predict liveness for
 	 * @return Boolean of whether more responses will occur or not. null if
 	 * 			it is not possible to recommend liveness.
+	 * @throws Exception 
 	 */
-	public Boolean predictLiveness(ThreadType thread);
+	public Boolean predictLiveness(ThreadType thread) throws Exception;
 	
 	/**
 	 * Trains the underlying model of the predictor
+	 * @throws Exception 
 	 */
-	public void train();
+	public void train() throws Exception;
 	
 }

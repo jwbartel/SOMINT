@@ -1,5 +1,6 @@
 package prediction.features.messages;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import snml.dataconvert.BasicFeatureExtractor;
+import snml.dataconvert.IntermediateData;
 import snml.dataconvert.IntermediateDataInitializer;
 import snml.dataconvert.IntermediateDataSet;
 import snml.dataimport.MessageData;
@@ -20,22 +22,24 @@ import data.representation.actionbased.messages.SingleMessage;
 /**
  * Extracts intermediate data sets for use with SNML
  */
-public class MessageIntermediateDataSetExtractor<Collaborator, Message extends SingleMessage<Collaborator>> {
+public class MessageIntermediateDataSetExtractor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator,Message>> {
 
 	final Map<Collaborator, Integer> creatorIds = new HashMap<>();
 	final Map<Collaborator, Integer> collaboratorIds = new HashMap<>();
 	final WordIndexFinder wordIndexFinder;
 	
-	public MessageIntermediateDataSetExtractor(Collection<Message> allPossibleMessages, Set<String> stopWords) {
+	public MessageIntermediateDataSetExtractor(Collection<ThreadType> allPossibleThreads, Set<String> stopWords) {
 		
 		Set<Collaborator> creators = new HashSet<>();
 		Set<Collaborator> collaborators = new HashSet<>();
 		Set<String> titleWords = new TreeSet<>();
 
-		for (Message message : allPossibleMessages) {
-			creators.addAll(message.getCreators());
-			collaborators.addAll(message.getCollaborators());
-			titleWords.addAll(SimpleWordIndexFinder.parseWords(message.getTitle()));
+		for (ThreadType thread : allPossibleThreads) {
+			for (Message message : thread.getThreadedActions()) {
+				creators.addAll(message.getCreators());
+				collaborators.addAll(message.getCollaborators());
+				titleWords.addAll(SimpleWordIndexFinder.parseWords(message.getTitle()));
+			}
 		}
 		titleWords.removeAll(stopWords);
 		wordIndexFinder = new SimpleWordIndexFinder(titleWords, stopWords);
@@ -108,23 +112,27 @@ public class MessageIntermediateDataSetExtractor<Collaborator, Message extends S
 	public WordIndexFinder getWordIndexFinder() {
 		return wordIndexFinder;
 	}
+	
+	public ThreadData extractThreadDataItem(ThreadType thread) {
+		ThreadData threadData = new ThreadData();
+		for (Message message : thread.getThreadedActions()) {
+			MessageData messageData = extractMessageData(message);
+			threadData.addMsgData(messageData);
+		}
+		return threadData;
+	}
 
-	public ThreadDataSet extractThreadData(
-			Collection<MessageThread<Collaborator, Message>> threads) {
+	public ThreadDataSet extractThreadData(Collection<ThreadType> threads) {
 
 		ThreadDataSet threadDataSet = new ThreadDataSet();
-		for (MessageThread<Collaborator, Message> thread : threads) {
-			ThreadData threadData = new ThreadData();
-			for (Message message : thread.getThreadedActions()) {
-				MessageData messageData = extractMessageData(message);
-				threadData.addMsgData(messageData);
-			}
+		for (ThreadType thread : threads) {
+			ThreadData threadData = extractThreadDataItem(thread);
 			threadDataSet.addThreadData(threadData);
 		}
 		return threadDataSet;
 	}
 
-	public IntermediateDataSet extractFeatureData(Collection<MessageThread<Collaborator, Message>> threads,
+	public IntermediateDataSet extractFeatureData(Collection<ThreadType> threads,
 			String dataSetName,
 			IBasicFeatureRule[] featureRules,
 			IntermediateDataInitializer initializer) throws Exception {
@@ -135,7 +143,7 @@ public class MessageIntermediateDataSetExtractor<Collaborator, Message extends S
 	
 
 
-	public IntermediateDataSet extractAllIntermediateData(Collection<MessageThread<Collaborator, Message>> threads,
+	public IntermediateDataSet extractAllIntermediateData(Collection<ThreadType> threads,
 			String dataSetName,
 			IBasicFeatureRule[] featureRules,
 			IBasicFeatureRule[] predictedFeatureRules,
@@ -148,4 +156,21 @@ public class MessageIntermediateDataSetExtractor<Collaborator, Message extends S
 		return featureSet.mergeByAttributes(predictedFeatureSet);
 	}
 
+	public IntermediateData extractSingleItem(ThreadType thread,
+			String dataSetName,
+			IBasicFeatureRule[] featureRules,
+			IBasicFeatureRule[] predictedFeatureRules,
+			IntermediateDataInitializer initializer) throws Exception {
+		
+		Collection<ThreadType> threadSet = new ArrayList<>();
+		threadSet.add(thread);
+
+		IntermediateDataSet intermediateSet = extractAllIntermediateData(threadSet, dataSetName,
+				featureRules, predictedFeatureRules, initializer);
+		if (intermediateSet.size() > 0) {
+			return intermediateSet.getDataInstance(0);
+		}
+		return null;
+		
+	}
 }
