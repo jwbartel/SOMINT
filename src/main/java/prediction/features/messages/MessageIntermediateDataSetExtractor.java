@@ -1,5 +1,6 @@
 package prediction.features.messages;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import snml.dataconvert.IntermediateDataSet;
 import snml.dataimport.MessageData;
 import snml.dataimport.ThreadData;
 import snml.dataimport.ThreadDataSet;
+import snml.dataimport.email.EmailDataConfig;
 import snml.rule.basicfeature.IBasicFeatureRule;
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
@@ -105,7 +107,12 @@ public class MessageIntermediateDataSetExtractor<Collaborator, Message extends S
 		
 		messageData.addAttribute(MessageDataConfig.CREATORS, getCreators(message));
 		messageData.addAttribute(MessageDataConfig.COLLABORATORS, getCollaborators(message));
-		messageData.addAttribute(MessageDataConfig.DATE_DEFAULT, message.getLastActiveDate());
+		
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				EmailDataConfig.DATEFORMAT_DEFAULT);
+		messageData.addAttribute(MessageDataConfig.DATE_DEFAULT,
+				dateFormat.format(message.getLastActiveDate()));
 		return messageData;
 	}
 	
@@ -150,7 +157,7 @@ public class MessageIntermediateDataSetExtractor<Collaborator, Message extends S
 			IntermediateDataInitializer initializer) throws Exception {
 
 		IntermediateDataSet featureSet = extractFeatureData(threads, dataSetName + "-predictors",
-				predictedFeatureRules, initializer);
+				featureRules, initializer);
 		IntermediateDataSet predictedFeatureSet = extractFeatureData(threads, dataSetName
 				+ "-predictables", predictedFeatureRules, initializer);
 		return featureSet.mergeByAttributes(predictedFeatureSet);
@@ -167,6 +174,7 @@ public class MessageIntermediateDataSetExtractor<Collaborator, Message extends S
 
 		IntermediateDataSet intermediateSet = extractAllIntermediateData(threadSet, dataSetName,
 				featureRules, predictedFeatureRules, initializer);
+		intermediateSet.setTargetIndex();
 		if (intermediateSet.size() > 0) {
 			return intermediateSet.getDataInstance(0);
 		}

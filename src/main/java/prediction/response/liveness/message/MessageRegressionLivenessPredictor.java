@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.Set;
 
 import prediction.features.messages.MessageIntermediateDataSetExtractor;
+import prediction.features.messages.MessageLivenessRule;
 import snml.dataconvert.IntermediateData;
 import snml.dataconvert.IntermediateDataSet;
 import snml.dataconvert.WekaDataInitializer;
+import snml.dataconvert.WekaDataSet;
 import snml.rule.basicfeature.ContainsFollowMessageRule;
 import snml.rule.basicfeature.IBasicFeatureRule;
 import snml.rule.superfeature.model.weka.WekaRegressionModelRule;
@@ -51,9 +53,10 @@ public class MessageRegressionLivenessPredictor<Collaborator, Message extends Si
 		if (extractor == null) {
 			extractor = new MessageIntermediateDataSetExtractor<>(pastThreads, stopWords);
 			IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[1];
-			predictableRules[0] = new ContainsFollowMessageRule("hasResponse");
+			predictableRules[0] = new MessageLivenessRule("hasResponse");
 			IntermediateDataSet dataSet = extractor.extractAllIntermediateData(pastThreads, "liveness",
 					featureRules, predictableRules, new WekaDataInitializer());
+			dataSet.setTargetIndex();
 			snmlModel.train(dataSet, null);;
 		}
 	}
@@ -70,9 +73,22 @@ public class MessageRegressionLivenessPredictor<Collaborator, Message extends Si
 	public Boolean predictLiveness(ThreadType thread) throws Exception {
 		train();
 		IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[1];
-		predictableRules[0] = new ContainsFollowMessageRule("hasResponse");
+		predictableRules[0] = new MessageLivenessRule("hasResponse");
 		IntermediateData instance = extractor.extractSingleItem(thread, "liveness_test_item", featureRules, predictableRules, new WekaDataInitializer());
 		return ((double) snmlModel.extract(instance)) > 0.5;
+	}
+	
+	
+	@Override
+	public void evaluate(Collection<ThreadType> testThreads) throws Exception {
+		train();
+		IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[1];
+		predictableRules[0] = new MessageLivenessRule("hasResponse");
+		WekaDataSet trainData = (WekaDataSet) extractor.extractAllIntermediateData(pastThreads, "trainData", featureRules, predictableRules, new WekaDataInitializer());
+		trainData.setTargetIndex();
+		WekaDataSet testData = (WekaDataSet) extractor.extractAllIntermediateData(testThreads, "testData", featureRules, predictableRules, new WekaDataInitializer());
+		testData.setTargetIndex();
+		snmlModel.evaluate(trainData, testData);
 	}
 
 }

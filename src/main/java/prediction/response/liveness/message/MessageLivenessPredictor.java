@@ -1,5 +1,7 @@
 package prediction.response.liveness.message;
 
+import java.util.Collection;
+
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
 
@@ -27,5 +29,7 @@ public interface MessageLivenessPredictor<Collaborator, Message extends SingleMe
 	 * @throws Exception 
 	 */
 	public void train() throws Exception;
+	
+	public void evaluate(Collection<ThreadType> testThreads) throws Exception;
 	
 }
