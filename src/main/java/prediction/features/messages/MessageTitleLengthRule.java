@@ -31,7 +31,7 @@ public class MessageTitleLengthRule extends NumericFeatureRule implements IBasic
 	public Object extract(ThreadData aThread) throws Exception {
 		
 		MessageData msg = aThread.getKthEarlest(0);
-		String subj = (String)msg.getAttribute("Subject");
+		String subj = (String)msg.getAttribute(MessageDataConfig.TITLE);
 		if(subj==null) return 0;
 		
 		double length = subj.length();
