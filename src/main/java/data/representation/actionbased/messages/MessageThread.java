@@ -1,15 +1,33 @@
 package data.representation.actionbased.messages;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.mail.MessagingException;
 
+import data.representation.actionbased.CollaborativeAction;
 import data.representation.actionbased.CollaborativeActionThread;
 
 public abstract class MessageThread<V, MessageType extends SingleMessage<V>> extends
 		CollaborativeActionThread<V, MessageType> {
-
+	
+	public String getTitle() {
+		Date earliestStart = null;
+		MessageType earliestMessage = null;
+		for (MessageType action : getThreadedActions()) {
+			if (earliestStart == null || earliestStart.after(action.getStartDate())) {
+				earliestStart = action.getStartDate();
+				earliestMessage = action;
+			}
+		}
+		
+		if (earliestMessage != null) {
+			return earliestMessage.getTitle();
+		}
+		return null;
+	}
+	
 	
 	public Date[] getFirstAndResponseDates() throws MessagingException {
 		if (getThreadedActions().size() < 2) {

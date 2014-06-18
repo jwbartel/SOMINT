@@ -33,7 +33,7 @@ public class SimpleWordIndexFinder implements WordIndexFinder {
 		ArrayList<String> wordList = new ArrayList<>(words);
 		for (int i=0; i<wordList.size(); i++) {
 			String word = wordList.get(i);
-			wordIndices.put(word, i);
+			wordIndices.put(word, i+1);
 		}
 	}
 	
@@ -146,6 +146,14 @@ public class SimpleWordIndexFinder implements WordIndexFinder {
 	@Override
 	public int numWords() {
 		return wordIndices.size();
+	}
+	
+	/**
+	 * The set of stop words that are not counted because they give no syntactic value
+	 * @return The set of stop words
+	 */
+	public Set<String> stopWords() {
+		return stopWords;
 	}
 
 }

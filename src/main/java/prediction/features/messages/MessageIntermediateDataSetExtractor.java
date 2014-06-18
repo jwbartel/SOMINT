@@ -3,9 +3,6 @@ package prediction.features.messages;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -26,44 +23,18 @@ import data.representation.actionbased.messages.SingleMessage;
  */
 public class MessageIntermediateDataSetExtractor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator,Message>> {
 
-	final Map<Collaborator, Integer> creatorIds = new HashMap<>();
-	final Map<Collaborator, Integer> collaboratorIds = new HashMap<>();
-	final WordIndexFinder wordIndexFinder;
+	final ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties;
 	
-	public MessageIntermediateDataSetExtractor(Collection<ThreadType> allPossibleThreads, Set<String> stopWords) {
+	public MessageIntermediateDataSetExtractor(ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 		
-		Set<Collaborator> creators = new HashSet<>();
-		Set<Collaborator> collaborators = new HashSet<>();
-		Set<String> titleWords = new TreeSet<>();
-
-		for (ThreadType thread : allPossibleThreads) {
-			for (Message message : thread.getThreadedActions()) {
-				creators.addAll(message.getCreators());
-				collaborators.addAll(message.getCollaborators());
-				titleWords.addAll(SimpleWordIndexFinder.parseWords(message.getTitle()));
-			}
-		}
-		titleWords.removeAll(stopWords);
-		wordIndexFinder = new SimpleWordIndexFinder(titleWords, stopWords);
-		
-		int creatorId = 1;
-		for (Collaborator creator : creators) {
-			creatorIds.put(creator, creatorId);
-			creatorId++;
-		}
-		
-		int collaboratorId = 1;
-		for (Collaborator collaborator : collaborators) {
-			collaboratorIds.put(collaborator, collaboratorId);
-			collaboratorId++;
-		}
+		this.threadsProperties = threadsProperties;
 		
 	}
 	
 	private int[] getCreators(Message message) {
 		Set<Integer> creators = new TreeSet<>();
 		for (Collaborator creator : message.getCreators()) {
-			Integer id = creatorIds.get(creator);
+			Integer id = threadsProperties.getCreatorId(creator);
 			if (id != null) {
 				creators.add(id);
 			}
@@ -80,7 +51,7 @@ public class MessageIntermediateDataSetExtractor<Collaborator, Message extends S
 	private int[] getCollaborators(Message message) {
 		Set<Integer> collaborators = new TreeSet<>();
 		for (Collaborator collaborator : message.getCreators()) {
-			Integer id = collaboratorIds.get(collaborator);
+			Integer id = threadsProperties.getCollaboratorId(collaborator);
 			if (id != null) {
 				collaborators.add(id);
 			}
@@ -117,7 +88,7 @@ public class MessageIntermediateDataSetExtractor<Collaborator, Message extends S
 	}
 	
 	public WordIndexFinder getWordIndexFinder() {
-		return wordIndexFinder;
+		return threadsProperties.getWordIndexFinder();
 	}
 	
 	public ThreadData extractThreadDataItem(ThreadType thread) {

@@ -2,15 +2,14 @@ package prediction.response.liveness.message;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 import prediction.features.messages.MessageIntermediateDataSetExtractor;
 import prediction.features.messages.MessageLivenessRule;
+import prediction.features.messages.ThreadSetProperties;
 import snml.dataconvert.IntermediateData;
 import snml.dataconvert.IntermediateDataSet;
 import snml.dataconvert.WekaDataInitializer;
 import snml.dataconvert.WekaDataSet;
-import snml.rule.basicfeature.ContainsFollowMessageRule;
 import snml.rule.basicfeature.IBasicFeatureRule;
 import snml.rule.superfeature.model.weka.WekaRegressionModelRule;
 import data.representation.actionbased.messages.MessageThread;
@@ -23,14 +22,33 @@ public class MessageRegressionLivenessPredictor<Collaborator, Message extends Si
 	private Collection<ThreadType> pastThreads = new ArrayList<>();
 	private IBasicFeatureRule[] featureRules;
 	private WekaRegressionModelRule snmlModel;
-	private Set<String> stopWords;
+	private ThreadSetProperties<Collaborator,Message,ThreadType> threadsProperties;
+	
+	public static <Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
+			MessageLivenessPredictorFactory<Collaborator, Message, ThreadType>
+			factory(final WekaRegressionModelRule snmlModel,
+					Class<Collaborator> collaboratorClass, Class<Message> messageClass,
+					Class<ThreadType> threadClass) {
+
+		return new MessageLivenessPredictorFactory<Collaborator, Message, ThreadType>() {
+
+			@Override
+			public MessageLivenessPredictor<Collaborator, Message, ThreadType> create(
+					Collection<IBasicFeatureRule> features,
+					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
+				
+				IBasicFeatureRule[] featureArray = features.toArray(new IBasicFeatureRule[0]);
+				return new MessageRegressionLivenessPredictor<>(snmlModel, featureArray, threadsProperties);
+			}
+		};
+	}
 	
 	public MessageRegressionLivenessPredictor(WekaRegressionModelRule snmlModel,
 			IBasicFeatureRule[] featureRules,
-			Set<String> stopWords) {
+			ThreadSetProperties<Collaborator,Message,ThreadType> threadsProperties) {
 		this.snmlModel = snmlModel;
 		this.featureRules = featureRules;
-		this.stopWords = stopWords;
+		this.threadsProperties = threadsProperties;
 	}
 	
 	
@@ -51,7 +69,7 @@ public class MessageRegressionLivenessPredictor<Collaborator, Message extends Si
 	 */
 	public void train() throws Exception {
 		if (extractor == null) {
-			extractor = new MessageIntermediateDataSetExtractor<>(pastThreads, stopWords);
+			extractor = new MessageIntermediateDataSetExtractor<>(threadsProperties);
 			IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[1];
 			predictableRules[0] = new MessageLivenessRule("hasResponse");
 			IntermediateDataSet dataSet = extractor.extractAllIntermediateData(pastThreads, "liveness",
