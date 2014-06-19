@@ -28,6 +28,21 @@ public abstract class MessageThread<V, MessageType extends SingleMessage<V>> ext
 		return null;
 	}
 	
+	public Double getTimeToResponse() throws MessagingException {
+		Date[] firstAndResponseDates = getFirstAndResponseDates();
+		if (firstAndResponseDates == null ||
+				firstAndResponseDates.length < 2 ||
+				firstAndResponseDates[0] == null ||
+				firstAndResponseDates[1] == null) {
+			return Double.POSITIVE_INFINITY;
+		}
+		
+		long firstTime = firstAndResponseDates[0].getTime();
+		long responseTime = firstAndResponseDates[1].getTime();
+		
+		return (responseTime-firstTime)/1000.0;
+	}
+	
 	
 	public Date[] getFirstAndResponseDates() throws MessagingException {
 		if (getThreadedActions().size() < 2) {

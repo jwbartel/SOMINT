@@ -89,5 +89,10 @@ public abstract class WekaClassifyModelRule extends ClassifyModelRule implements
 		eval.evaluateModel(classifier, test.getDataSet());
 		System.out.println(eval.toSummaryString("\nResults\n======\n", false));
 	}
+	
+
+	public Classifier getClassifier() {
+		return classifier;
+	}
 
 }

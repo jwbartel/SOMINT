@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import snml.dataconvert.IntermediateDataSet;
 import snml.dataconvert.WekaDataSet;
-import weka.classifiers.functions.SimpleLogistic;
+import weka.classifiers.functions.Logistic;
 import weka.core.Instances;
 
 /**
@@ -53,7 +53,7 @@ public class WekaLogisticRegressionModelRule extends WekaClassifyModelRule imple
 			throws Exception {		
 		Instances insts = ((WekaDataSet)trainingSet).getDataSet();
 		
-		classifier = new SimpleLogistic();		
+		classifier = new Logistic();		
 		//((LinearRegression)classifier).setOptions(options);//TODO wrap options
 		classifier.buildClassifier(insts);
 		

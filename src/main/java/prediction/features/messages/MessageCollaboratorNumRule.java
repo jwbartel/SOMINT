@@ -61,12 +61,10 @@ public class MessageCollaboratorNumRule extends NumericFeatureRule implements IB
 	public Object extract(ThreadData aThread) throws Exception {
 
 		Set<Integer> collaborators = new HashSet<>();
-		for (int k=0; k < aThread.size(); k++) {
-			MessageData msg = aThread.getKthEarlest(k);
-			int[] messageCollaborators = (int[]) msg.getAttribute(MessageDataConfig.COLLABORATORS);
-			for (int collaborator : messageCollaborators) {
-				collaborators.add(collaborator);
-			}
+		MessageData msg = aThread.getKthEarlest(0);
+		int[] messageCollaborators = (int[]) msg.getAttribute(MessageDataConfig.COLLABORATORS);
+		for (int collaborator : messageCollaborators) {
+			collaborators.add(collaborator);
 		}
 		return collaborators.size();
 	}

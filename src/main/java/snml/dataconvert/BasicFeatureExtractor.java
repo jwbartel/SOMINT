@@ -49,7 +49,7 @@ public class BasicFeatureExtractor extends IFeatureExtractor{
 		IntermediateDataSet destDataSet = this.destDatasetInit.initDestDataSet(destDataSetName, threadNum, rules);
 			
 		
-		for(int threadId = 1; threadId < threadNum; threadId ++){
+		for(int threadId = 0; threadId < threadNum; threadId ++){
 			if(srcDataSet.getDataInstance(threadId)==null){
 				throw new Exception("null threadId");
 			}

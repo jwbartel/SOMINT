@@ -67,13 +67,10 @@ public class MessageCollaboratorsIdsRule extends NumericVectorFeatureRule implem
 			val[i] = 0;
 		}
 
-		for (int k = 0; k < aThread.size(); k++) {
-			MessageData msg = aThread.getKthEarlest(k);
-			int[] collaborators = (int[]) msg.getAttribute(MessageDataConfig.COLLABORATORS);
-
-			for (int i = 0; i < collaborators.length; i++) {
-				val[collaborators[i] - 1] = 1;
-			}
+		MessageData msg = aThread.getKthEarlest(0);
+		int[] collaborators = (int[]) msg.getAttribute(MessageDataConfig.COLLABORATORS);
+		for (int i = 0; i < collaborators.length; i++) {
+			val[collaborators[i] - 1] = 1;
 		}
 
 		return val;

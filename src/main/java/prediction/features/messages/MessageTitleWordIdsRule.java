@@ -67,16 +67,13 @@ public class MessageTitleWordIdsRule extends NumericVectorFeatureRule implements
 		for (int i = 0; i < val.length; i++) {
 			val[i] = 0;
 		}
+		MessageData msg = aThread.getKthEarlest(0);
+		String[] words = (String[]) msg.getAttribute(MessageDataConfig.TITLE_WORDS);
 
-		for (int k = 0; k < aThread.size(); k++) {
-			MessageData msg = aThread.getKthEarlest(k);
-			String[] words = (String[]) msg.getAttribute(MessageDataConfig.TITLE_WORDS);
-
-			for (String word : words) {
-				Integer index = wordIndexFinder.indexOf(word);
-				if (index != null) {
-					val[index - 1] = 1;
-				}
+		for (String word : words) {
+			Integer index = wordIndexFinder.indexOf(word);
+			if (index != null) {
+				val[index - 1] = 1;
 			}
 		}
 

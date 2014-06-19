@@ -8,6 +8,12 @@ import data.representation.actionbased.messages.SingleMessage;
 public interface MessageLivenessPredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>> {
 
 	/**
+	 * Gets the title of the predictor
+	 * @return the title
+	 */
+	public String getTitle();
+	
+	/**
 	 * Adds a thread to train the model
 	 * @param thread
 	 * 			The past thread to be used for training
@@ -30,6 +36,18 @@ public interface MessageLivenessPredictor<Collaborator, Message extends SingleMe
 	 */
 	public void train() throws Exception;
 	
+	/**
+	 * Runs the evaluation according to weka
+	 * @param testThreads Threads to evaluate with
+	 * @throws Exception
+	 */
 	public void evaluate(Collection<ThreadType> testThreads) throws Exception;
+	
+	/**
+	 * Prints a description of the resultant model used to make predictions
+	 * @return A human-readable String description of the model
+	 * @throws Exception
+	 */
+	public String getModelInfo() throws Exception;
 	
 }
