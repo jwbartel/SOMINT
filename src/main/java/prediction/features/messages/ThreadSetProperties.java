@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
@@ -37,16 +38,21 @@ public class ThreadSetProperties<Collaborator, Message extends SingleMessage<Col
 	}
 
 	private void extractProperties() {
-		titleWords = new HashSet<>();
-		creators = new HashSet<>();
-		collaborators = new HashSet<>();
+		titleWords = new TreeSet<>();
+		creators = new TreeSet<>();
+		collaborators = new TreeSet<>();
 
 		for (ThreadType thread : threads) {
 			titleWords.addAll(SimpleWordIndexFinder.parseWords(thread
 					.getTitle()));
-			creators.addAll(thread.getCreators());
+			for (Collaborator creator : thread.getCreators()) {
+				if (creator != null) {
+					creators.add(creator);
+				}
+			}
 			collaborators.addAll(thread.getCollaborators());
 		}
+		titleWords.removeAll(stopWords);
 		wordIndexFinder = new SimpleWordIndexFinder(titleWords, stopWords);
 
 		int creatorId = 1;
