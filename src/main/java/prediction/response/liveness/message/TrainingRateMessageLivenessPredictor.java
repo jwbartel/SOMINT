@@ -9,7 +9,7 @@ import snml.rule.basicfeature.IBasicFeatureRule;
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
 
-public class MessageRandomLivenessPredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
+public class TrainingRateMessageLivenessPredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 		implements MessageLivenessPredictor<Collaborator, Message, ThreadType> {
 
 	private Random rand = new Random();
@@ -19,8 +19,7 @@ public class MessageRandomLivenessPredictor<Collaborator, Message extends Single
 	
 	public static <Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 			MessageLivenessPredictorFactory<Collaborator, Message, ThreadType>
-			factory(final double livenessRate,
-					Class<Collaborator> collaboratorClass,
+			factory(Class<Collaborator> collaboratorClass,
 					Class<Message> messageClass,
 					Class<ThreadType> threadClass) {
 
@@ -31,14 +30,13 @@ public class MessageRandomLivenessPredictor<Collaborator, Message extends Single
 					Collection<IBasicFeatureRule> features,
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
-				return new MessageRandomLivenessPredictor<Collaborator,Message,ThreadType>(livenessRate);
+				return new TrainingRateMessageLivenessPredictor<Collaborator,Message,ThreadType>();
 			}
 		};
 	}
 	
-	public MessageRandomLivenessPredictor(double livenessRate) {
-		this.title = "Predict live "+(livenessRate*100)+"% of the time";
-		this.livenessRate = livenessRate;
+	public TrainingRateMessageLivenessPredictor() {
+		this.title = "Predict liveness based on training rate";
 	}
 	
 	/**
@@ -61,11 +59,19 @@ public class MessageRandomLivenessPredictor<Collaborator, Message extends Single
 	}
 	
 	/**
-	 * Trains the underlying model of the predictor.
-	 * In this case, this is a no-op
+	 * Trains the liveness rate of the predictor.
 	 * @throws Exception 
 	 */
 	public void train() throws Exception {
+		int totalLive = 0;
+		for(ThreadType thread : pastThreads) {
+			Double responseTime = thread.getTimeToResponse();
+			if (responseTime != Double.POSITIVE_INFINITY) {
+				totalLive++;
+			}
+		}
+		
+		livenessRate = ((double) totalLive)/pastThreads.size();
 	}
 	
 	/**
@@ -78,6 +84,7 @@ public class MessageRandomLivenessPredictor<Collaborator, Message extends Single
 	 */
 	@Override
 	public Boolean predictLiveness(ThreadType thread) throws Exception {
+		train();
 		double prob = rand.nextDouble();
 		if (prob < livenessRate) {
 			return true;
@@ -99,7 +106,8 @@ public class MessageRandomLivenessPredictor<Collaborator, Message extends Single
 	 */
 	@Override
 	public String getModelInfo() throws Exception {
-		return title;
+		train();
+		return "Predict live "+(livenessRate*100)+"% of the time";
 	}
 
 }

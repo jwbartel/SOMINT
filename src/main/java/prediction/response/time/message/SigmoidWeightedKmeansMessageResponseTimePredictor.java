@@ -21,7 +21,7 @@ import data.representation.actionbased.messages.SingleMessage;
 
 public class SigmoidWeightedKmeansMessageResponseTimePredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 		extends
-		MessageWekaClusteringResponseTimePredictor<Collaborator, Message, ThreadType> {
+		WekaClusteringMessageResponseTimePredictor<Collaborator, Message, ThreadType> {
 	
 	public static <Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 			MessageResponseTimePredictorFactory<Collaborator, Message, ThreadType>

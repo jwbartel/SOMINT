@@ -18,7 +18,7 @@ import snml.rule.superfeature.model.weka.WekaClusterModelRule;
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
 
-public class MessageWekaClusteringResponseTimePredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
+public class WekaClusteringMessageResponseTimePredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 		implements MessageResponseTimePredictor<Collaborator, Message, ThreadType> {
 
 	private String title;
@@ -46,12 +46,12 @@ public class MessageWekaClusteringResponseTimePredictor<Collaborator, Message ex
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
 				IBasicFeatureRule[] featureArray = features.toArray(new IBasicFeatureRule[0]);
-				return new MessageWekaClusteringResponseTimePredictor<>(title, snmlModel, featureArray, threadsProperties);
+				return new WekaClusteringMessageResponseTimePredictor<>(title, snmlModel, featureArray, threadsProperties);
 			}
 		};
 	}
 	
-	public MessageWekaClusteringResponseTimePredictor(String title,
+	public WekaClusteringMessageResponseTimePredictor(String title,
 			WekaClusterModelRule snmlModel,
 			IBasicFeatureRule[] featureRules,
 			ThreadSetProperties<Collaborator,Message,ThreadType> threadsProperties) {

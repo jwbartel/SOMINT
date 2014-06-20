@@ -8,7 +8,7 @@ import snml.rule.basicfeature.IBasicFeatureRule;
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
 
-public class MessageConstantLivenessPredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
+public class ConstantMessageLivenessPredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 		implements MessageLivenessPredictor<Collaborator, Message, ThreadType> {
 	
 	public static enum LivenessPrediction {
@@ -34,12 +34,12 @@ public class MessageConstantLivenessPredictor<Collaborator, Message extends Sing
 					Collection<IBasicFeatureRule> features,
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
-				return new MessageConstantLivenessPredictor<Collaborator,Message,ThreadType>(prediction);
+				return new ConstantMessageLivenessPredictor<Collaborator,Message,ThreadType>(prediction);
 			}
 		};
 	}
 	
-	public MessageConstantLivenessPredictor(LivenessPrediction prediction) {
+	public ConstantMessageLivenessPredictor(LivenessPrediction prediction) {
 		this.title = "Constant prediction of "+prediction;
 		this.prediction = prediction;
 	}

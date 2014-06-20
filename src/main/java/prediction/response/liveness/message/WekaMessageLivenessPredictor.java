@@ -16,7 +16,7 @@ import snml.rule.superfeature.model.weka.WekaClassifyModelRule;
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
 
-public class MessageWekaLivenessPredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
+public class WekaMessageLivenessPredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 		implements MessageLivenessPredictor<Collaborator, Message, ThreadType> {
 
 	private String title;
@@ -42,12 +42,12 @@ public class MessageWekaLivenessPredictor<Collaborator, Message extends SingleMe
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
 				IBasicFeatureRule[] featureArray = features.toArray(new IBasicFeatureRule[0]);
-				return new MessageWekaLivenessPredictor<>(title, snmlModel, featureArray, threadsProperties);
+				return new WekaMessageLivenessPredictor<>(title, snmlModel, featureArray, threadsProperties);
 			}
 		};
 	}
 	
-	public MessageWekaLivenessPredictor(String title,
+	public WekaMessageLivenessPredictor(String title,
 			WekaClassifyModelRule snmlModel,
 			IBasicFeatureRule[] featureRules,
 			ThreadSetProperties<Collaborator,Message,ThreadType> threadsProperties) {
