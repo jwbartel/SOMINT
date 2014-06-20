@@ -1,4 +1,4 @@
-package prediction.response.time.message;
+package prediction.response.time;
 
 public class ResponseTimeRange {
 	public final Double minResponseTime;

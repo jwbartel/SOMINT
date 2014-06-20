@@ -2,6 +2,7 @@ package prediction.response.time.message;
 
 import java.util.Collection;
 
+import prediction.response.time.ResponseTimeRange;
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
 

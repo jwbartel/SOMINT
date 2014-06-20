@@ -8,6 +8,7 @@ import javax.mail.MessagingException;
 import prediction.features.messages.MessageIntermediateDataSetExtractor;
 import prediction.features.messages.SecondsToFirstResponseRule;
 import prediction.features.messages.ThreadSetProperties;
+import prediction.response.time.ResponseTimeRange;
 import snml.dataconvert.IntermediateData;
 import snml.dataconvert.IntermediateDataSet;
 import snml.dataconvert.WekaDataInitializer;

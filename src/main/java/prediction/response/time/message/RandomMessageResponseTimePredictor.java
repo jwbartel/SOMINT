@@ -9,7 +9,7 @@ import snml.rule.basicfeature.IBasicFeatureRule;
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
 
-public class ConstantMessageResponseTimePredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
+public class RandomMessageResponseTimePredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 		implements MessageResponseTimePredictor<Collaborator, Message, ThreadType> {
 
 	private Double prediction;
@@ -31,12 +31,12 @@ public class ConstantMessageResponseTimePredictor<Collaborator, Message extends 
 					Collection<IBasicFeatureRule> features,
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
-				return new ConstantMessageResponseTimePredictor<Collaborator,Message,ThreadType>(prediction, label);
+				return new RandomMessageResponseTimePredictor<Collaborator,Message,ThreadType>(prediction, label);
 			}
 		};
 	}
 	
-	public ConstantMessageResponseTimePredictor(Double prediction, String label) {
+	public RandomMessageResponseTimePredictor(Double prediction, String label) {
 		this.title = "Constant prediction of "+label;
 		this.prediction = prediction;
 	}
@@ -94,7 +94,7 @@ public class ConstantMessageResponseTimePredictor<Collaborator, Message extends 
 	 */
 	@Override
 	public String getModelInfo() throws Exception {
-		return "Always predict "+prediction;
+		return getTitle();
 	}
 
 }

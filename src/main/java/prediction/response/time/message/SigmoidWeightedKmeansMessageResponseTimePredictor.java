@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
 import prediction.features.messages.ThreadSetProperties;
+import prediction.response.time.ResponseTimeRange;
 import snml.dataconvert.IntermediateData;
 import snml.dataconvert.WekaData;
 import snml.dataconvert.WekaDataInitializer;

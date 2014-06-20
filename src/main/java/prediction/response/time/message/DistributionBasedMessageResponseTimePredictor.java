@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import prediction.features.messages.ThreadSetProperties;
 import prediction.response.time.DistributionResponseTimePredictor;
+import prediction.response.time.ResponseTimeRange;
 import snml.rule.basicfeature.IBasicFeatureRule;
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
