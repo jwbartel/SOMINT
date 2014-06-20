@@ -23,13 +23,13 @@ public class MessageWekaClusteringResponseTimePredictor<Collaborator, Message ex
 
 	private String title;
 	
-	private MessageIntermediateDataSetExtractor<Collaborator, Message, ThreadType> extractor = null;
-	IntermediateDataSet currTrainDataSet;
+	protected MessageIntermediateDataSetExtractor<Collaborator, Message, ThreadType> extractor = null;
+	protected IntermediateDataSet currTrainDataSet;
 	
-	private List<ThreadType> pastThreads = new ArrayList<>();
-	private IBasicFeatureRule[] featureRules;
-	private WekaClusterModelRule snmlModel;
-	private ThreadSetProperties<Collaborator,Message,ThreadType> threadsProperties;
+	protected List<ThreadType> pastThreads = new ArrayList<>();
+	protected IBasicFeatureRule[] featureRules;
+	protected WekaClusterModelRule snmlModel;
+	protected ThreadSetProperties<Collaborator,Message,ThreadType> threadsProperties;
 	
 	public static <Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 			MessageResponseTimePredictorFactory<Collaborator, Message, ThreadType>
@@ -158,6 +158,9 @@ public class MessageWekaClusteringResponseTimePredictor<Collaborator, Message ex
 		return new ResponseTimeRange(minTime, maxTime);
 	}
 	
+	/* (non-Javadoc)
+	 * @see prediction.response.time.message.MessageResponseTimePredictor#predictResponseTime(data.representation.actionbased.messages.MessageThread)
+	 */
 	@Override
 	public ResponseTimeRange predictResponseTime(ThreadType thread) throws Exception {
 		train();
