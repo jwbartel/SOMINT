@@ -2,7 +2,7 @@ package snml.rule.superfeature.model.weka;
 
 import snml.dataconvert.IntermediateDataSet;
 import snml.dataconvert.WekaDataSet;
-import weka.classifiers.functions.SimpleLinearRegression;
+import weka.classifiers.functions.LinearRegression;
 import weka.core.Instances;
 
 /**
@@ -37,7 +37,7 @@ public class WekaLinearRegressionModelRule extends WekaRegressionModelRule imple
 		
 		Instances insts = ((WekaDataSet)trainingSet).getDataSet();
 				
-		classifier = new SimpleLinearRegression();
+		classifier = new LinearRegression();
 		
 		//((LinearRegression)classifier).setOptions(options);//TODO wrap options
 		classifier.buildClassifier(insts);	

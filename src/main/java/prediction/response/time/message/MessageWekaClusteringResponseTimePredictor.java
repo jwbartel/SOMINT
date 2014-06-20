@@ -2,36 +2,39 @@ package prediction.response.time.message;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.mail.MessagingException;
 
 import prediction.features.messages.MessageIntermediateDataSetExtractor;
-import prediction.features.messages.SecondsToFirstResponseRule;
+import prediction.features.messages.MessageLivenessRule;
 import prediction.features.messages.ThreadSetProperties;
 import snml.dataconvert.IntermediateData;
 import snml.dataconvert.IntermediateDataSet;
 import snml.dataconvert.WekaDataInitializer;
 import snml.dataconvert.WekaDataSet;
 import snml.rule.basicfeature.IBasicFeatureRule;
-import snml.rule.superfeature.model.weka.WekaRegressionModelRule;
+import snml.rule.superfeature.model.weka.WekaClusterModelRule;
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
 
-public class MessageWekaRegressionResponseTimePredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
+public class MessageWekaClusteringResponseTimePredictor<Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 		implements MessageResponseTimePredictor<Collaborator, Message, ThreadType> {
 
 	private String title;
 	
 	private MessageIntermediateDataSetExtractor<Collaborator, Message, ThreadType> extractor = null;
-	private Collection<ThreadType> pastThreads = new ArrayList<>();
+	IntermediateDataSet currTrainDataSet;
+	
+	private List<ThreadType> pastThreads = new ArrayList<>();
 	private IBasicFeatureRule[] featureRules;
-	private WekaRegressionModelRule snmlModel;
+	private WekaClusterModelRule snmlModel;
 	private ThreadSetProperties<Collaborator,Message,ThreadType> threadsProperties;
 	
 	public static <Collaborator, Message extends SingleMessage<Collaborator>, ThreadType extends MessageThread<Collaborator, Message>>
 			MessageResponseTimePredictorFactory<Collaborator, Message, ThreadType>
 			factory(final String title,
-					final WekaRegressionModelRule snmlModel,
+					final WekaClusterModelRule snmlModel,
 					Class<Collaborator> collaboratorClass, Class<Message> messageClass,
 					Class<ThreadType> threadClass) {
 
@@ -43,13 +46,13 @@ public class MessageWekaRegressionResponseTimePredictor<Collaborator, Message ex
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
 				IBasicFeatureRule[] featureArray = features.toArray(new IBasicFeatureRule[0]);
-				return new MessageWekaRegressionResponseTimePredictor<>(title, snmlModel, featureArray, threadsProperties);
+				return new MessageWekaClusteringResponseTimePredictor<>(title, snmlModel, featureArray, threadsProperties);
 			}
 		};
 	}
 	
-	public MessageWekaRegressionResponseTimePredictor(String title,
-			WekaRegressionModelRule snmlModel,
+	public MessageWekaClusteringResponseTimePredictor(String title,
+			WekaClusterModelRule snmlModel,
 			IBasicFeatureRule[] featureRules,
 			ThreadSetProperties<Collaborator,Message,ThreadType> threadsProperties) {
 		this.title = title;
@@ -91,30 +94,75 @@ public class MessageWekaRegressionResponseTimePredictor<Collaborator, Message ex
 	public void train() throws Exception {
 		if (extractor == null) {
 			extractor = new MessageIntermediateDataSetExtractor<>(threadsProperties);
-			IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[1];
-			predictableRules[0] = new SecondsToFirstResponseRule("responseTime");
-			IntermediateDataSet dataSet = extractor.extractAllIntermediateData(pastThreads, "liveness",
+			IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[0];
+			currTrainDataSet = extractor.extractAllIntermediateData(pastThreads, "liveness",
 					featureRules, predictableRules, new WekaDataInitializer());
-			dataSet.setTargetIndex();
-			snmlModel.train(dataSet, null);;
+			snmlModel.train(currTrainDataSet, null);;
 		}
+	}
+	
+	/**
+	 * Retrieves the cluster predicted by the weka clusterer
+	 * @param thread The thread for which to predict the cluster
+	 * @return The cluster id
+	 * @throws Exception
+	 */
+	public Integer getCluster(ThreadType thread) throws Exception {
+		train();
+		
+		IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[0];
+		IntermediateData instance = extractor.extractSingleItem(thread, "liveness_test_item", featureRules, predictableRules, new WekaDataInitializer());
+		
+		Object result =  snmlModel.extract(instance);
+		Integer cluster = null;
+		if (result != null) {
+			if (result instanceof String) {
+				cluster = Integer.parseInt((String) result);
+			} else {
+				cluster = (int) result;
+			}
+		}
+		return cluster;
+	}
+
+	
+	/**
+	 * Retrieves response time range associated with a cluster
+	 * @param thread The thread for which to predict the cluster
+	 * @return The cluster id
+	 * @throws Exception
+	 */
+	public ResponseTimeRange getClusterRange(Integer cluster) throws Exception {
+		if (cluster == null) {
+			return null;
+		}
+		int[] trainingDataAssignments = snmlModel.getAssignments();
+		
+		Double minTime = null;
+		Double maxTime = null;
+		for (int i = 0; i < trainingDataAssignments.length; i++) {
+			if (trainingDataAssignments[i] == cluster) {
+				ThreadType thread = pastThreads.get(i);
+				Double responseTime = thread.getTimeToResponse();
+				if (responseTime !=null) {
+					if (minTime == null || minTime > responseTime) {
+						minTime = responseTime;
+					}
+					if (maxTime == null || maxTime < responseTime) {
+						maxTime = responseTime;
+					}
+				}
+			}
+		}
+		
+		return new ResponseTimeRange(minTime, maxTime);
 	}
 	
 	@Override
 	public ResponseTimeRange predictResponseTime(ThreadType thread) throws Exception {
 		train();
-		IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[1];
-		predictableRules[0] = new SecondsToFirstResponseRule("responseTime");
-		IntermediateData instance = extractor.extractSingleItem(thread, "liveness_test_item", featureRules, predictableRules, new WekaDataInitializer());
-		Object result =  snmlModel.extract(instance);
-		Double prediction;
-		if (result instanceof String) {
-			prediction = Double.parseDouble((String) result);
-		} else {
-			prediction = (double) result;
-		}
-		
-		return new ResponseTimeRange(prediction, null);
+		Integer cluster = getCluster(thread);
+		return getClusterRange(cluster);
 	}
 	
 	
@@ -122,7 +170,7 @@ public class MessageWekaRegressionResponseTimePredictor<Collaborator, Message ex
 	public void evaluate(Collection<ThreadType> testThreads) throws Exception {
 		train();
 		IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[1];
-		predictableRules[0] = new SecondsToFirstResponseRule("responseTime");
+		predictableRules[0] = new MessageLivenessRule("responseTime");
 		WekaDataSet trainData = (WekaDataSet) extractor.extractAllIntermediateData(pastThreads, "trainData", featureRules, predictableRules, new WekaDataInitializer());
 		trainData.setTargetIndex();
 		WekaDataSet testData = (WekaDataSet) extractor.extractAllIntermediateData(testThreads, "testData", featureRules, predictableRules, new WekaDataInitializer());
@@ -136,7 +184,13 @@ public class MessageWekaRegressionResponseTimePredictor<Collaborator, Message ex
 	@Override
 	public String getModelInfo() throws Exception {
 		train();
-		return snmlModel.getClassifier().toString();
+		String info = snmlModel.getClusterer().toString();
+		info += "\n\n";
+		info += "Cluster to range\n====================\n";
+		for (int i=0; i<snmlModel.getClusterer().numberOfClusters(); i++) {
+			info += i + " -> " + getClusterRange(i) + "\n";
+		}
+		return info;
 	}
 
 }

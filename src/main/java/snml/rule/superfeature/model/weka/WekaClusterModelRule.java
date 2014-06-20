@@ -88,6 +88,16 @@ public abstract class WekaClusterModelRule extends ClusterModelRule implements I
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public Clusterer getClusterer() {
+		return clusterer;
+	}
 
+	/**
+	 * Gets the cluster assignment for each instance.
+	 * @return Array of indexes of the cluster assigned to each instance
+	 * @throws Exception 
+	 */
+	public abstract int[] getAssignments() throws Exception;
 
 }

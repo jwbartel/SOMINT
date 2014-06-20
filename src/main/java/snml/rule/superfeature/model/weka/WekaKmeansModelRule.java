@@ -2,9 +2,14 @@ package snml.rule.superfeature.model.weka;
 
 import java.util.ArrayList;
 
+import snml.dataconvert.IntermediateData;
 import snml.dataconvert.IntermediateDataSet;
+import snml.dataconvert.WekaData;
 import snml.dataconvert.WekaDataSet;
 import weka.clusterers.SimpleKMeans;
+import weka.core.DistanceFunction;
+import weka.core.Instance;
+import weka.core.Instances;
 
 /**
  * A K-means model from Weka extracting feature rules
@@ -65,6 +70,7 @@ public class WekaKmeansModelRule extends WekaClusterModelRule implements IWekaMo
 		*/
 		
 		clusterer = new SimpleKMeans();
+		((SimpleKMeans)clusterer).setPreserveInstancesOrder(true);
 		((SimpleKMeans)clusterer).setNumClusters(domain.size());
 		((SimpleKMeans)clusterer).setSeed((int)System.currentTimeMillis());
 		clusterer.buildClusterer(((WekaDataSet)trainingSet).getDataSet());
@@ -72,12 +78,39 @@ public class WekaKmeansModelRule extends WekaClusterModelRule implements IWekaMo
 		
 	}
 
-
+	/**
+	 * Gets the cluster assignment for each instance.
+	 * @return Array of indexes of the cluster assigned to each instance
+	 * @throws Exception 
+	 */
+	public int[] getAssignments() throws Exception {
+		return ((SimpleKMeans) clusterer).getAssignments();
+	}
 	
-
+	private Object findClosestCluster(IntermediateData anInstData) {
+		DistanceFunction distanceFunction = ((SimpleKMeans) clusterer).getDistanceFunction();
+		
+		double shortestDistance = Double.POSITIVE_INFINITY;
+		Integer closestCluster = null;
+		Instances centroids = ((SimpleKMeans) clusterer).getClusterCentroids();
+		for (int i=0; i<centroids.numInstances(); i++) {
+			Instance centroid = centroids.get(i);
+			double distance = distanceFunction.distance(centroid, ((WekaData) anInstData).getInstValue());
+			if (distance < shortestDistance) {
+				shortestDistance = distance;
+				closestCluster = i;
+			}
+		}
+		return closestCluster;
+	}
 	
-
-	
-	
+	@Override
+	public Object extract(IntermediateData anInstData) throws Exception {
+		try {
+			return super.extract(anInstData);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return findClosestCluster(anInstData);
+		}
+	}
 
 }

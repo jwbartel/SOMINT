@@ -50,7 +50,7 @@ public class MessageIntermediateDataSetExtractor<Collaborator, Message extends S
 	
 	private int[] getCollaborators(Message message) {
 		Set<Integer> collaborators = new TreeSet<>();
-		for (Collaborator collaborator : message.getCreators()) {
+		for (Collaborator collaborator : message.getCollaborators()) {
 			Integer id = threadsProperties.getCollaboratorId(collaborator);
 			if (id != null) {
 				collaborators.add(id);
