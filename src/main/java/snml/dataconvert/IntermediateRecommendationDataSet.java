@@ -24,7 +24,7 @@ public abstract class IntermediateRecommendationDataSet implements IntermediateD
 	// user has specified for the same item
 	PreferenceCombiner combiner;
 	
-	protected List<IntermediateData> data = new ArrayList<>();
+	protected List<IntermediateRecommendationData> data = new ArrayList<>();
 	protected Map<UserItemPair, Object> seenPreferences = new TreeMap<>();
 	
 	/**
@@ -52,7 +52,7 @@ public abstract class IntermediateRecommendationDataSet implements IntermediateD
 		if(!(inst instanceof IntermediateRecommendationData)) {
 			throw new Exception("instance must be of type " +IntermediateRecommendationData.class.getName());
 		}
-		data.add(inst);
+		data.add((IntermediateRecommendationData) inst);
 		addPreferenceInformation((IntermediateRecommendationData) inst);;
 	}
 	
@@ -90,7 +90,7 @@ public abstract class IntermediateRecommendationDataSet implements IntermediateD
 	 * @see snml.dataconvert.IntermediateDataSet#getDataInstance(int)
 	 */
 	@Override
-	public IntermediateData getDataInstance(int instId) throws Exception {
+	public IntermediateRecommendationData getDataInstance(int instId) throws Exception {
 		return data.get(instId);
 	}
 
