@@ -1,6 +1,6 @@
 package snml.rule.superfeature.model.weka;
 
-import snml.dataconvert.WekaDataSet;
+import snml.dataconvert.weka.WekaDataSet;
 import snml.rule.superfeature.model.IModelRule;
 
 /**

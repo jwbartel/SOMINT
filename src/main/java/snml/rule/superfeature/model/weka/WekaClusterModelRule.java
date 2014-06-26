@@ -3,8 +3,8 @@ package snml.rule.superfeature.model.weka;
 import java.util.ArrayList;
 
 import snml.dataconvert.IntermediateData;
-import snml.dataconvert.WekaData;
-import snml.dataconvert.WekaDataSet;
+import snml.dataconvert.weka.WekaData;
+import snml.dataconvert.weka.WekaDataSet;
 import snml.rule.superfeature.model.ClusterModelRule;
 import weka.clusterers.Clusterer;
 

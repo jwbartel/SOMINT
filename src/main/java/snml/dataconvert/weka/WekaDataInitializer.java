@@ -1,7 +1,10 @@
-package snml.dataconvert;
+package snml.dataconvert.weka;
 
 import java.util.ArrayList;
 
+import snml.dataconvert.IntermediateData;
+import snml.dataconvert.IntermediateDataInitializer;
+import snml.dataconvert.IntermediateDataSet;
 import snml.dataimport.MsgDataConfig;
 import snml.rule.DateFeatureRule;
 import snml.rule.IFeatureRule;

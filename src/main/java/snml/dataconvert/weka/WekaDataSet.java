@@ -1,9 +1,11 @@
-package snml.dataconvert;
+package snml.dataconvert.weka;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
+import snml.dataconvert.IntermediateData;
+import snml.dataconvert.IntermediateDataSet;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;

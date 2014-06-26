@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import snml.dataconvert.IntermediateData;
 import snml.dataconvert.IntermediateDataSet;
-import snml.dataconvert.WekaData;
-import snml.dataconvert.WekaDataSet;
+import snml.dataconvert.weka.WekaData;
+import snml.dataconvert.weka.WekaDataSet;
 import weka.clusterers.SimpleKMeans;
 import weka.core.DistanceFunction;
 import weka.core.Instance;

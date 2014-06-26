@@ -1,7 +1,7 @@
 package snml.rule.superfeature.model.weka;
 
 import snml.dataconvert.IntermediateDataSet;
-import snml.dataconvert.WekaDataSet;
+import snml.dataconvert.weka.WekaDataSet;
 import weka.classifiers.functions.SGD;
 import weka.core.Instances;
 

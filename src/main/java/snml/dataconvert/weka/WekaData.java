@@ -1,8 +1,10 @@
-package snml.dataconvert;
+package snml.dataconvert.weka;
 
 import java.lang.reflect.Array;
 import java.text.ParseException;
 
+import snml.dataconvert.IntermediateData;
+import snml.dataconvert.IntermediateDataSet;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
