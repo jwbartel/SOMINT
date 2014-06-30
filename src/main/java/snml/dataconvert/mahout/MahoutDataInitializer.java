@@ -2,6 +2,7 @@ package snml.dataconvert.mahout;
 
 import snml.dataconvert.IntermediateDataSet;
 import snml.dataconvert.IntermediateRecommendationDataInitializer;
+import snml.rule.BinaryFeatureRule;
 import snml.rule.basicfeature.IBasicFeatureRule;
 
 /**
@@ -14,16 +15,23 @@ public class MahoutDataInitializer extends
 	public MahoutDataSet initDestDataSet(String destDataSetName, int threadNum,
 			IBasicFeatureRule userRule, IBasicFeatureRule itemRule,
 			IBasicFeatureRule preferenceRule) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		DataModelInitializer modelInitializer;
+		if (preferenceRule instanceof BinaryFeatureRule) {
+			modelInitializer = new BooleanModelInitializer();
+		} else {
+			modelInitializer = new GenericDataModelInitializer();
+		}
+		
+		return new MahoutDataSet(userRule, itemRule, preferenceRule, modelInitializer);
 	}
 
 	@Override
 	public MahoutData initADataInstance(IntermediateDataSet relatedDataset,
 			IBasicFeatureRule userRule, IBasicFeatureRule itemRule,
 			IBasicFeatureRule preferenceRule) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return new MahoutData();
 	}
 
 }

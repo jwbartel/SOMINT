@@ -20,9 +20,9 @@ public class MahoutDataSet extends IntermediateRecommendationDataSet {
 	public MahoutDataSet(IBasicFeatureRule userFeature,
 			IBasicFeatureRule itemFeature,
 			IBasicFeatureRule preferenceFeature,
-			DataModelInitializer preferenceCreator) {
+			DataModelInitializer modelInitializer) {
 		super(userFeature, itemFeature, preferenceFeature);
-		this.modelInitializer = preferenceCreator;
+		this.modelInitializer = modelInitializer;
 	}
 
 	@Override

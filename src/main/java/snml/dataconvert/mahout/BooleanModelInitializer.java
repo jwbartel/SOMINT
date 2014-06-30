@@ -11,7 +11,7 @@ import org.apache.mahout.cf.taste.model.DataModel;
 
 import snml.dataconvert.UserItemPair;
 
-public class BooleanPreferenceCreator implements DataModelInitializer {
+public class BooleanModelInitializer implements DataModelInitializer {
 	
 	private FastByIDMap<FastIDSet> initializeUserData(
 			Map<Object, Long> userToId,
