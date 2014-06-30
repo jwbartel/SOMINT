@@ -16,9 +16,9 @@ import snml.rule.basicfeature.IBasicFeatureRule;
  */
 public abstract class IntermediateRecommendationDataSet implements IntermediateDataSet {
 	
-	IBasicFeatureRule userFeature;
-	IBasicFeatureRule itemFeature;
-	IBasicFeatureRule preferenceFeature;
+	protected IBasicFeatureRule userFeature;
+	protected IBasicFeatureRule itemFeature;
+	protected IBasicFeatureRule preferenceFeature;
 
 	// Used to combine preferences when there are multiple preferences a single
 	// user has specified for the same item
