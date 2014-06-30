@@ -59,27 +59,21 @@ public class GenericDataModelInitializer implements DataModelInitializer {
 
 	@Override
 	public DataModel initializeDataModel(
-			Map<UserItemPair, Object> seenPreferences) throws Exception {
-		
+			Map<UserItemPair, Object> seenPreferences,
+			Map<Object, Long> userIds, Map<Object, Long> itemIds)
+			throws Exception {
+
 		// Assign user ids and sort preferences by user
-		Map<Object,Long> userToId = new HashMap<>();
-		Map<Object,Long> itemToId = new HashMap<>();
 		Map<Object,ArrayList<Preference>> userToPreferences = new HashMap<>();
 		for (Entry<UserItemPair, Object> entry : seenPreferences.entrySet()) {
 			UserItemPair userItemPair = entry.getKey();
 			Object user = userItemPair.getUser();
 			Object item = userItemPair.getItem();
 			Object preference = entry.getValue();
-			Long userId = userToId.get(user);
-			if (userId == null) {
-				userId = (long) userToId.size();
-				userToId.put(user, userId);
-			}
-			Long itemId = itemToId.get(item);
-			if (itemId == null) {
-				itemId = (long) itemToId.size();
-				itemToId.put(item, itemId);
-			}
+			
+			Long userId = userIds.get(user);
+			Long itemId = itemIds.get(item);
+			
 			ArrayList<Preference> preferences = userToPreferences.get(user);
 			if(preferences == null) {
 				preferences = new ArrayList<>();
@@ -89,7 +83,7 @@ public class GenericDataModelInitializer implements DataModelInitializer {
 			preferences.add(preferenceObj);
 		}
 		
-		DataModel dataModel = new GenericDataModel(initializeUserData(userToId, userToPreferences));
+		DataModel dataModel = new GenericDataModel(initializeUserData(userIds, userToPreferences));
 		return dataModel;
 	}
 

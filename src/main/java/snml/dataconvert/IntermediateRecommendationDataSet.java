@@ -25,6 +25,9 @@ public abstract class IntermediateRecommendationDataSet implements IntermediateD
 	PreferenceCombiner combiner;
 	
 	protected List<IntermediateRecommendationData> data = new ArrayList<>();
+	
+	protected Map<Object,Long> userIds;
+	protected Map<Object,Long> itemIds;
 	protected Map<UserItemPair, Object> seenPreferences = new TreeMap<>();
 	
 	/**
@@ -70,9 +73,22 @@ public abstract class IntermediateRecommendationDataSet implements IntermediateD
 	private void addUsersPreferenceInformation(Object user, IntermediateRecommendationData inst) {
 		Object preference = inst.getPreferenceAttribute();
 		Object itemAttrib = inst.getItemAttribute();
+
+		Long userId = userIds.get(user);
+		if (userId == null) {
+			userId = (long) userIds.size();
+			userIds.put(user, userId);
+		}
+		
 		if (itemAttrib.getClass().isArray()) {
 			for (int i=0; i<Array.getLength(itemAttrib); i++) {
-				addUserItemPreferenceInformation(user, Array.get(itemAttrib, i), preference);
+				Object item = Array.get(itemAttrib, i);
+				Long itemId = itemIds.get(item);
+				if (itemId == null) {
+					itemId = (long) itemIds.size();
+					itemIds.put(item, itemId);
+				}
+				addUserItemPreferenceInformation(user, item, preference);
 			}
 	 	} else {
 	 		addUserItemPreferenceInformation(user, itemAttrib, preference);
@@ -190,6 +206,31 @@ public abstract class IntermediateRecommendationDataSet implements IntermediateD
 	   */
 	public void setTargetIndex(int index) {
 		
+	}
+	
+	/**
+	 * The number of users in the data set
+	 */
+	public int getNumUsers() {
+		return userIds.size();
+	}
+	
+	/**
+	 * Get the id of the user object
+	 * @param user The user object
+	 * @return The user id
+	 */
+	public Long getUserId(Object user) {
+		return userIds.get(user);
+	}
+	
+	/**
+	 * Get the id of the item object
+	 * @param user The item object
+	 * @return The item id
+	 */
+	public Long getItemId(Object item) {
+		return itemIds.get(item);
 	}
 	
 

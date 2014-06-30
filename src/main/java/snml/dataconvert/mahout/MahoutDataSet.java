@@ -76,7 +76,7 @@ public class MahoutDataSet extends IntermediateRecommendationDataSet {
 	   */
 	public DataModel getDataSet() throws Exception{
 
-		return modelInitializer.initializeDataModel(seenPreferences);
+		return modelInitializer.initializeDataModel(seenPreferences, userIds, itemIds);
 
 	}
 

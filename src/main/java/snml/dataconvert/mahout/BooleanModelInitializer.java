@@ -31,11 +31,11 @@ public class BooleanModelInitializer implements DataModelInitializer {
 
 	@Override
 	public DataModel initializeDataModel(
-			Map<UserItemPair, Object> seenPreferences) throws Exception {
+			Map<UserItemPair, Object> seenPreferences,
+			Map<Object, Long> userIds, Map<Object, Long> itemIds)
+			throws Exception {
 		
-		// Assign user ids and sort preferences by user
-		Map<Object,Long> userToId = new HashMap<>();
-		Map<Object,Long> itemToId = new HashMap<>();
+		// Sort preferences by user
 		Map<Object,FastIDSet> userToPreferences = new HashMap<>();
 		for (Entry<UserItemPair, Object> entry : seenPreferences.entrySet()) {
 			UserItemPair userItemPair = entry.getKey();
@@ -46,16 +46,8 @@ public class BooleanModelInitializer implements DataModelInitializer {
 				continue;
 			}
 			
-			Long userId = userToId.get(user);
-			if (userId == null) {
-				userId = (long) userToId.size();
-				userToId.put(user, userId);
-			}
-			Long itemId = itemToId.get(item);
-			if (itemId == null) {
-				itemId = (long) itemToId.size();
-				itemToId.put(item, itemId);
-			}
+			Long itemId = itemIds.get(item);
+
 			FastIDSet preferences = userToPreferences.get(user);
 			if(preferences == null) {
 				preferences = new FastIDSet();
@@ -64,7 +56,7 @@ public class BooleanModelInitializer implements DataModelInitializer {
 			preferences.add(itemId);
 		}
 		
-		DataModel dataModel = new GenericBooleanPrefDataModel(initializeUserData(userToId, userToPreferences));
+		DataModel dataModel = new GenericBooleanPrefDataModel(initializeUserData(userIds, userToPreferences));
 		return dataModel;
 	}
 
