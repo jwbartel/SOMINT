@@ -1,6 +1,6 @@
 package prediction.response.time.message;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -35,7 +35,7 @@ public class SigmoidWeightedKmeansMessageResponseTimePredictor<Collaborator, Mes
 
 			@Override
 			public MessageResponseTimePredictor<Collaborator, Message, ThreadType> create(
-					Collection<IBasicFeatureRule> features,
+					List<IBasicFeatureRule> features,
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
 				IBasicFeatureRule[] featureArray = features.toArray(new IBasicFeatureRule[0]);

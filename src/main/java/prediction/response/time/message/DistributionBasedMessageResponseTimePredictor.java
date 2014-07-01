@@ -2,6 +2,7 @@ package prediction.response.time.message;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import prediction.features.messages.ThreadSetProperties;
 import prediction.response.time.DistributionResponseTimePredictor;
@@ -28,7 +29,7 @@ public class DistributionBasedMessageResponseTimePredictor<Collaborator, Message
 
 			@Override
 			public MessageResponseTimePredictor<Collaborator, Message, ThreadType> create(
-					Collection<IBasicFeatureRule> features,
+					List<IBasicFeatureRule> features,
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
 				return new DistributionBasedMessageResponseTimePredictor<Collaborator,Message,ThreadType>(distribution);

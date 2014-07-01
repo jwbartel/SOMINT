@@ -43,7 +43,7 @@ public class WekaClusteringMessageResponseTimePredictor<Collaborator, Message ex
 
 			@Override
 			public MessageResponseTimePredictor<Collaborator, Message, ThreadType> create(
-					Collection<IBasicFeatureRule> features,
+					List<IBasicFeatureRule> features,
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
 				IBasicFeatureRule[] featureArray = features.toArray(new IBasicFeatureRule[0]);
@@ -96,7 +96,7 @@ public class WekaClusteringMessageResponseTimePredictor<Collaborator, Message ex
 		if (extractor == null) {
 			extractor = new MessageIntermediateDataSetExtractor<>(threadsProperties);
 			IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[0];
-			currTrainDataSet = extractor.extractAllIntermediateData(pastThreads, "liveness",
+			currTrainDataSet = extractor.extractAllIntermediateData(pastThreads, "responseTime",
 					featureRules, predictableRules, new WekaDataInitializer());
 			snmlModel.train(currTrainDataSet, null);;
 		}

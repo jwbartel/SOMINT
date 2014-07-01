@@ -2,6 +2,7 @@ package prediction.response.time.message;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.mail.MessagingException;
 
@@ -40,7 +41,7 @@ public class WekaRegressionMessageResponseTimePredictor<Collaborator, Message ex
 
 			@Override
 			public MessageResponseTimePredictor<Collaborator, Message, ThreadType> create(
-					Collection<IBasicFeatureRule> features,
+					List<IBasicFeatureRule> features,
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
 				IBasicFeatureRule[] featureArray = features.toArray(new IBasicFeatureRule[0]);
@@ -94,7 +95,7 @@ public class WekaRegressionMessageResponseTimePredictor<Collaborator, Message ex
 			extractor = new MessageIntermediateDataSetExtractor<>(threadsProperties);
 			IBasicFeatureRule[] predictableRules = new IBasicFeatureRule[1];
 			predictableRules[0] = new SecondsToFirstResponseRule("responseTime");
-			IntermediateDataSet dataSet = extractor.extractAllIntermediateData(pastThreads, "liveness",
+			IntermediateDataSet dataSet = extractor.extractAllIntermediateData(pastThreads, "responseTime",
 					featureRules, predictableRules, new WekaDataInitializer());
 			dataSet.setTargetIndex();
 			snmlModel.train(dataSet, null);;

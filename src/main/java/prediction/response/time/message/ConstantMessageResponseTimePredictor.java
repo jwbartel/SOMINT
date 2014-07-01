@@ -2,6 +2,7 @@ package prediction.response.time.message;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import prediction.features.messages.ThreadSetProperties;
 import prediction.response.time.ResponseTimeRange;
@@ -28,7 +29,7 @@ public class ConstantMessageResponseTimePredictor<Collaborator, Message extends 
 
 			@Override
 			public MessageResponseTimePredictor<Collaborator, Message, ThreadType> create(
-					Collection<IBasicFeatureRule> features,
+					List<IBasicFeatureRule> features,
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
 				
 				return new ConstantMessageResponseTimePredictor<Collaborator,Message,ThreadType>(prediction, label);
