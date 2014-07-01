@@ -1,5 +1,6 @@
 package snml.rule.superfeature.model.mahout;
 
+import snml.dataconvert.IntermediateData;
 import snml.dataconvert.mahout.MahoutData;
 import snml.rule.superfeature.model.NumericModelRule;
 
@@ -24,5 +25,15 @@ public abstract class MahoutCollaborativeFiteringModelRule extends
 	 * @param item The item to predict a preference for
 	 * @return A float representing the preference.  This will be null if no preference can be predicted.
 	 */
-	public abstract Float estimatePreference(MahoutData data);
+	public Float estimatePreference(MahoutData data) {
+		return estimatePreference(data.getUserAttribute(), data.getItemAttribute());
+	}
+
+	@Override
+	public Object extract(IntermediateData anInstData) throws Exception {
+		if (anInstData instanceof MahoutData) {
+			return estimatePreference((MahoutData) anInstData);
+		}
+		throw new Exception("Data must of type MahoutData");
+	}
 }

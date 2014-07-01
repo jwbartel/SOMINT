@@ -59,17 +59,4 @@ public class MahoutSlopeOneModelRule extends MahoutCollaborativeFiteringModelRul
 		}
 	}
 
-	@Override
-	public Float estimatePreference(MahoutData data) {
-		return estimatePreference(data.getUserAttribute(), data.getItemAttribute());
-	}
-
-	@Override
-	public Object extract(IntermediateData anInstData) throws Exception {
-		if (anInstData instanceof MahoutData) {
-			return estimatePreference((MahoutData) anInstData);
-		}
-		throw new Exception("Data must of type MahoutData");
-	}
-
 }
