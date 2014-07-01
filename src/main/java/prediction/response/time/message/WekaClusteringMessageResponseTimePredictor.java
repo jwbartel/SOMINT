@@ -101,6 +101,11 @@ public class WekaClusteringMessageResponseTimePredictor<Collaborator, Message ex
 			snmlModel.train(currTrainDataSet, null);;
 		}
 	}
+
+	@Override
+	public void validate(Collection<ThreadType> validationSet) throws Exception {
+		train();
+	}
 	
 	/**
 	 * Retrieves the cluster predicted by the weka clusterer

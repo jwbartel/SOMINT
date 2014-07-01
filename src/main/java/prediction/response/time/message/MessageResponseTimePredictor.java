@@ -37,6 +37,13 @@ public interface MessageResponseTimePredictor<Collaborator, Message extends Sing
 	public void train() throws Exception;
 	
 	/**
+	 * Validates any necessary weights for the predictor
+	 * @param validationSet The set of threads to use for validation
+	 * @throws Exception 
+	 */
+	public void validate(Collection<ThreadType> validationSet) throws Exception;
+	
+	/**
 	 * Runs the evaluation according to weka
 	 * @param testThreads Threads to evaluate with
 	 * @throws Exception

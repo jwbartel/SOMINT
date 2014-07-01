@@ -67,6 +67,11 @@ public class RandomMessageResponseTimePredictor<Collaborator, Message extends Si
 	 */
 	public void train() throws Exception {
 	}
+
+	@Override
+	public void validate(Collection<ThreadType> validationSet) throws Exception {
+		train();
+	}
 	
 	/**
 	 * Predicts whether a thread is alive or will have more responses

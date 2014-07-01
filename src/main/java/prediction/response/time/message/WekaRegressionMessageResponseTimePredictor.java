@@ -100,6 +100,11 @@ public class WekaRegressionMessageResponseTimePredictor<Collaborator, Message ex
 			snmlModel.train(dataSet, null);;
 		}
 	}
+
+	@Override
+	public void validate(Collection<ThreadType> validationSet) throws Exception {
+		train();
+	}
 	
 	@Override
 	public ResponseTimeRange predictResponseTime(ThreadType thread) throws Exception {
