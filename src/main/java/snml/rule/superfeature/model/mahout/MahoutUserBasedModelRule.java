@@ -3,6 +3,10 @@ package snml.rule.superfeature.model.mahout;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
+import org.apache.mahout.cf.taste.impl.similarity.EuclideanDistanceSimilarity;
+import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
+import org.apache.mahout.cf.taste.impl.similarity.SpearmanCorrelationSimilarity;
+import org.apache.mahout.cf.taste.impl.similarity.UncenteredCosineSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
@@ -16,11 +20,11 @@ public class MahoutUserBasedModelRule extends MahoutCollaborativeFiteringModelRu
 
 	MahoutDataSet dataSet;
 	GenericUserBasedRecommender recommender;
-	UserSimilarity similarity;
+	SimilarityMeasure similarityMeasure;
 
-	public MahoutUserBasedModelRule(String featureName, UserSimilarity similarity) {
+	public MahoutUserBasedModelRule(String featureName, SimilarityMeasure similarity) {
 		super(featureName);
-		this.similarity = similarity;
+		this.similarityMeasure = similarity;
 	}
 	
 	@Override
@@ -34,6 +38,28 @@ public class MahoutUserBasedModelRule extends MahoutCollaborativeFiteringModelRu
 		dataSet = (MahoutDataSet) trainingSet;
 		DataModel model = dataSet.getDataSet();
 
+		UserSimilarity similarity;
+		switch (similarityMeasure) {
+		case EuclideanDistance:
+			similarity = new EuclideanDistanceSimilarity(model);
+			break;
+
+		case CosineSimilarity:
+			similarity = new UncenteredCosineSimilarity(model);
+			break;
+
+		case PearsonCorrelation:
+			similarity = new PearsonCorrelationSimilarity(model);
+			break;
+
+		case SpearmanCorrelation:
+			similarity = new SpearmanCorrelationSimilarity(model);
+			break;
+
+		default:
+			throw new Exception("Unknown similarity measure.");
+		}
+		
 		UserNeighborhood neighborhood = new NearestNUserNeighborhood(
 				dataSet.getNumUsers(), similarity, model);
 		recommender = new GenericUserBasedRecommender(model, neighborhood,
