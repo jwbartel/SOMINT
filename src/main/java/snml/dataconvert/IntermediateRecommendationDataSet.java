@@ -2,6 +2,7 @@ package snml.dataconvert;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -26,8 +27,8 @@ public abstract class IntermediateRecommendationDataSet implements IntermediateD
 	
 	protected List<IntermediateRecommendationData> data = new ArrayList<>();
 	
-	protected Map<Object,Long> userIds;
-	protected Map<Object,Long> itemIds;
+	protected Map<Object,Long> userIds = new HashMap<>();
+	protected Map<Object,Long> itemIds = new HashMap<>();
 	protected Map<UserItemPair, Object> seenPreferences = new TreeMap<>();
 	
 	/**
@@ -61,12 +62,14 @@ public abstract class IntermediateRecommendationDataSet implements IntermediateD
 	
 	private void addPreferenceInformation(IntermediateRecommendationData inst) {
 		Object userAttrib = inst.getUserAttribute();
-		if (userAttrib.getClass().isArray()) {
-			for (int i=0; i<Array.getLength(userAttrib); i++) {
-				addUsersPreferenceInformation(Array.get(userAttrib, i), inst);
+		if (userAttrib != null) {
+			if (userAttrib.getClass().isArray()) {
+				for (int i=0; i<Array.getLength(userAttrib); i++) {
+					addUsersPreferenceInformation(Array.get(userAttrib, i), inst);
+				}
+			} else {
+				addUsersPreferenceInformation(userAttrib, inst);
 			}
-		} else {
-			addUsersPreferenceInformation(userAttrib, inst);
 		}
 	}
 	

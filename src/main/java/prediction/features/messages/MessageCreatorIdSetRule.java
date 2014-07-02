@@ -1,16 +1,16 @@
 package prediction.features.messages;
 
-import data.representation.actionbased.messages.MessageThread;
-import data.representation.actionbased.messages.SingleMessage;
 import snml.dataimport.MessageData;
 import snml.dataimport.ThreadData;
-import snml.rule.NumericVectorFeatureRule;
+import snml.rule.ObjectSetFeatureRule;
 import snml.rule.basicfeature.IBasicFeatureRule;
+import data.representation.actionbased.messages.MessageThread;
+import data.representation.actionbased.messages.SingleMessage;
 
 /**
  * Extract the numeric vector of the ids of creators of the thread
  */
-public class MessageCreatorIdSetRule extends NumericVectorFeatureRule implements IBasicFeatureRule{
+public class MessageCreatorIdSetRule extends ObjectSetFeatureRule implements IBasicFeatureRule{
 	
 	/**
 	 * Create a factory to generate instances of the feature
@@ -30,7 +30,7 @@ public class MessageCreatorIdSetRule extends NumericVectorFeatureRule implements
 			@Override
 			public IBasicFeatureRule create(
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
-				return new MessageCreatorIdSetRule(featureName, threadsProperties.getCreators().size());
+				return new MessageCreatorIdSetRule(featureName);
 			}
 		};
 	}
@@ -39,10 +39,9 @@ public class MessageCreatorIdSetRule extends NumericVectorFeatureRule implements
 	   * Create an binary feature rule for extracting sender id
 	   * 
 	   * @param destFeatureName name for extracted feature
-	   * @param totalRecipientNum largest address id
 	   */
-	public MessageCreatorIdSetRule(String featureName, int largestSenderId) {
-		super(featureName, largestSenderId);
+	public MessageCreatorIdSetRule(String featureName) {
+		super(featureName);
 	}
 
 	/**

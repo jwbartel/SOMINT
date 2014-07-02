@@ -1,16 +1,16 @@
 package prediction.features.messages;
 
-import data.representation.actionbased.messages.MessageThread;
-import data.representation.actionbased.messages.SingleMessage;
 import snml.dataimport.MessageData;
 import snml.dataimport.ThreadData;
-import snml.rule.NumericVectorFeatureRule;
+import snml.rule.ObjectSetFeatureRule;
 import snml.rule.basicfeature.IBasicFeatureRule;
+import data.representation.actionbased.messages.MessageThread;
+import data.representation.actionbased.messages.SingleMessage;
 
 /**
  * Extract the numeric vector of title word ids that occurred in the message
  */
-public class MessageTitleWordIdSetRule extends NumericVectorFeatureRule implements IBasicFeatureRule {
+public class MessageTitleWordIdSetRule extends ObjectSetFeatureRule implements IBasicFeatureRule {
 	
 	/**
 	 * Create a factory to generate instances of the feature
@@ -30,12 +30,10 @@ public class MessageTitleWordIdSetRule extends NumericVectorFeatureRule implemen
 			@Override
 			public IBasicFeatureRule create(
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
-				return new MessageTitleWordIdSetRule(featureName, threadsProperties.getWordIndexFinder());
+				return new MessageTitleWordIdSetRule(featureName);
 			}
 		};
 	}
-
-	private WordIndexFinder wordIndexFinder;
 	
 	/**
 	 * Create an binary feature rule for extracting title words
@@ -45,14 +43,12 @@ public class MessageTitleWordIdSetRule extends NumericVectorFeatureRule implemen
 	 * @param totalRecipientNum
 	 *            largest address id
 	 */
-	public MessageTitleWordIdSetRule(String featureName, WordIndexFinder wordIndexFinder) {
-		super(featureName, wordIndexFinder.numWords());
-		this.wordIndexFinder = wordIndexFinder;
+	public MessageTitleWordIdSetRule(String featureName) {
+		super(featureName);
 	}
 
 	/**
-	 * Extract the numeric vector of whether a word in the title of a
-	 * given thread
+	 * Extract the set of words in the title
 	 * 
 	 * @param aThread
 	 *            the source thread data
@@ -65,11 +61,7 @@ public class MessageTitleWordIdSetRule extends NumericVectorFeatureRule implemen
 		MessageData msg = aThread.getKthEarlest(0);
 		String[] words = (String[]) msg.getAttribute(MessageDataConfig.TITLE_WORDS);
 
-		int[] wordIds = new int[words.length];
-		for(int i=0; i<words.length; i++) {
-			wordIds[i] = wordIndexFinder.indexOf(words[i]);
-		}
-		return wordIds;
+		return words;
 	}
 
 }

@@ -74,6 +74,10 @@ public class GenericDataModelInitializer implements DataModelInitializer {
 			Long userId = userIds.get(user);
 			Long itemId = itemIds.get(item);
 			
+			if (userId == null || itemId == null || preference == null) {
+				continue;
+			}
+			
 			ArrayList<Preference> preferences = userToPreferences.get(user);
 			if(preferences == null) {
 				preferences = new ArrayList<>();

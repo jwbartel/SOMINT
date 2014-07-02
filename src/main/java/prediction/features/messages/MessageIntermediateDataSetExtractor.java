@@ -10,6 +10,8 @@ import snml.dataconvert.BasicFeatureExtractor;
 import snml.dataconvert.IntermediateData;
 import snml.dataconvert.IntermediateDataInitializer;
 import snml.dataconvert.IntermediateDataSet;
+import snml.dataconvert.IntermediateRecommendationDataInitializer;
+import snml.dataconvert.RecommendationFeatureExtractor;
 import snml.dataimport.MessageData;
 import snml.dataimport.ThreadData;
 import snml.dataimport.ThreadDataSet;

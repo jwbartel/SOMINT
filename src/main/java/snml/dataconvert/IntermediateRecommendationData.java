@@ -39,7 +39,7 @@ public abstract class IntermediateRecommendationData implements IntermediateData
 	 * @return The attribute or array of attributes associated with the preference
 	 */
 	public Object getPreferenceAttribute() {
-		return getAttrValue(startPreferenceAttributes, startPreferenceAttributes);
+		return getAttrValue(startPreferenceAttributes, length());
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public abstract class IntermediateRecommendationData implements IntermediateData
 			return null;
 		}
 		
-		int length = startAttributeIndex - endAttributeIndex;
+		int length = endAttributeIndex - startAttributeIndex;
 		if (length < 1) {
 			return null;
 		} else if (length > 1) {

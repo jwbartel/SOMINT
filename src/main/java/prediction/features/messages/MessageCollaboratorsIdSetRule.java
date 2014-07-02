@@ -1,16 +1,16 @@
 package prediction.features.messages;
 
-import data.representation.actionbased.messages.MessageThread;
-import data.representation.actionbased.messages.SingleMessage;
 import snml.dataimport.MessageData;
 import snml.dataimport.ThreadData;
-import snml.rule.NumericVectorFeatureRule;
+import snml.rule.ObjectSetFeatureRule;
 import snml.rule.basicfeature.IBasicFeatureRule;
+import data.representation.actionbased.messages.MessageThread;
+import data.representation.actionbased.messages.SingleMessage;
 
 /**
  * Extract the numeric vector of collaborator ids that occurred in the message
  */
-public class MessageCollaboratorsIdSetRule extends NumericVectorFeatureRule implements
+public class MessageCollaboratorsIdSetRule extends ObjectSetFeatureRule implements
 		IBasicFeatureRule {
 	
 	/**
@@ -31,8 +31,7 @@ public class MessageCollaboratorsIdSetRule extends NumericVectorFeatureRule impl
 			@Override
 			public IBasicFeatureRule create(
 					ThreadSetProperties<Collaborator, Message, ThreadType> threadsProperties) {
-				return new MessageCollaboratorsIdSetRule(featureName,
-						threadsProperties.getCollaborators().size());
+				return new MessageCollaboratorsIdSetRule(featureName);
 			}
 		};
 	}
@@ -45,8 +44,8 @@ public class MessageCollaboratorsIdSetRule extends NumericVectorFeatureRule impl
 	 * @param totalRecipientNum
 	 *            largest address id
 	 */
-	public MessageCollaboratorsIdSetRule(String featureName, int totalRecipientNum) {
-		super(featureName, totalRecipientNum);
+	public MessageCollaboratorsIdSetRule(String featureName) {
+		super(featureName);
 	}
 
 	/**

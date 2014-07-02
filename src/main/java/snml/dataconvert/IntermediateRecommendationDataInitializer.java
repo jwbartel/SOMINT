@@ -48,7 +48,7 @@ public abstract class IntermediateRecommendationDataInitializer implements Inter
 		return initDestDataSet(destDataSetName, threadNum,
 				(IBasicFeatureRule) rules[0],
 				(IBasicFeatureRule) rules[1],
-				(IBasicFeatureRule) rules[3]);
+				(IBasicFeatureRule) rules[2]);
 	}
 	
 	public abstract IntermediateRecommendationData initADataInstance(
@@ -62,7 +62,7 @@ public abstract class IntermediateRecommendationDataInitializer implements Inter
 		checkRules(rules);
 		return initADataInstance(relatedDataset, (IBasicFeatureRule) rules[0],
 				(IBasicFeatureRule) rules[1],
-				(IBasicFeatureRule) rules[3]);
+				(IBasicFeatureRule) rules[2]);
 	}
 
 }

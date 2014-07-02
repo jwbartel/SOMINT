@@ -7,6 +7,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 
 import prediction.features.messages.MessageIntermediateDataSetExtractor;
+import prediction.features.messages.MessageIntermediateRecommendationDataSetExtractor;
 import prediction.features.messages.SecondsToFirstResponseRule;
 import prediction.features.messages.ThreadSetProperties;
 import prediction.response.time.ResponseTimeRange;
@@ -98,7 +99,7 @@ public abstract class MahoutCollaborativeFilteringResponseTimePredictor<Collabor
 	 */
 	public void train() throws Exception {
 		if (extractor == null) {
-			extractor = new MessageIntermediateDataSetExtractor<>(threadsProperties);
+			extractor = new MessageIntermediateRecommendationDataSetExtractor<>(threadsProperties);
 			
 			IBasicFeatureRule[] predictorRules = {userFeatureRule, itemFeatureRule};
 			
@@ -123,10 +124,10 @@ public abstract class MahoutCollaborativeFilteringResponseTimePredictor<Collabor
 		
 		IntermediateData instance = extractor.extractSingleItem(thread, "liveness_test_item", predictorRules, predictableRules, new MahoutDataInitializer());
 		Object result =  snmlModel.extract(instance);
-		Double prediction;
+		Double prediction = null;
 		if (result instanceof String) {
 			prediction = Double.parseDouble((String) result);
-		} else {
+		} else if (result != null) {
 			prediction = (double) result;
 		}
 		
