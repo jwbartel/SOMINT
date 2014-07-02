@@ -128,7 +128,7 @@ public abstract class MahoutCollaborativeFilteringResponseTimePredictor<Collabor
 		if (result instanceof String) {
 			prediction = Double.parseDouble((String) result);
 		} else if (result != null) {
-			prediction = (double) result;
+			prediction = (double) (float) result;
 		}
 		
 		return new ResponseTimeRange(prediction, null);
