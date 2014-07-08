@@ -65,6 +65,8 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 	@Override
 	public Collection<Set<CollaboratorType>> getRecommendations() {
 		UndirectedGraph<CollaboratorType, DefaultEdge> graph = buildGraph();
+		System.out.println("Vertices: "+graph.vertexSet().size());
+		System.out.println("Edges:" + graph.edgeSet().size());
 		SeedlessGroupRecommender<CollaboratorType> recommender = recommenderFactory.create(graph);
 		return recommender.getRecommendations();
 	}

@@ -6,10 +6,11 @@ import java.util.List;
 
 import prediction.features.messages.SecondsToFirstResponseRule;
 import prediction.features.messages.ThreadSetProperties;
-import prediction.response.time.ScoringMethods;
+import prediction.response.time.ScoringMethod;
 import snml.dataimport.ThreadData;
 import snml.rule.basicfeature.IBasicFeatureRule;
 import snml.rule.superfeature.model.mahout.MahoutALSWRModelRule;
+import snml.rule.superfeature.model.mahout.MahoutFactorizerModelRule;
 import data.representation.actionbased.messages.MessageThread;
 import data.representation.actionbased.messages.SingleMessage;
 
@@ -122,14 +123,44 @@ public class ALSWRCollaborativeFilterResponseTimePredictor<Collaborator, Message
 		snmlModel = new MahoutALSWRModelRule("responseTime", possibleNumFeatures[0], possibleLambdas[0], numIterations);
 	}
 
+	ScoringMethod[] validationScoringRanks = {
+			ScoringMethod.percentWithinErrorThreshold(60.0),
+			ScoringMethod.percentWithinErrorThreshold(3*60.0),
+			ScoringMethod.percentWithinErrorThreshold(5*60.0),
+			ScoringMethod.percentWithinErrorThreshold(10*60.0),
+			ScoringMethod.coverage()};
+	
+	private double[] computeScoringRanks(List<Double> trueTimes,
+			List<Double> predictedTimes) {
+
+		double[] ranks = new double[validationScoringRanks.length];
+		for (int i=0; i<validationScoringRanks.length; i++){
+			ranks[i] = validationScoringRanks[i].score(trueTimes, predictedTimes);
+		}
+		return ranks;
+	}
+	
+	private boolean betterRankThanBestRanking(double[] rank, double[] bestRanking) {
+		for (int i=0; i<rank.length; i++) {
+			if (rank[i] < bestRanking[i]) {
+				return false;
+			} else if(rank[i] > bestRanking[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public void validate(Collection<ThreadType> validationSet) throws Exception {
 		if (possibleNumFeatures.length > 1 || possibleLambdas.length > 1) {
 
 			double bestLambda = 0;
 			int bestNumFeatures = 0;
-			double bestRMSE = Double.POSITIVE_INFINITY;
-			double bestCoverage = Double.POSITIVE_INFINITY;
+			double[] bestScores = new double[validationScoringRanks.length];
+			for (int i=0; i<bestScores.length; i++) {
+				bestScores[i] = Double.NEGATIVE_INFINITY;
+			}
 
 			for (int i = 0; i < possibleNumFeatures.length; i++) {
 				for (int j = 0; j < possibleLambdas.length; j++) {
@@ -155,30 +186,22 @@ public class ALSWRCollaborativeFilterResponseTimePredictor<Collaborator, Message
 								.add(this.predictResponseTime(thread).minResponseTime);
 					}
 
-					double rmse = ScoringMethods.rootMeanSquareError(trueTimes,
-							predictedTimes);
-					double coverage = ScoringMethods.coverage(trueTimes,
-							predictedTimes);
-
-					boolean overwrite = (rmse < bestRMSE || (rmse == bestRMSE && coverage > bestCoverage));
-					if (overwrite) {
+					double[] rankScores = computeScoringRanks(trueTimes, predictedTimes);
+					if (betterRankThanBestRanking(rankScores, bestScores)) {
 						bestNumFeatures = chosenNumFeatures;
 						bestLambda = chosenLambda;
-						bestRMSE = rmse;
-						bestCoverage = coverage;
+						bestScores = rankScores;
 					}
 				}
 			}
+			
+			chosenLambda = bestLambda;
+			chosenNumFeatures = bestNumFeatures;
 
-			if (bestLambda != chosenLambda
-					|| bestNumFeatures != chosenNumFeatures) {
-				chosenLambda = bestLambda;
-				chosenNumFeatures = bestNumFeatures;
-
-				snmlModel = new MahoutALSWRModelRule("responseTime",
-						chosenNumFeatures, chosenLambda, numIterations);
-				train();
-			}
+			extractor = null;
+			snmlModel = new MahoutALSWRModelRule("responseTime",
+					chosenNumFeatures, chosenLambda, numIterations);
+			train();
 
 		} else {
 			chosenNumFeatures = possibleNumFeatures[0];
@@ -189,7 +212,10 @@ public class ALSWRCollaborativeFilterResponseTimePredictor<Collaborator, Message
 
 	@Override
 	public String getModelInfo() throws Exception {
-		return "ALS-WR collaborative filtering(" + chosenNumFeatures + " features, lambda="+chosenLambda + ")";
+		String retVal = "ALS-WR collaborative filtering(" + chosenNumFeatures + " features, lambda="+chosenLambda + ")" + "\n";
+		retVal += "\n\n";
+		retVal += ((MahoutFactorizerModelRule) snmlModel).getFactorizationMatricesString();
+		return retVal;
 	}
 
 }

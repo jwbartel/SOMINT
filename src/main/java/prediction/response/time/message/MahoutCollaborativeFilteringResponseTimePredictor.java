@@ -72,7 +72,8 @@ public abstract class MahoutCollaborativeFilteringResponseTimePredictor<Collabor
 	 * @return the title
 	 */
 	public String getTitle() {
-		return title;
+		return title + "_" + userFeatureRule.getDestFeatureName() + "_"
+				+ itemFeatureRule.getDestFeatureName();
 	}
 	
 	/**

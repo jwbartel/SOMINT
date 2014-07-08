@@ -1,5 +1,9 @@
 package snml.rule.superfeature.model.mahout;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Map.Entry;
+
 import org.apache.mahout.cf.taste.common.NoSuchItemException;
 import org.apache.mahout.cf.taste.common.NoSuchUserException;
 import org.apache.mahout.cf.taste.impl.recommender.svd.Factorization;
@@ -27,7 +31,10 @@ public abstract class MahoutFactorizerModelRule extends
 	@Override
 	public void train(IntermediateDataSet trainingSet, String[] options)
 			throws Exception {
-
+		if (trainingSet == null) {
+			throw new NullPointerException();
+		}
+		
 		if (!(trainingSet instanceof MahoutDataSet)) {
 			throw new Exception("training set must of type "
 					+ MahoutDataSet.class.getName());
@@ -52,6 +59,10 @@ public abstract class MahoutFactorizerModelRule extends
 
 	@Override
 	public Float estimatePreference(Object user, Object item) {
+		
+		if (user == null || item == null) {
+			return null;
+		}
 
 		Long userID = trainingSet.getUserId(user);
 		Long itemID = trainingSet.getItemId(item);
@@ -68,6 +79,45 @@ public abstract class MahoutFactorizerModelRule extends
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public String getFactorizationMatricesString() {
+		NumberFormat formatter = new DecimalFormat("0.0000E0");
+		
+		String retVal = "User features\n============\n";
+		for (Entry<Long,Integer> entry : factorization.getUserIDMappings()) {
+			long userId = entry.getKey();
+			try {
+				String userLine = "user"+userId+"\t";
+				double[] features = factorization.getUserFeatures(userId);
+				for (double feature : features) {
+					userLine += formatter.format(feature) + " ";
+				}
+				retVal += userLine + "\n";
+			} catch (NoSuchUserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		retVal += "\n";
+		
+		for (Entry<Long,Integer> entry : factorization.getItemIDMappings()) {
+			
+			long itemId = entry.getKey();
+			try {
+				String itemLine = "item"+itemId+"\t";
+				double[] features = factorization.getItemFeatures(itemId);
+				for (double feature : features) {
+					itemLine += formatter.format(feature) + " ";
+				}
+				retVal += itemLine + "\n";
+			} catch (NoSuchItemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return retVal;
 	}
 
 }
