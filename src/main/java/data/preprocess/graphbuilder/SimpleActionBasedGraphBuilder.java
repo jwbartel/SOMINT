@@ -63,10 +63,9 @@ public class SimpleActionBasedGraphBuilder<Collaborator, Action extends Collabor
 		pastActions.add(currentAction);
 		for (CollaborativeAction<Collaborator> action : pastActions) {
 			for (Collaborator collaborator : action.getCollaborators()) {
-				if (graph.containsVertex(collaborator)) {
-					continue;
+				if (!graph.containsVertex(collaborator)) {
+					graph.addVertex(collaborator);
 				}
-				graph.addVertex(collaborator);
 				for (Collaborator collaborator2 : action.getCollaborators()) {
 					if (!collaborator2.equals(collaborator)) {
 						if (!graph.containsVertex(collaborator2)) {
