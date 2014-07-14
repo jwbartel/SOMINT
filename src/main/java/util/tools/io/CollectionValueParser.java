@@ -11,7 +11,7 @@ public class CollectionValueParser<V> implements ValueParser<Collection<V>> {
 		this.subparser = subparser;
 	}
 
-	@Override
+
 	public Collection<V> parse(String str) {
 		Collection<V> retVal = new TreeSet<V>();
 

@@ -14,7 +14,7 @@ public class SortedListAssist<V> {
 		Map<Integer, Collection<V>> orderedFreqs = new TreeMap<Integer, Collection<V>>(
 				new Comparator<Integer>() {
 
-					@Override
+					
 					public int compare(Integer o1, Integer o2) {
 						return -1 * o1.compareTo(o2);
 					}

@@ -21,12 +21,12 @@ public class FileSorter {
 			this.source = source;
 		}
 
-		@Override
+		
 		public int compareTo(SortedItem<V> o) {
 			return item.compareTo(o.item);
 		}
 
-		@Override
+		
 		public String toString() {
 			return "" + source + ":" + item.toString();
 		}
