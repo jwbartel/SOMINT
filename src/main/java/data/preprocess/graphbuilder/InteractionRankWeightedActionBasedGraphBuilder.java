@@ -102,10 +102,9 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
         	}
 
         	for(CollaboratorType collaborator1 : action.getCollaborators()) {
-        		if (graph.containsVertex(collaborator1)) {
-        			continue;
+        		if (!graph.containsVertex(collaborator1)) {
+        			graph.addVertex(collaborator1);
         		}
-        		graph.addVertex(collaborator1);
         		for (CollaboratorType collaborator2 : action.getCollaborators()) {
         			if (!collaborator1.equals(collaborator2)) {
         				if(!graph.containsVertex(collaborator2)) {
