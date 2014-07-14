@@ -17,6 +17,8 @@ import recommendation.groups.seedless.SeedlessGroupRecommenderFactory;
 public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> implements
 	ActionBasedSeedlessGroupRecommender<CollaboratorType>{
 
+	private UndirectedGraph<CollaboratorType, DefaultEdge> graph;
+	
 	private final SeedlessGroupRecommenderFactory<CollaboratorType> recommenderFactory;
 	private final ActionBasedGraphBuilder<CollaboratorType, CollaborativeAction<CollaboratorType>> graphBuilder;
 	private final Collection<CollaborativeAction<CollaboratorType>> pastActions = new ArrayList<>();
@@ -32,6 +34,7 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 	@Override
 	public void addPastAction(CollaborativeAction<CollaboratorType> action) {
 		pastActions.add(action);
+		graph = null;
 		if (mostRecentAction == null
 				|| mostRecentAction.getLastActiveDate().before(action.getLastActiveDate())) {
 			mostRecentAction = action;
@@ -64,7 +67,9 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 
 	@Override
 	public Collection<Set<CollaboratorType>> getRecommendations() {
-		UndirectedGraph<CollaboratorType, DefaultEdge> graph = buildGraph();
+		if (graph == null) {
+			graph = buildGraph();
+		}
 		SeedlessGroupRecommender<CollaboratorType> recommender = recommenderFactory.create(graph);
 		return recommender.getRecommendations();
 	}
@@ -74,4 +79,7 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 		return "graph-forming action-based seedless";
 	}
 
+	public UndirectedGraph<CollaboratorType, DefaultEdge> getGraph() {
+		return graph;
+	}
 }
