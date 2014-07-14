@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 
 import org.jgrapht.Graph;
+import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
@@ -58,8 +59,8 @@ public class TimeThresholdActionBasedGraphBuilder<Collaborator, Action extends C
 	}
 
 	@Override
-	public Graph<Collaborator, DefaultEdge> addActionToGraph(
-			Graph<Collaborator, DefaultEdge> graph,
+	public UndirectedGraph<Collaborator, DefaultEdge> addActionToGraph(
+			UndirectedGraph<Collaborator, DefaultEdge> graph,
 			Action currentAction,
 			Collection<Action> pastActions) {
 

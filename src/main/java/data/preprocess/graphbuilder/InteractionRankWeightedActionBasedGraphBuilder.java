@@ -4,15 +4,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jgrapht.Graph;
-import org.jgrapht.WeightedGraph;
+import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
-import data.representation.actionbased.CollaborativeAction;
 import recommendation.recipients.groupbased.GroupScorer;
 import recommendation.recipients.groupbased.interactionrank.scoring.TopContactScore;
+import data.representation.actionbased.CollaborativeAction;
 
 public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, ActionType extends CollaborativeAction<CollaboratorType>>
 		extends WeightedActionBasedGraphBuilder<CollaboratorType, ActionType> {
@@ -83,8 +82,8 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
 	
 	
 	@Override
-	public WeightedGraph<CollaboratorType, DefaultEdge> addActionToWeightedGraph(
-			WeightedGraph<CollaboratorType, DefaultEdge> graph,
+	public SimpleWeightedGraph<CollaboratorType, DefaultEdge> addActionToWeightedGraph(
+			SimpleWeightedGraph<CollaboratorType, DefaultEdge> graph,
 			ActionType currentAction,
 			Collection<ActionType> pastActions) {
 		
@@ -128,13 +127,13 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
 	}
 
 	@Override
-	public Graph<CollaboratorType, DefaultEdge> addActionToGraph(
-			Graph<CollaboratorType, DefaultEdge> graph,
+	public UndirectedGraph<CollaboratorType, DefaultEdge> addActionToGraph(
+			UndirectedGraph<CollaboratorType, DefaultEdge> graph,
 			ActionType currentAction,
 			Collection<ActionType> pastActions) {
-		if (graph == null || graph instanceof WeightedGraph) {
+		if (graph == null || graph instanceof SimpleWeightedGraph) {
 			graph = addActionToWeightedGraph(
-					(WeightedGraph<CollaboratorType, DefaultEdge>) graph, currentAction,
+					(SimpleWeightedGraph<CollaboratorType, DefaultEdge>) graph, currentAction,
 					pastActions);
 			
 			Set<CollaboratorType> allVertices = graph.vertexSet();

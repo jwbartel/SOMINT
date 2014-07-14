@@ -50,19 +50,21 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 		if (mostRecentAction == null) {
 			return new SimpleGraph<>(DefaultEdge.class);
 		}
-		Graph<CollaboratorType, DefaultEdge> graph = graphBuilder.addActionToGraph(null,
+		return graphBuilder.addActionToGraph(null,
 				mostRecentAction, getPastActions());
-		UndirectedGraph<CollaboratorType, DefaultEdge> undirectedGraph = new SimpleGraph<>(
-				DefaultEdge.class);
-		for (CollaboratorType collaborator : graph.vertexSet()) {
-			undirectedGraph.addVertex(collaborator);
-		}
-		for (DefaultEdge edge : graph.edgeSet()) {
-			CollaboratorType source = graph.getEdgeSource(edge);
-			CollaboratorType target = graph.getEdgeTarget(edge);
-			undirectedGraph.addEdge(source, target);
-		}
-		return undirectedGraph;
+//		Graph<CollaboratorType, DefaultEdge> graph = graphBuilder.addActionToGraph(null,
+//				mostRecentAction, getPastActions());
+//		UndirectedGraph<CollaboratorType, DefaultEdge> undirectedGraph = new SimpleGraph<>(
+//				DefaultEdge.class);
+//		for (CollaboratorType collaborator : graph.vertexSet()) {
+//			undirectedGraph.addVertex(collaborator);
+//		}
+//		for (DefaultEdge edge : graph.edgeSet()) {
+//			CollaboratorType source = graph.getEdgeSource(edge);
+//			CollaboratorType target = graph.getEdgeTarget(edge);
+//			undirectedGraph.addEdge(source, target);
+//		}
+//		return undirectedGraph;
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package data.preprocess.graphbuilder;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.jgrapht.Graph;
+import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
@@ -50,8 +50,8 @@ public class SimpleActionBasedGraphBuilder<Collaborator, Action extends Collabor
 	}
 	
 	@Override
-	public Graph<Collaborator, DefaultEdge> addActionToGraph(
-			Graph<Collaborator, DefaultEdge> graph,
+	public UndirectedGraph<Collaborator, DefaultEdge> addActionToGraph(
+			UndirectedGraph<Collaborator, DefaultEdge> graph,
 			Action currentAction,
 			Collection<Action> pastActions) {
 
