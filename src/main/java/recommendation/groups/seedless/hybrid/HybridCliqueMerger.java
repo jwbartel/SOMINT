@@ -72,7 +72,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		}
 	}
 	
-	@Override
+	
 	public String getTypeOfRecommender() {
 		return "Hybrid";
 	}
@@ -90,7 +90,7 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 		this.D = d;
 	}
 
-	@Override
+	
 	public Collection<Set<V>> getRecommendations() {
 		if (precomputedMaximalCliques == null) {
 			return findNetworksAndSubgroups();
@@ -291,6 +291,9 @@ public class HybridCliqueMerger<V> implements SeedlessGroupRecommender<V> {
 			BronKerboschCliqueFinder<V, DefaultEdge> BKcliqueFind = new FileAndMemoryBasedBronKerboschCliqueFinder<V, DefaultEdge>(
 					graph, parser, maxVerticesForCliquesInMemory);
 			maximalCliques = BKcliqueFind.getAllMaximalCliques();
+			//------------
+			printStatus("//-------------------BKcliqueFind is created.");
+			//------------
 			if (maximalCliqueFile != null) {
 				ioHelp.printCliqueIDsToFile(maximalCliqueFile.getPath(), maximalCliques);
 				printStatus("Can be found in " + maximalCliqueFile.getPath());

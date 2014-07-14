@@ -3,7 +3,9 @@
  */
 package util.tools;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -131,7 +133,8 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
     	}
     	int tempCount = 0;
     	while (true) {
-    		tempCliqueFile = new File("temp_cliques"+tempCount);
+    		//tempCliqueFile = new File("temp_cliques"+tempCount);
+    		tempCliqueFile = new File("/afs/cs.unc.edu/home/bartel/fbfriendslist/data/log/temp_cliques"+tempCount);
     		if (!tempCliqueFile.exists()) {
     			tempCliqueFile.createNewFile();
     			break;
@@ -149,13 +152,23 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
     		cliques = new ArrayList<Set<V>>();
 
     		CollectionValueParser<V> collectionParser = new CollectionValueParser<V>(parser);
-    		Scanner scanner = new Scanner(tempCliqueFile);
-    		while (scanner.hasNextLine()) {
-    			String line = scanner.nextLine();
-    			Set<V> clique = new HashSet<V>(collectionParser.parse(line));
-    			cliques.add(clique);
+    		System.out.println(tempCliqueFile.getName());
+    		BufferedReader bf = new BufferedReader(new FileReader(tempCliqueFile));
+    		while (true) {
+				String line = bf.readLine();
+				if(line ==null){
+					break;
+				}
+				Set<V> clique = new HashSet<V>(collectionParser.parse(line));
+				cliques.add(clique);
     		}
-    		scanner.close();
+//    		Scanner scanner = new Scanner(tempCliqueFile);
+//    		while (scanner.hasNextLine()) {
+//    			String line = scanner.nextLine();
+//    			Set<V> clique = new HashSet<V>(collectionParser.parse(line));
+//    			cliques.add(clique);
+//    		}
+//    		scanner.close();
     		return cliques;
     	} catch (IOException e) {
     		throw new RuntimeException(e);
