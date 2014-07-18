@@ -62,6 +62,9 @@ public class SimpleActionBasedGraphBuilder<Collaborator, Action extends Collabor
 		pastActions = new HashSet<>(pastActions);
 		pastActions.add(currentAction);
 		for (CollaborativeAction<Collaborator> action : pastActions) {
+			if (action.getCollaborators().size() <= 1) {
+				continue;
+			}
 			for (Collaborator collaborator : action.getCollaborators()) {
 				if (!graph.containsVertex(collaborator)) {
 					graph.addVertex(collaborator);

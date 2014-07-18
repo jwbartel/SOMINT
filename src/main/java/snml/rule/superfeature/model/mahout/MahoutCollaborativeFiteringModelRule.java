@@ -68,7 +68,7 @@ public abstract class MahoutCollaborativeFiteringModelRule extends
 				}
 			}
 			if (stats.getN() > 0) {
-				return (float) stats.getPercentile(50);
+				return (float) stats.getMean();
 			} else {
 				return null;
 			}

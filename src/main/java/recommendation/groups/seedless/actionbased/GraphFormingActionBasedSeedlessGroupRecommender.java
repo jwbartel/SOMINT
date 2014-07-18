@@ -72,6 +72,9 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 		if (graph == null) {
 			graph = buildGraph();
 		}
+		System.out.println("Finding groups in graph with "
+				+ graph.vertexSet().size() + " vertices and "
+				+ graph.edgeSet().size() + " edges.");
 		SeedlessGroupRecommender<CollaboratorType> recommender = recommenderFactory.create(graph);
 		return recommender.getRecommendations();
 	}
@@ -82,6 +85,9 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 	}
 
 	public UndirectedGraph<CollaboratorType, DefaultEdge> getGraph() {
+		if (graph == null) {
+			graph = buildGraph();
+		}
 		return graph;
 	}
 }

@@ -93,6 +93,9 @@ public class InteractionRankWeightedActionBasedGraphBuilder<CollaboratorType, Ac
 		pastActions = new HashSet<>(pastActions);
 		pastActions.add(currentAction);
         for(ActionType action : pastActions) {
+			if (action.getCollaborators().size() <= 1) {
+				continue;
+			}
         	
             Set<Pair<CollaboratorType>> seenCollaboratorPairs = new HashSet<>();
         	double actionScore = scorer.getInteractionRankScoreOfPastAction(currentAction, action);

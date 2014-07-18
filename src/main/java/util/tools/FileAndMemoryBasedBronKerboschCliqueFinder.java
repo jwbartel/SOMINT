@@ -105,7 +105,7 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
 				&& maxVerticesInMemory >= graph.vertexSet().size())) {
 			return super.getAllMaximalCliques();
 		}
-    	
+    	System.out.println("Graph is too large. Finding cliques on file rather than in memory.");
     	try {
 			findTempCliqueFile();
 		} catch (IOException e) {

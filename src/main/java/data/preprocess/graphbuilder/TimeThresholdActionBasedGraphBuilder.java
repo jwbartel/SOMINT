@@ -74,6 +74,9 @@ public class TimeThresholdActionBasedGraphBuilder<Collaborator, Action extends C
 		pastActions = new HashSet<>(pastActions);
 		pastActions.add(currentAction);
 		for (CollaborativeAction<Collaborator> action : pastActions) {
+			if (action.getCollaborators().size() <= 1) {
+				continue;
+			}
 			if (action.getLastActiveDate().before(threshold))
 				continue;
 			for (Collaborator collaborator : action.getCollaborators()) {
