@@ -2,17 +2,18 @@ package recommendation.groups.seedless.actionbased;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
-import org.jgrapht.Graph;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import data.preprocess.graphbuilder.ActionBasedGraphBuilder;
-import data.representation.actionbased.CollaborativeAction;
 import recommendation.groups.seedless.SeedlessGroupRecommender;
 import recommendation.groups.seedless.SeedlessGroupRecommenderFactory;
+import data.preprocess.graphbuilder.ActionBasedGraphBuilder;
+import data.representation.actionbased.CollaborativeAction;
 
 public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> implements
 	ActionBasedSeedlessGroupRecommender<CollaboratorType>{
@@ -43,7 +44,9 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 
 	@Override
 	public Collection<CollaborativeAction<CollaboratorType>> getPastActions() {
-		return new ArrayList<>(pastActions);
+		List<CollaborativeAction<CollaboratorType>> retVal = new ArrayList<>(pastActions);
+		Collections.sort(retVal);
+		return retVal;
 	}
 	
 	private UndirectedGraph<CollaboratorType, DefaultEdge> buildGraph() {

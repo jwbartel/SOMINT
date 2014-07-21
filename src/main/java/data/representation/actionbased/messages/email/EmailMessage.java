@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
 
+import data.representation.actionbased.CollaborativeAction;
 import data.representation.actionbased.messages.SingleMessage;
 
 public class EmailMessage<RecipientType> implements SingleMessage<RecipientType> {
@@ -320,6 +321,14 @@ public class EmailMessage<RecipientType> implements SingleMessage<RecipientType>
 		} catch (MessagingException e) {
 			return super.toString();
 		}
+	}
+	
+	@Override
+	public int compareTo(CollaborativeAction<RecipientType> action) {
+		if (!getStartDate().equals(action.getStartDate())) {
+			return getStartDate().compareTo(action.getStartDate());
+		}
+		return this.toString().compareTo(action.toString());
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import data.representation.actionbased.messages.MessageThread;
+
 public abstract class CollaborativeActionThread<V,ActionType extends CollaborativeAction<V>> implements CollaborativeAction<V>{
 
 	public abstract void addThreadedAction(ActionType action);
@@ -75,5 +77,18 @@ public abstract class CollaborativeActionThread<V,ActionType extends Collaborati
 			}
 		}
 		return collaborators;
+	}
+	
+	@Override
+	public int compareTo(CollaborativeAction<V> action) {
+		if (action instanceof CollaborativeActionThread) {
+			CollaborativeActionThread thread = (CollaborativeActionThread) action;
+			
+			if (!getStartDate().equals(thread.getStartDate())) {
+				return getStartDate().compareTo(thread.getStartDate());
+			}
+			return this.toString().compareTo(thread.toString());
+		}
+		throw new RuntimeException("Thread cannont be compared to a non thread object");
 	}
 }

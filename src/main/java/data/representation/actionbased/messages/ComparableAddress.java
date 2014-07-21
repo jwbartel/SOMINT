@@ -71,4 +71,9 @@ public class ComparableAddress implements Comparable<ComparableAddress>{
 			return false;
 		}
 	}
+	
+	@Override
+	public int hashCode() {
+		return getComparableVal().hashCode();
+	}
 }

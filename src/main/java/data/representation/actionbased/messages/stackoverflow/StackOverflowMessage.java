@@ -5,9 +5,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.TreeSet;
 
+import data.representation.actionbased.CollaborativeAction;
 import data.representation.actionbased.messages.SingleMessage;
 
-public class StackOverflowMessage<Recipient> implements SingleMessage<Recipient>, Comparable<StackOverflowMessage<Recipient>> {
+public class StackOverflowMessage<Recipient> implements SingleMessage<Recipient> {
 
 	public static enum MessageType {
 		Question,
@@ -89,12 +90,16 @@ public class StackOverflowMessage<Recipient> implements SingleMessage<Recipient>
 	public boolean wasSent() {
 		return wasSent;
 	}
-	
+
 	@Override
-	public int compareTo(StackOverflowMessage<Recipient> message) {
-		if (!getStartDate().equals(message.getStartDate())) {
-			return getStartDate().compareTo(message.getStartDate());
+	public int compareTo(CollaborativeAction<Recipient> action) {
+		if (!getStartDate().equals(action.getStartDate())) {
+			return getStartDate().compareTo(action.getStartDate());
 		}
-		return getId().compareTo(message.getId());
+		if (action instanceof StackOverflowMessage) {
+			StackOverflowMessage message = (StackOverflowMessage) action;
+			return getId().compareTo(message.getId());
+		}
+		return toString().compareTo(action.toString());
 	}
 }

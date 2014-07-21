@@ -114,7 +114,9 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
         List<V> potential_clique = new ArrayList<V>();
         List<V> candidates = new ArrayList<V>();
         List<V> already_found = new ArrayList<V>();
-        candidates.addAll(graph.vertexSet());
+        for (V candidate : graph.vertexSet()) {
+        	candidates.add(candidate);
+        }
         findCliquesOnFile(potential_clique, candidates, already_found);
         if (tempCliqueFile != null) {
         	cliques = readCliques();
@@ -133,8 +135,8 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
     	}
     	int tempCount = 0;
     	while (true) {
-    		//tempCliqueFile = new File("temp_cliques"+tempCount);
-    		tempCliqueFile = new File("/afs/cs.unc.edu/home/bartel/fbfriendslist/data/log/temp_cliques"+tempCount);
+    		tempCliqueFile = new File("temp_cliques"+tempCount);
+    		//tempCliqueFile = new File("/afs/cs.unc.edu/home/bartel/fbfriendslist/data/log/temp_cliques"+tempCount);
     		if (!tempCliqueFile.exists()) {
     			tempCliqueFile.createNewFile();
     			break;
@@ -181,17 +183,17 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
         if (!end(candidates, already_found)) {
             // for each candidate_node in candidates do
             for (V candidate : candidates_array) {
-                List<V> new_candidates = new ArrayList<V>();
+                Set<V> new_candidates = new HashSet<V>();
                 List<V> new_already_found = new ArrayList<V>();
 
                 // move candidate node to potential_clique
                 potential_clique.add(candidate);
-                candidates.remove(candidate);
+                while(candidates.remove(candidate)){}
 
                 // create new_candidates by removing nodes in candidates not
                 // connected to candidate node
                 for (V new_candidate : candidates) {
-                    if (graph.containsEdge(candidate, new_candidate)) {
+                    if (!potential_clique.contains(new_candidate) && graph.containsEdge(candidate, new_candidate)) {
                         new_candidates.add(new_candidate);
                     } // of if
                 } // of for
@@ -211,6 +213,7 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
                 		try {
 							cliqueWriter.write("" + new HashSet<V>(potential_clique));
 	                        cliqueWriter.write("\n");
+	                        cliqueWriter.flush();
 						} catch (IOException e) {
 							throw new RuntimeException(e);
 						}
@@ -220,7 +223,7 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
                 } // of if
                 else {
                     // recursive call
-                    findCliquesOnFile(potential_clique, new_candidates, new_already_found);
+                    findCliquesOnFile(potential_clique, new ArrayList<>(new_candidates), new_already_found);
                 } // of else
 
                 // move candidate_node from potential_clique to already_found;

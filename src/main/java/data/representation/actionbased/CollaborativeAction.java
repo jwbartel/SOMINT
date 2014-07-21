@@ -3,7 +3,7 @@ package data.representation.actionbased;
 import java.util.Collection;
 import java.util.Date;
 
-public interface CollaborativeAction<V> {
+public interface CollaborativeAction<V> extends Comparable<CollaborativeAction<V>>{
 
 	public Collection<V> getCreators();
 	public Date getStartDate();

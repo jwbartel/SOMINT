@@ -63,7 +63,7 @@ public class TimeThresholdActionBasedGraphBuilder<Collaborator, Action extends C
 			UndirectedGraph<Collaborator, DefaultEdge> graph,
 			Action currentAction,
 			Collection<Action> pastActions) {
-
+		
 		if (graph == null) {
 			graph = new SimpleGraph<>(DefaultEdge.class);
 		}
@@ -71,8 +71,8 @@ public class TimeThresholdActionBasedGraphBuilder<Collaborator, Action extends C
 		calendar.setTimeInMillis(currentAction.getLastActiveDate().getTime() - thresholdAge);
 		Date threshold = calendar.getTime();
 
-		pastActions = new HashSet<>(pastActions);
 		pastActions.add(currentAction);
+		int actionCount = 0;
 		for (CollaborativeAction<Collaborator> action : pastActions) {
 			if (action.getCollaborators().size() <= 1) {
 				continue;

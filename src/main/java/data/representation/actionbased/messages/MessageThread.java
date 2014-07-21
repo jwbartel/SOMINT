@@ -1,7 +1,6 @@
 package data.representation.actionbased.messages;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import javax.mail.MessagingException;
