@@ -127,4 +127,16 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 		}
 		return graph;
 	}
+
+	@Override
+	public Collection<Set<CollaboratorType>> getMaximalCliques() {
+		if (tryRebuildingGraph) {
+			UndirectedGraph<CollaboratorType, DefaultEdge> newGraph = buildGraph();
+			if (graphsAreDifferent(graph, newGraph)) {
+				graph = newGraph;
+			}
+		}
+		SeedlessGroupRecommender<CollaboratorType> recommender = recommenderFactory.create(graph);
+		return recommender.getMaximalCliques();
+	}
 }

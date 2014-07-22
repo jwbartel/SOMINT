@@ -494,4 +494,9 @@ public class Fellows<V extends Comparable<V>> implements
 			fellows.findGroups(cliques);
 		}
 	}
+
+	@Override
+	public Collection<Set<V>> getMaximalCliques() {
+		return null;
+	}
 }

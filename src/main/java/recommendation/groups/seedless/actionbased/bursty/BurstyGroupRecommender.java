@@ -82,4 +82,9 @@ public class BurstyGroupRecommender<Collaborator extends Comparable<Collaborator
 		return graphBasedRecommender.getPastActions();
 	}
 
+	@Override
+	public Collection<Set<Collaborator>> getMaximalCliques() {
+		return graphBasedRecommender.getMaximalCliques();
+	}
+
 }

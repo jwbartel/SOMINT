@@ -7,5 +7,7 @@ import recommendation.groups.GroupRecommender;
 
 public interface SeedlessGroupRecommender<V> extends GroupRecommender<V> {
 	
+	public Collection<Set<V>> getMaximalCliques();
+	
 	public String getTypeOfRecommender();
 }
