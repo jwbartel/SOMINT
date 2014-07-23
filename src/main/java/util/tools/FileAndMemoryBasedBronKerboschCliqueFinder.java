@@ -135,8 +135,8 @@ public class FileAndMemoryBasedBronKerboschCliqueFinder<V, E> extends BronKerbos
     	}
     	int tempCount = 0;
     	while (true) {
-    		tempCliqueFile = new File("temp_cliques"+tempCount);
-    		//tempCliqueFile = new File("/afs/cs.unc.edu/home/bartel/fbfriendslist/data/log/temp_cliques"+tempCount);
+    		//tempCliqueFile = new File("temp_cliques"+tempCount);
+    		tempCliqueFile = new File("/afs/cs.unc.edu/home/bartel/fbfriendslist/data/log/temp_cliques"+tempCount);
     		if (!tempCliqueFile.exists()) {
     			tempCliqueFile.createNewFile();
     			break;
