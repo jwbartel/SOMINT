@@ -76,6 +76,10 @@ public abstract class IntermediateRecommendationDataSet implements IntermediateD
 	private void addUsersPreferenceInformation(Object user, IntermediateRecommendationData inst) {
 		Object preference = inst.getPreferenceAttribute();
 		Object itemAttrib = inst.getItemAttribute();
+		
+		if (itemAttrib == null) {
+			return;
+		}
 
 		Long userId = userIds.get(user);
 		if (userId == null) {

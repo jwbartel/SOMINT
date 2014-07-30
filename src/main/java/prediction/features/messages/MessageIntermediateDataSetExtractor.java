@@ -12,6 +12,7 @@ import snml.dataconvert.IntermediateDataInitializer;
 import snml.dataconvert.IntermediateDataSet;
 import snml.dataconvert.IntermediateRecommendationDataInitializer;
 import snml.dataconvert.RecommendationFeatureExtractor;
+import snml.dataconvert.weka.WekaDataInitializer;
 import snml.dataimport.MessageData;
 import snml.dataimport.ThreadData;
 import snml.dataimport.ThreadDataSet;

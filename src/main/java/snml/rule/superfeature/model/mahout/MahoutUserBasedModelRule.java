@@ -88,7 +88,12 @@ public class MahoutUserBasedModelRule extends MahoutCollaborativeFiteringModelRu
 			return null;
 		}
 		try {
-			return recommender.estimatePreference(userId, itemId);
+			float preference = recommender.estimatePreference(userId, itemId);
+			if (!Float.isNaN(preference)) {
+				return preference;
+			} else {
+				return null;
+			}
 		} catch (TasteException e) {
 			e.printStackTrace();
 			return null;

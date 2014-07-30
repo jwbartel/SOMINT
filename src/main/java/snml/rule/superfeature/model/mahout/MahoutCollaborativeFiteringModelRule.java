@@ -62,13 +62,17 @@ public abstract class MahoutCollaborativeFiteringModelRule extends
 				for (int i = 0; i < Array.getLength(item); i++) {
 					Float preference = estimatePreference(user,
 							Array.get(item, i));
-					if (preference != null) {
-						stats.addValue((float) preference);
+					if (preference != null && !preference.isNaN()) {
+						stats.addValue((float) preference);	
 					}
 				}
 			}
 			if (stats.getN() > 0) {
-				return (float) stats.getMean();
+				Double retVal = stats.getPercentile(50.0);
+				if (retVal.isNaN() || retVal.toString().toLowerCase().contains("nan")) {
+					throw new RuntimeException("Invalid NaN prediction");
+				}
+				return (float) (double) retVal;
 			} else {
 				return null;
 			}
