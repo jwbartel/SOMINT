@@ -10,19 +10,19 @@ import recommendation.groups.seedless.actionbased.ActionBasedSeedlessGroupRecomm
 import recommendation.groups.seedless.actionbased.GraphFormingActionBasedSeedlessGroupRecommender;
 import data.representation.actionbased.CollaborativeAction;
 
-public class BurstyGroupRecommender<Collaborator extends Comparable<Collaborator>> implements
-		ActionBasedSeedlessGroupRecommender<Collaborator> {
+public class BurstyGroupRecommender<Collaborator extends Comparable<Collaborator>, Action extends CollaborativeAction<Collaborator>> implements
+		ActionBasedSeedlessGroupRecommender<Collaborator, Action> {
 
 	Collection<Set<Collaborator>> previousSeeds = new HashSet<>();
 	Collection<Set<Collaborator>> previousRecommendations = new HashSet<>();
 	CollaborativeAction<Collaborator> mostRecentAction;
 
-	GraphFormingActionBasedSeedlessGroupRecommender<Collaborator> graphBasedRecommender;
+	GraphFormingActionBasedSeedlessGroupRecommender<Collaborator, Action> graphBasedRecommender;
 	GroupMatcher<Collaborator> seedMatcher;
 	GroupMatcher<Collaborator> recommendationMatcher;
 
 	public BurstyGroupRecommender(
-			GraphFormingActionBasedSeedlessGroupRecommender<Collaborator> graphBasedRecommender,
+			GraphFormingActionBasedSeedlessGroupRecommender<Collaborator,Action> graphBasedRecommender,
 			GroupMatcher<Collaborator> seedMatcher,
 			GroupMatcher<Collaborator> recommendationMatcher) {
 		
@@ -65,7 +65,7 @@ public class BurstyGroupRecommender<Collaborator extends Comparable<Collaborator
 	}
 
 	@Override
-	public void addPastAction(CollaborativeAction<Collaborator> action) {
+	public void addPastAction(Action action) {
 		graphBasedRecommender.addPastAction(action);
 		if (mostRecentAction == null
 				|| mostRecentAction.getLastActiveDate().before(action.getLastActiveDate())
@@ -78,7 +78,7 @@ public class BurstyGroupRecommender<Collaborator extends Comparable<Collaborator
 	}
 
 	@Override
-	public Collection<CollaborativeAction<Collaborator>> getPastActions() {
+	public Collection<Action> getPastActions() {
 		return graphBasedRecommender.getPastActions();
 	}
 

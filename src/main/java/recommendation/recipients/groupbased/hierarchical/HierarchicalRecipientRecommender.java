@@ -15,13 +15,13 @@ import recommendation.recipients.RecipientRecommendation;
 import recommendation.recipients.ScoredRecipientRecommendation;
 import recommendation.recipients.groupbased.GroupBasedRecipientRecommender;
 
-public class HierarchicalRecipientRecommender<V extends Comparable<V>> extends
-		GroupBasedRecipientRecommender<V> {
+public class HierarchicalRecipientRecommender<Collaborator extends Comparable<Collaborator>, Action extends CollaborativeAction<Collaborator>> extends
+		GroupBasedRecipientRecommender<Collaborator, Action> {
 
-	private final GroupBasedRecipientRecommender<V> groupBasedRecommender;
+	private final GroupBasedRecipientRecommender<Collaborator, Action> groupBasedRecommender;
 
 	public HierarchicalRecipientRecommender(
-			GroupBasedRecipientRecommender<V> groupBasedRecommender) {
+			GroupBasedRecipientRecommender<Collaborator, Action> groupBasedRecommender) {
 		this.groupBasedRecommender = groupBasedRecommender;
 	}
 
@@ -31,36 +31,36 @@ public class HierarchicalRecipientRecommender<V extends Comparable<V>> extends
 	}
 
 	@Override
-	public void addPastAction(CollaborativeAction<V> action) {
+	public void addPastAction(Action action) {
 		groupBasedRecommender.addPastAction(action);
 
 	}
 
 	@Override
-	public Collection<CollaborativeAction<V>> getPastActions() {
+	public Collection<Action> getPastActions() {
 		return groupBasedRecommender.getPastActions();
 	}
 
 	@Override
-	public Collection<Set<V>> getGroups() {
+	public Collection<Set<Collaborator>> getGroups() {
 		return groupBasedRecommender.getGroups();
 	}
 
-	private Collection<HierarchicalRecommendation<V>> hierarchicallyGroupRecommendations(
-			Collection<ScoredRecipientRecommendation<V>> singleRecipientRecommendations,
-			Map<Set<V>, Double> groupToScore) {
+	private Collection<HierarchicalRecommendation<Collaborator>> hierarchicallyGroupRecommendations(
+			Collection<ScoredRecipientRecommendation<Collaborator>> singleRecipientRecommendations,
+			Map<Set<Collaborator>, Double> groupToScore) {
 
-		HierarchicalGroupRecommendation<V> predictionList =
+		HierarchicalGroupRecommendation<Collaborator> predictionList =
 				new HierarchicalGroupRecommendation<>(null);
 		
-		for(ScoredRecipientRecommendation<V> recipientRecommendation : singleRecipientRecommendations) {
+		for(ScoredRecipientRecommendation<Collaborator> recipientRecommendation : singleRecipientRecommendations) {
 			
-			V recipient = recipientRecommendation.getRecipient();
-			Set<V> highestScoredGroup = null;
+			Collaborator recipient = recipientRecommendation.getRecipient();
+			Set<Collaborator> highestScoredGroup = null;
 			Double highestScore = null;
 
-			for (Entry<Set<V>, Double> entry : groupToScore.entrySet()) {
-				Set<V> group = entry.getKey();
+			for (Entry<Set<Collaborator>, Double> entry : groupToScore.entrySet()) {
+				Set<Collaborator> group = entry.getKey();
 				Double score = entry.getValue();
 				if (group.contains(recipient) && (highestScore == null
 						|| highestScore < score)) {
@@ -73,53 +73,53 @@ public class HierarchicalRecipientRecommender<V extends Comparable<V>> extends
 				highestScoredGroup = new TreeSet<>();
 				highestScoredGroup.add(recipient);
 			}
-			predictionList.add(new HierarchicalIndividualRecommendation<V>(
+			predictionList.add(new HierarchicalIndividualRecommendation<Collaborator>(
 					recipient, new ComparableSet<>(highestScoredGroup)));
 		}
 		return new ArrayList<>(predictionList.getValues());
 	}
 	
 	@Override
-	public double getGroupScore(CollaborativeAction<V> action, Set<V> group) {
+	public double getGroupScore(CollaborativeAction<Collaborator> action, Set<Collaborator> group) {
 		return groupBasedRecommender.getGroupScore(action, group);
 	}
 
 	@Override
-	public Collection<RecipientRecommendation<V>> recommendRecipients(
-			CollaborativeAction<V> action, int maxPredictions) {
+	public Collection<RecipientRecommendation<Collaborator>> recommendRecipients(
+			CollaborativeAction<Collaborator> action, int maxPredictions) {
 
-		Map<V, Double> recipientToScore = new TreeMap<>();
-		Map<Set<V>, Double> groupToScore = new HashMap<>();
+		Map<Collaborator, Double> recipientToScore = new TreeMap<>();
+		Map<Set<Collaborator>, Double> groupToScore = new HashMap<>();
 		updateGroupAndRecipientScores(action, recipientToScore, groupToScore);
 
-		Collection<ScoredRecipientRecommendation<V>> allSingleRecipientRecommendations =
+		Collection<ScoredRecipientRecommendation<Collaborator>> allSingleRecipientRecommendations =
 				getAllSingleRecipientRecommendations(
 				action, recipientToScore);
-		Collection<ScoredRecipientRecommendation<V>> limitedSingleRecipientRecommendations =
+		Collection<ScoredRecipientRecommendation<Collaborator>> limitedSingleRecipientRecommendations =
 				new TreeSet<>();
-		for (ScoredRecipientRecommendation<V> recommendation : allSingleRecipientRecommendations) {
+		for (ScoredRecipientRecommendation<Collaborator> recommendation : allSingleRecipientRecommendations) {
 			if (limitedSingleRecipientRecommendations.size() >= maxPredictions) {
 				break;
 			}
 			limitedSingleRecipientRecommendations.add(recommendation);
 		}
 
-		return new ArrayList<RecipientRecommendation<V>>(
+		return new ArrayList<RecipientRecommendation<Collaborator>>(
 				hierarchicallyGroupRecommendations(
 						limitedSingleRecipientRecommendations, groupToScore));
 	}
 
 	@Override
-	public Collection<RecipientRecommendation<V>> recommendRecipients(
-			CollaborativeAction<V> action) {
-		Map<V, Double> recipientToScore = new TreeMap<>();
-		Map<Set<V>, Double> groupToScore = new HashMap<>();
+	public Collection<RecipientRecommendation<Collaborator>> recommendRecipients(
+			CollaborativeAction<Collaborator> action) {
+		Map<Collaborator, Double> recipientToScore = new TreeMap<>();
+		Map<Set<Collaborator>, Double> groupToScore = new HashMap<>();
 		updateGroupAndRecipientScores(action, recipientToScore, groupToScore);
 
-		Collection<ScoredRecipientRecommendation<V>> singleRecipientRecommendations = getAllSingleRecipientRecommendations(
+		Collection<ScoredRecipientRecommendation<Collaborator>> singleRecipientRecommendations = getAllSingleRecipientRecommendations(
 				action, recipientToScore);
 
-		return new ArrayList<RecipientRecommendation<V>>(
+		return new ArrayList<RecipientRecommendation<Collaborator>>(
 				hierarchicallyGroupRecommendations(
 						singleRecipientRecommendations, groupToScore));
 	}

@@ -1,10 +1,11 @@
 package recommendation.recipients;
 
+import data.representation.actionbased.CollaborativeAction;
 import recommendation.recipients.groupbased.GroupScorer;
 
-public interface RecipientRecommenderFactory<V extends Comparable<V>> {
+public interface RecipientRecommenderFactory<Collaborator extends Comparable<Collaborator>, Action extends CollaborativeAction<Collaborator>> {
 
-	public RecipientRecommender<V> createRecommender();
-	public RecipientRecommender<V> createRecommender(GroupScorer<V> groupScorer);
+	public RecipientRecommender<Collaborator, Action> createRecommender();
+	public RecipientRecommender<Collaborator, Action> createRecommender(GroupScorer<Collaborator> groupScorer);
 	
 }

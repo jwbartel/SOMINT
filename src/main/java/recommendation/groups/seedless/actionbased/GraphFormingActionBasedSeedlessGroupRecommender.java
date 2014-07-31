@@ -15,27 +15,27 @@ import recommendation.groups.seedless.SeedlessGroupRecommenderFactory;
 import data.preprocess.graphbuilder.ActionBasedGraphBuilder;
 import data.representation.actionbased.CollaborativeAction;
 
-public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> implements
-	ActionBasedSeedlessGroupRecommender<CollaboratorType>{
+public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType, Action extends CollaborativeAction<CollaboratorType>> implements
+	ActionBasedSeedlessGroupRecommender<CollaboratorType, Action>{
 
 	boolean tryRebuildingGraph = true;
 	private UndirectedGraph<CollaboratorType, DefaultEdge> graph;
 	private Collection<Set<CollaboratorType>> recommendations;
 	
 	private final SeedlessGroupRecommenderFactory<CollaboratorType> recommenderFactory;
-	private final ActionBasedGraphBuilder<CollaboratorType, CollaborativeAction<CollaboratorType>> graphBuilder;
-	private final Collection<CollaborativeAction<CollaboratorType>> pastActions = new ArrayList<>();
-	private CollaborativeAction<CollaboratorType> mostRecentAction = null;
+	private final ActionBasedGraphBuilder<CollaboratorType, Action> graphBuilder;
+	private final Collection<Action> pastActions = new ArrayList<>();
+	private Action mostRecentAction = null;
 
 	public GraphFormingActionBasedSeedlessGroupRecommender(
 			SeedlessGroupRecommenderFactory<CollaboratorType> recommenderFactory,
-			ActionBasedGraphBuilder<CollaboratorType, CollaborativeAction<CollaboratorType>> graphBuilder) {
+			ActionBasedGraphBuilder<CollaboratorType, Action> graphBuilder) {
 		this.recommenderFactory = recommenderFactory;
 		this.graphBuilder = graphBuilder;
 	}
 
 	@Override
-	public void addPastAction(CollaborativeAction<CollaboratorType> action) {
+	public void addPastAction(Action action) {
 		pastActions.add(action);
 		tryRebuildingGraph = true;
 		if (mostRecentAction == null
@@ -45,8 +45,8 @@ public class GraphFormingActionBasedSeedlessGroupRecommender<CollaboratorType> i
 	}
 
 	@Override
-	public Collection<CollaborativeAction<CollaboratorType>> getPastActions() {
-		List<CollaborativeAction<CollaboratorType>> retVal = new ArrayList<>(pastActions);
+	public Collection<Action> getPastActions() {
+		List<Action> retVal = new ArrayList<>(pastActions);
 		Collections.sort(retVal);
 		return retVal;
 	}

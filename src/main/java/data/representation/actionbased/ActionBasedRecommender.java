@@ -2,8 +2,8 @@ package data.representation.actionbased;
 
 import java.util.Collection;
 
-public interface ActionBasedRecommender<V> {
+public interface ActionBasedRecommender<Collaborator, Action extends CollaborativeAction<Collaborator>> {
 
-	public void addPastAction(CollaborativeAction<V> action);
-	public Collection<CollaborativeAction<V>> getPastActions();
+	public void addPastAction(Action action);
+	public Collection<Action> getPastActions();
 }

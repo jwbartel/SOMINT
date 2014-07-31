@@ -11,19 +11,19 @@ import data.representation.actionbased.CollaborativeAction;
 import recommendation.recipients.RecipientRecommender;
 import recommendation.recipients.ScoredRecipientRecommendation;
 
-public abstract class GroupBasedRecipientRecommender<V extends Comparable<V>>
-		implements RecipientRecommender<V> {
+public abstract class GroupBasedRecipientRecommender<Collaborator extends Comparable<Collaborator>, Action extends CollaborativeAction<Collaborator>>
+		implements RecipientRecommender<Collaborator, Action> {
 
-	public abstract Collection<Set<V>> getGroups();
+	public abstract Collection<Set<Collaborator>> getGroups();
 	
-	public abstract double getGroupScore(CollaborativeAction<V> action, Set<V> group);
+	public abstract double getGroupScore(CollaborativeAction<Collaborator> action, Set<Collaborator> group);
 	
-	protected boolean updateIndividualScores(Set<V> group, double score,
-			Map<V, Double> recipientToScore) {
+	protected boolean updateIndividualScores(Set<Collaborator> group, double score,
+			Map<Collaborator, Double> recipientToScore) {
 
 		boolean didUpdate = false;
 		if (score != 0) {
-			for (V recipient : new HashSet<>(group)) {
+			for (Collaborator recipient : new HashSet<>(group)) {
 				Double recipientScore = recipientToScore.get(recipient);
 				recipientScore = (recipientScore == null) ? score
 						: recipientScore + score;
@@ -34,10 +34,10 @@ public abstract class GroupBasedRecipientRecommender<V extends Comparable<V>>
 		return didUpdate;
 	}
 	
-	protected void updateGroupAndRecipientScores(CollaborativeAction<V> action,
-			Map<V, Double> recipientToScore, Map<Set<V>, Double> groupToScore) {
+	protected void updateGroupAndRecipientScores(CollaborativeAction<Collaborator> action,
+			Map<Collaborator, Double> recipientToScore, Map<Set<Collaborator>, Double> groupToScore) {
 
-		for (Set<V> pastGroup : getGroups()) {
+		for (Set<Collaborator> pastGroup : getGroups()) {
 			double score = getGroupScore(action, pastGroup);
 			if (updateIndividualScores(pastGroup, score, recipientToScore)) {
 				groupToScore.put(pastGroup, score);
@@ -45,15 +45,15 @@ public abstract class GroupBasedRecipientRecommender<V extends Comparable<V>>
 		}
 	}
 
-	protected Collection<ScoredRecipientRecommendation<V>> getAllSingleRecipientRecommendations(
-			CollaborativeAction<V> action, Map<V, Double> recipientToScore) {
-		Collection<V> collaborators = new TreeSet<>(action.getCollaborators());
-		Collection<ScoredRecipientRecommendation<V>> recommendations = new TreeSet<>();
-		for (Entry<V, Double> entry : recipientToScore.entrySet()) {
+	protected Collection<ScoredRecipientRecommendation<Collaborator>> getAllSingleRecipientRecommendations(
+			CollaborativeAction<Collaborator> action, Map<Collaborator, Double> recipientToScore) {
+		Collection<Collaborator> collaborators = new TreeSet<>(action.getCollaborators());
+		Collection<ScoredRecipientRecommendation<Collaborator>> recommendations = new TreeSet<>();
+		for (Entry<Collaborator, Double> entry : recipientToScore.entrySet()) {
 
-			V recipient = entry.getKey();
+			Collaborator recipient = entry.getKey();
 			if (!collaborators.contains(recipient)) {
-				recommendations.add(new ScoredRecipientRecommendation<V>(
+				recommendations.add(new ScoredRecipientRecommendation<Collaborator>(
 						recipient, entry.getValue()));
 			}
 		}

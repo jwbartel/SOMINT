@@ -17,14 +17,14 @@ import recommendation.recipients.groupbased.GroupBasedRecipientRecommender;
 import recommendation.recipients.groupbased.GroupScorer;
 import recommendation.recipients.groupbased.interactionrank.scoring.SubsetWeightedScore;
 
-public class InteractionRankGroupBasedRecipientRecommender<V extends Comparable<V>> extends
-		GroupBasedRecipientRecommender<V> {
+public class InteractionRankGroupBasedRecipientRecommender<Collaborator extends Comparable<Collaborator>, Action extends CollaborativeAction<Collaborator>> extends
+		GroupBasedRecipientRecommender<Collaborator, Action> {
 
-	private final GroupScorer<V> groupScorer;
-	private Collection<CollaborativeAction<V>> actions = new HashSet<>();
-	private Map<Set<V>, Collection<CollaborativeAction<V>>> groupsToActions = new HashMap<>();
+	private final GroupScorer<Collaborator> groupScorer;
+	private Collection<Action> actions = new HashSet<>();
+	private Map<Set<Collaborator>, Collection<CollaborativeAction<Collaborator>>> groupsToActions = new HashMap<>();
 
-	public InteractionRankGroupBasedRecipientRecommender(GroupScorer<V> groupScorer) {
+	public InteractionRankGroupBasedRecipientRecommender(GroupScorer<Collaborator> groupScorer) {
 		this.groupScorer = groupScorer;
 	}
 
@@ -32,7 +32,7 @@ public class InteractionRankGroupBasedRecipientRecommender<V extends Comparable<
 		this.groupScorer = new SubsetWeightedScore<>(wOut, halfLife);
 	}
 	
-	protected GroupScorer<V> getGroupScorer() {
+	protected GroupScorer<Collaborator> getGroupScorer() {
 		return groupScorer;
 	}
 	
@@ -42,82 +42,82 @@ public class InteractionRankGroupBasedRecipientRecommender<V extends Comparable<
 	}
 	
 	@Override
-	public Collection<Set<V>> getGroups() {
+	public Collection<Set<Collaborator>> getGroups() {
 		return groupsToActions.keySet();
 	}
 	
 	@Override
-	public double getGroupScore(CollaborativeAction<V> action, Set<V> group) {
-		Collection<CollaborativeAction<V>> pastGroupActions = groupsToActions
+	public double getGroupScore(CollaborativeAction<Collaborator> action, Set<Collaborator> group) {
+		Collection<CollaborativeAction<Collaborator>> pastGroupActions = groupsToActions
 				.get(group);
 		double score = groupScorer.score(group, action, pastGroupActions);
 		return score;
 	}
 
 	@Override
-	public void addPastAction(CollaborativeAction<V> action) {
+	public void addPastAction(Action action) {
 		if (actions.contains(action)) {
 			return;
 		}
 		
 		actions.add(action);
 
-		Set<V> group = new TreeSet<>(action.getCollaborators());
-		for (Entry<Set<V>, Collection<CollaborativeAction<V>>> entry : groupsToActions
+		Set<Collaborator> group = new TreeSet<>(action.getCollaborators());
+		for (Entry<Set<Collaborator>, Collection<CollaborativeAction<Collaborator>>> entry : groupsToActions
 				.entrySet()) {
 
-			Set<V> pastGroup = entry.getKey();
-			Collection<CollaborativeAction<V>> pastGroupActions = entry.getValue();
+			Set<Collaborator> pastGroup = entry.getKey();
+			Collection<CollaborativeAction<Collaborator>> pastGroupActions = entry.getValue();
 			if (group.containsAll(pastGroup)) {
 				pastGroupActions.add(action);
 			}
 		}
 		if (!groupsToActions.containsKey(group)) {
-			Collection<CollaborativeAction<V>> groupActions = new ArrayList<>();
+			Collection<CollaborativeAction<Collaborator>> groupActions = new ArrayList<>();
 			groupActions.add(action);
 			groupsToActions.put(group, groupActions);
 		}
 	}
 
 	@Override
-	public Collection<CollaborativeAction<V>> getPastActions() {
+	public Collection<Action> getPastActions() {
 		return new ArrayList<>(actions);
 	}
 
 	@Override
-	public Collection<RecipientRecommendation<V>> recommendRecipients(
-			CollaborativeAction<V> action, int maxPredictions) {
+	public Collection<RecipientRecommendation<Collaborator>> recommendRecipients(
+			CollaborativeAction<Collaborator> action, int maxPredictions) {
 
-		Map<V, Double> recipientToScore = new TreeMap<>();
-		Map<Set<V>, Double> groupToScore = new HashMap<>();
+		Map<Collaborator, Double> recipientToScore = new TreeMap<>();
+		Map<Set<Collaborator>, Double> groupToScore = new HashMap<>();
 		updateGroupAndRecipientScores(action, recipientToScore, groupToScore);
 
-		Collection<ScoredRecipientRecommendation<V>> allSingleRecipientRecommendations =
+		Collection<ScoredRecipientRecommendation<Collaborator>> allSingleRecipientRecommendations =
 				getAllSingleRecipientRecommendations(
 				action, recipientToScore);
-		Collection<ScoredRecipientRecommendation<V>> limitedSingleRecipientRecommendations =
+		Collection<ScoredRecipientRecommendation<Collaborator>> limitedSingleRecipientRecommendations =
 				new TreeSet<>();
-		for (ScoredRecipientRecommendation<V> recommendation : allSingleRecipientRecommendations) {
+		for (ScoredRecipientRecommendation<Collaborator> recommendation : allSingleRecipientRecommendations) {
 			if (limitedSingleRecipientRecommendations.size() >= maxPredictions) {
 				break;
 			}
 			limitedSingleRecipientRecommendations.add(recommendation);
 		}
-		return new ArrayList<RecipientRecommendation<V>>(
+		return new ArrayList<RecipientRecommendation<Collaborator>>(
 				limitedSingleRecipientRecommendations);
 	}
 
 	@Override
-	public Collection<RecipientRecommendation<V>> recommendRecipients(
-			CollaborativeAction<V> action) {
-		Map<V, Double> recipientToScore = new TreeMap<>();
-		Map<Set<V>, Double> groupToScore = new HashMap<>();
+	public Collection<RecipientRecommendation<Collaborator>> recommendRecipients(
+			CollaborativeAction<Collaborator> action) {
+		Map<Collaborator, Double> recipientToScore = new TreeMap<>();
+		Map<Set<Collaborator>, Double> groupToScore = new HashMap<>();
 		updateGroupAndRecipientScores(action, recipientToScore, groupToScore);
 
-		Collection<ScoredRecipientRecommendation<V>> singleRecipientRecommendations =
+		Collection<ScoredRecipientRecommendation<Collaborator>> singleRecipientRecommendations =
 				getAllSingleRecipientRecommendations(
 				action, recipientToScore);
-		return new ArrayList<RecipientRecommendation<V>>(singleRecipientRecommendations);
+		return new ArrayList<RecipientRecommendation<Collaborator>>(singleRecipientRecommendations);
 	}
 
 }
