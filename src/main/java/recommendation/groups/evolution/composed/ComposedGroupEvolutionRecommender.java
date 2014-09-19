@@ -198,13 +198,13 @@ public class ComposedGroupEvolutionRecommender<V> implements GroupEvolutionRecom
 			threshold += thresholdIncrement;
 		}
 		
-		if (usedRecommenderEngineResults.size() != recommenderEngineResults.size()) {
-			Collection<Set<V>> unusedRecommenderEngineResults = new HashSet<>(recommenderEngineResults);
-			unusedRecommenderEngineResults.removeAll(usedRecommenderEngineResults);
-			for (Set<V> unusedRecommenderEngineResult : unusedRecommenderEngineResults) {
-				allRecommendations.add(new RecommendedGroupCreationEvolution<>(unusedRecommenderEngineResult));
-			}
-		}
+//		if (usedRecommenderEngineResults.size() != recommenderEngineResults.size()) {
+//			Collection<Set<V>> unusedRecommenderEngineResults = new HashSet<>(recommenderEngineResults);
+//			unusedRecommenderEngineResults.removeAll(usedRecommenderEngineResults);
+//			for (Set<V> unusedRecommenderEngineResult : unusedRecommenderEngineResults) {
+//				allRecommendations.add(new RecommendedGroupCreationEvolution<>(unusedRecommenderEngineResult));
+//			}
+//		}
 		
 		return allRecommendations;
 	}
