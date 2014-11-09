@@ -24,6 +24,13 @@ import data.representation.actionbased.messages.JavaMailMessage;
 public class JavaMailEmailMessage extends EmailMessage<ComparableAddress> implements JavaMailMessage {
 
 	final static DateFormat[] dateFormats = {
+		new SimpleDateFormat("EEE, dd MMM yy HH:mm:ss z"),
+		new SimpleDateFormat("dd MMM yy HH:mm:ss z"),
+		new SimpleDateFormat("EEE, dd MMM yy HH:mm:ss"),
+		new SimpleDateFormat("dd MMM yy HH:mm:ss"), 
+		new SimpleDateFormat("dd MMM yy HH:mm z"), 
+		new SimpleDateFormat("EEE, dd MMM yy  HH:mm z"), 
+		
 			new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z"),
 			new SimpleDateFormat("dd MMM yyyy HH:mm:ss z"),
 			new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss"),
