@@ -1,4 +1,4 @@
-SharingPredictor
+SOMINT
 ================
 
 Toolkit for making predictions about sharing. Developed by Jacob Bartel
