@@ -16,6 +16,14 @@ public abstract class GroupScorer<V> {
 		public GroupScorer<V> create();
 		public GroupScorer<V> create(double wOut, double halfLife);
 	}
+	
+	public double getWOut() {
+		return wOut;
+	}
+	
+	public double getHalfLife() {
+		return halfLife;
+	}
 
 	protected Collection<V> getGroupIntersection(Collection<V> group,
 			CollaborativeAction<V> currentAction) {

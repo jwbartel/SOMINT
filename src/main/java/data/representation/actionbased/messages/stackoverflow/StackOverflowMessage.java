@@ -38,7 +38,11 @@ public class StackOverflowMessage<Recipient> implements SingleMessage<Recipient>
 		this.wasSent = wasSent;
 	}
 	
-	public Long getId() {
+	public String getId() {
+		return "" + getStackOverflowId();
+	}
+	
+	public Long getStackOverflowId() {
 		return id;
 	}
 	
@@ -98,7 +102,7 @@ public class StackOverflowMessage<Recipient> implements SingleMessage<Recipient>
 		}
 		if (action instanceof StackOverflowMessage) {
 			StackOverflowMessage message = (StackOverflowMessage) action;
-			return getId().compareTo(message.getId());
+			return getStackOverflowId().compareTo(message.getStackOverflowId());
 		}
 		return toString().compareTo(action.toString());
 	}

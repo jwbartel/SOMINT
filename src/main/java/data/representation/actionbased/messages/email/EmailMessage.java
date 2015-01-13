@@ -80,6 +80,16 @@ public class EmailMessage<RecipientType> implements SingleMessage<RecipientType>
 		this.subject = subject;
 		this.body = body;
 	}
+	
+	@Override
+	public String getId() {
+		try {
+			return getMessageId();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public String getMessageId() throws MessagingException {
 		if (parent == null) return messageId;

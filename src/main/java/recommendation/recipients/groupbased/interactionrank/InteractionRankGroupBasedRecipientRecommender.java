@@ -32,7 +32,7 @@ public class InteractionRankGroupBasedRecipientRecommender<Collaborator extends 
 		this.groupScorer = new SubsetWeightedScore<>(wOut, halfLife);
 	}
 	
-	protected GroupScorer<Collaborator> getGroupScorer() {
+	public GroupScorer<Collaborator> getGroupScorer() {
 		return groupScorer;
 	}
 	

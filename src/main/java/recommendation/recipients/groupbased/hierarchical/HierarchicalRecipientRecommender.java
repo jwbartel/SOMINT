@@ -24,6 +24,10 @@ public class HierarchicalRecipientRecommender<Collaborator extends Comparable<Co
 			GroupBasedRecipientRecommender<Collaborator, Action> groupBasedRecommender) {
 		this.groupBasedRecommender = groupBasedRecommender;
 	}
+	
+	public GroupBasedRecipientRecommender<Collaborator, Action> getBaseRecommender() {
+		return groupBasedRecommender;
+	}
 
 	@Override
 	public String getTypeOfRecommender() {

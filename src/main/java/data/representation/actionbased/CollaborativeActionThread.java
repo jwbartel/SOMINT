@@ -30,6 +30,23 @@ public abstract class CollaborativeActionThread<V,ActionType extends Collaborati
 	}
 	
 	@Override
+	public String getId() {
+		Date earliestStart = null;
+		CollaborativeAction<V> earliestAction = null;
+		for (CollaborativeAction<V> action : getThreadedActions()) {
+			if (earliestStart == null || earliestStart.after(action.getStartDate())) {
+				earliestStart = action.getStartDate();
+				earliestAction = action;
+			}
+		}
+		
+		if (earliestAction != null) {
+			return earliestAction.getId();
+		}
+		return null;
+	}
+	
+	@Override
 	public boolean wasSent() {
 		Date earliestStart = null;
 		CollaborativeAction<V> earliestAction = null;
